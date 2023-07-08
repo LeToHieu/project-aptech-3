@@ -18,14 +18,15 @@ namespace MediaWebApi.Repositories
         public async Task<User?> AddUser(RegisterViewModel user)
         {
             string sql = "EXECUTE RegisterUser @Username, @UserImage, @Password, @Phone, @Email";
-            User? newUser = await _context.Users.FromSqlRaw(sql,
-                                parameters: new[] {
+            IEnumerable<User> result = await _context.Users.FromSqlRaw(sql,
                                     new SqlParameter("@username", user.Username),
-                                    new SqlParameter("@userImage", user.Userimage),
+                                    new SqlParameter("@userimage", user.Userimage),
                                     new SqlParameter("@password", user.Password),
                                     new SqlParameter("@phone", user.Phone),
-                                    new SqlParameter("@email", user.Email),
-                                }).FirstOrDefaultAsync();
+                                    new SqlParameter("@email", user.Email)
+                                ).ToListAsync();
+
+            User? newUser = result.FirstOrDefault();
 
             return newUser;
 

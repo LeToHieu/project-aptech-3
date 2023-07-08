@@ -18,7 +18,12 @@ namespace MediaWebApi
             builder.Services.AddControllers();
             builder.Services.AddDbContext<MediaContext>(options =>
             {
-                options.UseSqlServer(settings["DefaultConnection"]);
+                options.UseSqlServer(settings["DefaultConnection"],
+                    options => options.EnableRetryOnFailure(
+                            maxRetryCount: 10,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null
+                        ));
             });
 
 

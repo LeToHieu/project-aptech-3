@@ -17,7 +17,7 @@ const Card = () => {
               <div className='text text-sm font-semibold'>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque, nobis. Enim aut vero, nisi a quibusdam accusamus odio explicabo sed.  
               </div>
-              <p className='text-xs'>Vie Channel </p>
+              <p className='text-xs mt-1'>Vie Channel </p>
               <p  className='flex items-center gap-1 text-xs'>1 Tr lượt xem <span className='rounded-full block w-1 h-1 bg-gray-500'></span> 6 ngày trước </p>
             </div>            
           </div>          

@@ -32,27 +32,30 @@ namespace MediaWebApi.Repositories
 
         }
 
-        public Task<bool> DeleteUser(int id)
+        public async Task<List<User>?> GetAllUsers()
         {
-            throw new NotImplementedException();
+            List<User> users = await _context.Users.ToListAsync();
+            return users;
         }
 
-        public Task<List<User>> GetAllUsers()
+        public async Task<User?> GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return user;
         }
 
-        public Task<User> GetByEmail(string email)
+        public async Task<User?> GetByUserName(string username)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> GetByUserName(string username)
-        {
-            throw new NotImplementedException();
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return user;
         }
 
         public Task<bool> UpdateUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteUser(int id)
         {
             throw new NotImplementedException();
         }

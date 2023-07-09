@@ -7,8 +7,10 @@ CREATE TABLE Users(
 	userimage VARCHAR(255),
 	password VARCHAR(255) NOT NULL,
 	email VARCHAR(255) NOT NULL,
+	phone VARCHAR(20) NOT NULL,
 	role INT NOT NULL DEFAULT 0,
 );
+
 
 CREATE TABLE Permissions(
 	Id INT NOT NULL IDENTITY PRIMARY KEY,
@@ -58,7 +60,6 @@ CREATE TABLE Artist_Album (
 	FOREIGN KEY (album_id) REFERENCES Albums(Id),
 );
 
-
 CREATE TABLE Artist_Media(
 	artist_id INT NOT NULL,
 	media_id INT NOT NULL,
@@ -76,7 +77,6 @@ CREATE TABLE Promotions(
 	end_date DATE,
 );
 
-
 CREATE TABLE Promotion_Album(
 	promotion_id INT NOT NULL,
 	album_id INT NOT NULL,
@@ -84,7 +84,6 @@ CREATE TABLE Promotion_Album(
 	FOREIGN KEY (promotion_id) REFERENCES Promotions(Id),
 	FOREIGN KEY (album_id) REFERENCES Albums(Id),
 );
-
 
 CREATE TABLE Promotion_Media(
 	promotion_id INT NOT NULL,
@@ -137,7 +136,6 @@ CREATE TABLE Order_Detail(
 	FOREIGN KEY (media_id) REFERENCES Medias(id),
 );
 
-
 INSERT INTO Users (username, password, email, role)
 VALUES ('user1', 'password1', 'user1@example.com', 1),
        ('user2', 'password2', 'user2@example.com', 2),
@@ -173,7 +171,6 @@ VALUES (1, 1),
        (7, 2),
        (8, 2),
        (9, 2);
-
 
 INSERT INTO Categories (category_name, description)
 VALUES ('Pop', 'Popular music'),
@@ -367,3 +364,19 @@ VALUES (1, 1, 9.99),
        (8, 8, 12.49),
        (9, 9, 9.99),
        (10, 10, 8.50);
+
+CREATE PROCEDURE RegisterUser
+    @Username VARCHAR(255),
+    @UserImage VARCHAR(255),
+    @Password VARCHAR(255),
+	@Phone VARCHAR(20),
+    @Email VARCHAR(255)
+AS
+BEGIN
+    INSERT INTO Users (username, userimage, password, phone, email)
+    VALUES (@Username, @UserImage, @Password, @Phone, @Email);
+	SELECT * FROM Users WHERE Id = @@IDENTITY;
+END
+
+EXEC RegisterUser 'cuong', 'image', 'cuong123', '01234567', 'cuong@gmail.com';
+SELECT * FROM Users

@@ -10,7 +10,6 @@ import LoginIndex from './components/login/index';
 import ResetPassword from './components/login/ResetPassword';
 import RequireAuth from './components/authorization/RequireAuth';
 import {
-  Home, 
   Cart
 } from './components/userPage/index'
 
@@ -19,6 +18,7 @@ import {
 
 // Admin
 import Admin from './components/admin/admin'
+import Home from './pages/Home';
 
 function App() {
   return (

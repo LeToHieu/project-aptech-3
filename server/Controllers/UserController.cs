@@ -23,14 +23,14 @@ namespace MediaWebApi.Controllers
                 var newUser = await _userService.RegisterUser(user);
                 return Ok(new
                 {
-                    newUser = newUser,
+                    user = newUser,
                 });
             }
             catch(ArgumentException ex)
             {
                 return BadRequest(new
                 { 
-                    Message = ex.Message,
+                    message = ex.Message,
                 });
 
             }

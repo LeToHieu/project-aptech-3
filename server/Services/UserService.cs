@@ -11,22 +11,24 @@ namespace MediaWebApi.Services
         {
             _userRepository = userRepository;
         }
+
         public async Task<User?> RegisterUser(RegisterViewModel user)
         {
-            //var existUserByUserName = await _userRepository.GetByUserName(user.Username ?? "");
-            //if (existUserByUserName != null)
-            //{
-            //    throw new ArgumentException("Username already exists");
-            //}
+            var existUserByUserName = await _userRepository.GetByUserName(user.Username ?? "");
+            if (existUserByUserName != null)
+            {
+                throw new ArgumentException("Username already exists");
+            }
 
-            //var existUserByEmail = await _userRepository.GetByEmail(user.Email ?? "");
-            //if (existUserByEmail != null)
-            //{
-            //    throw new ArgumentException("Email already exists");
-            //}
+            var existUserByEmail = await _userRepository.GetByEmail(user.Email ?? "");
+            if (existUserByEmail != null)
+            {
+                throw new ArgumentException("Email already exists");
+            }
             User? newUser = await _userRepository.AddUser(user);
             return newUser;
 
         }
+
     }
 }

@@ -1,7 +1,9 @@
 ﻿using MediaWebApi.Models;
 using MediaWebApi.Services;
 using MediaWebApi.ViewModels;
+using MediaWebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
+using MediaWebApi.Extensions;
 
 namespace MediaWebApi.Controllers
 {
@@ -35,5 +37,50 @@ namespace MediaWebApi.Controllers
 
             }
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginViewModel loginUser)
+        {
+            try
+            {
+                var jwt = await _userService.LoginUser(loginUser);
+                return Ok(new
+                {
+                    jwt,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                });
+
+            }
+        }
+
+        [HttpPost("loginWithJwt")]
+        [VerifyToken]
+        public async Task<IActionResult> LoginWithJwt()
+        {
+            try
+            {
+                //var jwt = await _userService.LoginUser(loginUser);
+                int userId = HttpContext.GetUserId();
+                User? user = await _userService.GetUserById(userId);
+                return Ok(new
+                {
+                    user
+                }); ;
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                });
+
+            }
+        }
+
     }
 }

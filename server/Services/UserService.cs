@@ -12,6 +12,22 @@ namespace MediaWebApi.Services
             _userRepository = userRepository;
         }
 
+        public async Task<User?> GetUserById(int userId)
+        {
+            return await _userRepository.GetById(userId);
+        }
+
+        public async Task<string> LoginUser(LoginViewModel loginUser)
+        {
+            var existUserByUserName = await _userRepository.GetByUserName(loginUser.Username ?? "");
+            if (existUserByUserName == null)
+            {
+                throw new ArgumentException("User name not found");
+            }
+
+            return await _userRepository.Login(loginUser);
+        }
+
         public async Task<User?> RegisterUser(RegisterViewModel user)
         {
             var existUserByUserName = await _userRepository.GetByUserName(user.Username ?? "");

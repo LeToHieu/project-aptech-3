@@ -1,32 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/logo.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 const Header = () => {
+  const [toggle, setToggle] = useState(false)
   return (
-    <div className='header h-[11vh]'>
-      <div className="wrapper px-10 py-5 flex gap-2 justify-between items-center">
-        <div className='start flex items-center gap-5'>
-          <label htmlFor="toggle">
+    <>
+    <div className='header shadow-lg shadow-blue-500/50 z-20  pb-2 fixed w-full bg-white'>
+      <div className="wrapper h-[11vh] px-10 flex gap-2 justify-between items-center max-[640px]:px-1">
+        <div className='start flex items-center gap-5 max-[640px]:gap-0'>
+          <label htmlFor="toggle" className='max-[640px]:hidden'>
             <MenuIcon fontSize="large" />
           </label>
-          <img src={logo} alt="" className='w-[100px] h-[40px]' />
+          <label htmlFor="toggle" className='sm:hidden'>
+            <MenuIcon fontSize="small" />
+          </label>
+          <img src={logo} alt="" className='w-[100px] h-[40px] max-[640px]:w-[50px]' />
         </div>
-        <div className="center">
-          <div className="search flex items-center gap-5 px-5 py-2 border border-gray-400 rounded-lg">
-            <input type="text" placeholder='Search' className='border-none outline-none w-[500px]  '/>
+        <div className="center flex-1 max-[640px]:hidden">
+          <div className="search flex items-center justify-center gap-5 px-5 py-2 border border-gray-400 rounded-lg mx-auto w-fit">
+            <input type="text" placeholder='Search' className='border-none outline-none w-[100%]  '/>
             <SearchIcon fontSize="medium" />
           </div>
         </div>
-        <div className="end">
-          <button className='p-2 flex items-center gap-2 text-blue-400 rounded-lg shadow-lg shadow-blue-500/50'>
+        <div className="end flex items-center gap-2">
+          <div className='sm:hidden'>
+            <label htmlFor="search" onClick={() => setToggle(!toggle)}>
+              <SearchIcon fontSize="medium" />
+            </label>
+          </div>
+          <button className='p-2 flex items-center gap-2 text-blue-400 rounded-lg shadow-lg shadow-blue-500/50 
+            max-[640px]:gap-0
+          '>
             <PersonIcon />
-            <span>Đăng nhập</span>
+            <span className='max-[640px]:text-xs'>Đăng nhập</span>
           </button>
         </div>
       </div>
+      {toggle &&
+          <div className='mt-2 pt-3 pb-3'>
+            <form action="">
+              <input type="text" placeholder='Search here' id='search' className='w-full outline-none px-2' />
+            </form>
+          </div>
+      }
     </div>
+    </>
   )
 }
 

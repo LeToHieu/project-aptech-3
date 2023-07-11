@@ -18,14 +18,29 @@ import {
 
 // Admin
 import Admin from './components/admin/admin'
-import Home from './pages/Home';
+import Index from './pages/Index';
+import Home from './components/Home/Home';
+import Video from './components/Video/Video';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux'
+import { loginUserWithJwt } from './redux/actions/users';
 
 function App() {
+  const jwt = localStorage.getItem('jwt') ?? null
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (jwt) {
+      loginUserWithJwt(jwt, dispatch)
+    }
+  }, [])
   return (
     <>
     <Routes>
       {/* public route */}
-      <Route path='/' element={<Home/>}/>
+      <Route path='/' element={<Index/>}>
+        <Route index path='' element={<Home />} />
+        <Route path='video/:id' element={<Video />} />
+      </Route>
       <Route path='/login' element={<LoginIndex/>}/>
       <Route path='/resetpassword' element={<ResetPassword/>}/>
 

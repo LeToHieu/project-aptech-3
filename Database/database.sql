@@ -380,3 +380,13 @@ END
 
 EXEC RegisterUser 'cuong', 'image', 'cuong123', '01234567', 'cuong@gmail.com';
 SELECT * FROM Users
+
+
+CREATE PROCEDURE loginUser
+    @Username VARCHAR(255),
+    @Password VARCHAR(255)
+AS
+BEGIN
+	SELECT * FROM Users WHERE username = @Username AND password = @Password;
+END
+

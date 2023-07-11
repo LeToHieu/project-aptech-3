@@ -5,7 +5,7 @@ import axios from '../../api/axios';
 import {toast} from 'react-toastify'
 import { useLocation, Navigate, Link, useNavigate } from "react-router-dom";
 
-const LOGIN_URL = 'users/login';
+const LOGIN_URL = 'user/login';
 
 
 const Login = (props) => {
@@ -18,43 +18,61 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) =>{
-    e.preventDefault();
-    const LoadingToast = toast.loading("Please wait...");
-    try{
+  // const handleSubmit = async (e) =>{
+  //   e.preventDefault();
+  //   const LoadingToast = toast.loading("Please wait...");
+  //   try{
 
-      const response = await axios.post(LOGIN_URL,
-        JSON.stringify({ email, password }),
-        {
-            headers: { 'Content-Type': 'application/json' },
-        }
-      );
-      const accessToken = response?.data?.data?.token;
-      const role = response?.data?.data?.role;
-      const name = response?.data?.data?.name;
-      toast.update(LoadingToast, { render: `${response?.data.message}`, type: "success", isLoading: false, autoClose: 5000,  closeOnClick: true });
-      setAuth({name, email, password, role, accessToken });
-      setEmail('');
-      setPassword('');
+  //     const response = await axios.post(LOGIN_URL,
+  //       JSON.stringify({ email, password }),
+  //       {
+  //           headers: { 'Content-Type': 'application/json' },
+  //       }
+  //     );
+  //     const accessToken = response?.data?.data?.token;
+  //     const role = response?.data?.data?.role;
+  //     const name = response?.data?.data?.name;
+  //     toast.update(LoadingToast, { render: `${response?.data.message}`, type: "success", isLoading: false, autoClose: 5000,  closeOnClick: true });
+  //     setAuth({name, email, password, role, accessToken });
+  //     setEmail('');
+  //     setPassword('');
       
-      navigate(from, {replace: true});
-    }catch(error){
-      if(!error?.response){
-        toast.update(LoadingToast, { render: "No server response", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
-      }else if(error?.response.data.message){
-        toast.update(LoadingToast, { render: `${error?.response.data.message}`, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true  });
-      }else {
-        toast.update(LoadingToast, { render: "Login fail!", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true  });
+  //     navigate(from, {replace: true});
+  //   }catch(error){
+  //     if(!error?.response){
+  //       toast.update(LoadingToast, { render: "No server response", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
+  //     }else if(error?.response.data.message){
+  //       toast.update(LoadingToast, { render: `${error?.response.data.message}`, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true  });
+  //     }else {
+  //       toast.update(LoadingToast, { render: "Login fail!", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true  });
+  //     }
+  //   }
+  // }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
       }
     }
+    let user = JSON.stringify({ username: email, password })
+    console.log(user);
+    try {
+      const response =  await axios.post(LOGIN_URL, user ,config)
+      localStorage.setItem('jwt', response.data.jwt)
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+
   }
   return (
     <>
       <form action="#" className="loginInsideForm" ref={props.loginForm} onSubmit={handleSubmit}>
         <div className="field">
           <input 
-            type="email" 
-            placeholder="Email Address" 
+            type="text" 
+            placeholder="Usser name" 
             required  
             value={email}
             onChange={(e)=>setEmail(e.target.value)}  

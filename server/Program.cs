@@ -32,14 +32,25 @@ namespace MediaWebApi
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+            builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
+            builder.Services.AddScoped<IArtistService, ArtistService>();
+
+            builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
+            builder.Services.AddScoped<IAlbumService, AlbumService>();
+
+            builder.Services.AddScoped<IMediaRepository, MediaRepository>();
+            builder.Services.AddScoped<IMediaService, MediaService>();
+
+            builder.Services.AddScoped<IArtistAlbumRepository, ArtistAlbumRepository>();
+            //builder.Services.AddScoped<IArtistAlbumService, ArtistAlbumService>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddCors(p => p.AddPolicy("cors", build =>
-            {
-                build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-            }));
-
+            
             builder.Services.AddAuthorization();
 
             builder.Services.AddAuthentication(options =>
@@ -47,6 +58,11 @@ namespace MediaWebApi
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             });
+
+            //builder.Services.AddCors(p => p.AddPolicy("cors", build =>
+            //{
+            //    build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            //}));
 
             var app = builder.Build();
 
@@ -56,7 +72,10 @@ namespace MediaWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseCors("cors");
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            });
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

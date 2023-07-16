@@ -9,8 +9,24 @@ const loginUserWithJwt = async (jwt, dispatch) => {
         Authorization: 'Bearer ' + jwt
       }
     }
-    const {data} = await axios.post(LOGIN_URL, config)
+    console.log(config.headers);
+
+    // const {data} = await axios.post(LOGIN_URL, "", {
+    //     headers: {
+    //       Authorization: 'Bearer ' + jwt,
+    //     }
+    //   },
+    //   )
+    const {data} = await axios.get('/artistAlbum', {
+      headers: 
+        {
+          "Content-Type": "application/json",
+        }
+    }) 
+      
     console.log(data);
+    let json = JSON.parse(data.json)
+    console.log(json);
     // dispatch('usersSuccess')
   } catch (error) {
     console.log(error);

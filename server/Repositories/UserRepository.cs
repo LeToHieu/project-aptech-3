@@ -90,12 +90,12 @@ namespace MediaWebApi.Repositories
             return user;
         }
 
-        public Task<bool> UpdateUser(User user)
+        public Task<bool?> UpdateUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteUser(int id)
+        public Task<bool?> DeleteUser(int id)
         {
             throw new NotImplementedException();
         }

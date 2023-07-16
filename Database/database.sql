@@ -1,4 +1,4 @@
-CREATE DATABASE MANAGE_MEDIA
+﻿CREATE DATABASE MANAGE_MEDIA
 USE MANAGE_MEDIA
 
 CREATE TABLE Users(
@@ -47,10 +47,15 @@ CREATE TABLE Albums (
 CREATE TABLE Medias (
 	ID INT NOT NULL IDENTITY PRIMARY KEY,
 	media_name VARCHAR(255) NOT NULL,
+	media_image VARCHAR(255),
+	media_url VARCHAR(255) NOT NULL,
 	price DECIMAL(10,2) NOT NULL DEFAULT 0,
 	category_id INT NOT NULL,
+	created_at DATETIME DEFAULT GETDATE(),
 	FOREIGN KEY (category_id) REFERENCES Categories(Id)
 );
+Alter table Medias ADD created_at DATETIME DEFAULT GETDATE();
+SELECT * FROM Medias;
 
 CREATE TABLE Artist_Album (
 	artist_id INT NOT NULL,
@@ -221,8 +226,8 @@ VALUES ('Hello', 1.29, 1),
        ('Stitches', 1.29, 10);
 
 INSERT INTO Artist_Album (artist_id, album_id)
-VALUES (1, 1),
-       (2, 2),
+VALUES (1, 1), (1, 2), (1,3),
+       (2, 2), (2,3), (2,5),
        (3, 3),
        (4, 4),
        (5, 5),
@@ -231,6 +236,9 @@ VALUES (1, 1),
        (8, 8),
        (9, 9),
        (10, 10);
+SELECT * FROM Artist_Album;
+DELETE Artist_Album;
+Select * from Artists Join Artist_Album ON Artists.Id = Artist_Album.artist_id JOIN Albums ON Artist_Album.album_id = Albums.ID
 
 INSERT INTO Artist_Media (artist_id, media_id)
 VALUES (1, 1),
@@ -390,3 +398,101 @@ BEGIN
 	SELECT * FROM Users WHERE username = @Username AND password = @Password;
 END
 
+CREATE PROCEDURE UpdateCategory
+    @Id int,
+    @category_name varchar(255),
+    @description varchar(255)
+AS
+BEGIN
+    UPDATE Categories
+    SET category_name = @category_name, description = @description
+    WHERE Id = @Id;
+	SELECT * FROM Categories WHERE Id = @Id
+END
+
+CREATE PROCEDURE InsertCategory
+    @category_name VARCHAR(255),
+    @description VARCHAR(255)
+AS
+BEGIN
+    INSERT INTO Categories (category_name, description)
+    VALUES (@category_name, @description);
+	SELECT * FROM Categories WHERE ID = @@IDENTITY
+END
+
+CREATE PROCEDURE InsertArtist
+    @artist_name VARCHAR(255),
+    @description VARCHAR(255)
+AS
+BEGIN
+    INSERT INTO Artists (artist_name, description) VALUES (@artist_name, @description);
+	SELECT * FROM Artists WHERE ID = @@IDENTITY
+END
+
+CREATE PROCEDURE UpdateArtist
+    @id INT,
+    @artist_name VARCHAR(255),
+    @description VARCHAR(255)
+AS
+BEGIN
+    UPDATE Artists SET artist_name = @artist_name, description = @description WHERE Id = @id;
+	SELECT * FROM Artists WHERE ID = @id
+END
+
+
+CREATE PROCEDURE InsertAlbum
+    @album_name VARCHAR(255),
+    @price DECIMAL(10,2),
+    @description VARCHAR(255)
+AS
+BEGIN
+    INSERT INTO Albums (album_name, price, description)
+    VALUES (@album_name, @price, @description);
+	SELECT * FROM Albums WHERE ID = @@IDENTITY
+END
+
+CREATE PROCEDURE UpdateAlbum
+    @id INT,
+    @album_name VARCHAR(255),
+    @price DECIMAL(10,2),
+    @description VARCHAR(255)
+AS
+BEGIN
+    UPDATE Albums SET album_name = @album_name, price = @price, description = @description WHERE Id = @id;
+	SELECT * FROM Albums WHERE ID = @id
+END
+
+CREATE PROCEDURE InsertMedia
+	@media_name VARCHAR(255),
+	@media_image VARCHAR(255),
+	@media_url VARCHAR(255),
+	@price DECIMAL(10,2),
+	@category_id INT
+AS
+BEGIN
+	INSERT INTO Medias (media_name, media_image, media_url, price, category_id)
+	VALUES (@media_name, @media_image, @media_url, @price, @category_id);
+	SELECT * FROM Medias WHERE ID = @@IDENTITY
+END;
+
+CREATE PROCEDURE UpdateMedia
+	@media_id INT,
+	@media_name VARCHAR(255),
+	@media_image VARCHAR(255),
+	@media_url VARCHAR(255),
+	@price DECIMAL(10,2),
+	@category_id INT
+AS
+BEGIN
+	UPDATE Medias
+	SET media_name = @media_name,
+		media_image = @media_image,
+		media_url = @media_url,
+		price = @price,
+		category_id = @category_id
+	WHERE ID = @media_id;
+	SELECT * FROM Medias WHERE ID = @media_id;
+END;
+
+EXEC InsertMedia 'Tên media', 'Đường dẫn ảnh', 'Đường dẫn media', 10.99, 1;
+EXEC UpdateMedia 1, 'Tên media mới', 'Đường dẫn ảnh mới', 'Đường dẫn media mới', 15.99, 2;

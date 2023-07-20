@@ -3,8 +3,13 @@ import logo from '../../assets/logo.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
+import {useNavigate} from "react-router-dom"
 const Header = () => {
+  const navigate = useNavigate();
   const [toggle, setToggle] = useState(false)
+  const handleLogin = () => {
+    navigate("/login");
+  }
   return (
     <>
     <div className='header shadow-lg shadow-blue-500/50 z-20  pb-2 fixed w-full bg-white'>
@@ -32,7 +37,8 @@ const Header = () => {
           </div>
           <button className='p-2 flex items-center gap-2 text-blue-400 rounded-lg shadow-lg shadow-blue-500/50 
             max-[640px]:gap-0
-          '>
+          '
+          onClick={handleLogin}>
             <PersonIcon />
             <span className='max-[640px]:text-xs'>Đăng nhập</span>
           </button>

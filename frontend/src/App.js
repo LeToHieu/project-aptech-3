@@ -17,7 +17,15 @@ import {
 
 
 // Admin
-import Admin from './components/admin/admin'
+import Admin from './components/admin/admin';
+import AdminIndex from './components/admin/AdminIndex';
+import GetUsers from './components/admin/User/GetUsers';
+import GetCate from './components/admin/Categories/GetCate';
+import GetArtists from './components/admin/Artists/GetArtists';
+import GetAlbums from './components/admin/Albums/GetAlbums';
+import {GetMedias, AddMedia} from './components/admin/Medias/IndexMedias';
+
+//Video
 import Index from './pages/Index';
 import Home from './components/Home/Home';
 import Video from './components/Video/Video';
@@ -50,8 +58,18 @@ function App() {
       </Route>
 
       {/* protected route admin */}
-      <Route element={<RequireAuth allowedRole={[1]}/>}>
-        <Route path='/admin' element={<Admin/>}/>
+      <Route path='admin' element={<>{/*<RequireAuth allowedRole={[1]}/>*/} <AdminIndex/></>}>
+        <Route path='' element={<Admin/>}/>
+        <Route path='users' element={<GetUsers/>}/>
+        <Route path='categories' element={<GetCate/>}/>
+        <Route path='artists' element={<GetArtists/>}/>
+        <Route path='albums' element={<GetAlbums/>}/>
+
+        <Route path='medias'>
+          <Route path='' element={<GetMedias/>}/>
+          <Route path='addMedia' element={<AddMedia/>}/>
+        </Route>
+        
       </Route>
 
       {/* catch all */}

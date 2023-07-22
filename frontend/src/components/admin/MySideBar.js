@@ -115,7 +115,7 @@ const SideBar = () => {
               <Link
                 to="permisson"
                 className={`${
-                  location === "medias" ? "font-bold" : "hover:font-bold"
+                  location === "permisson" ? "font-bold" : "hover:font-bold"
                 } flex items-center gap-[10px]`}
               >
                 <PermIdentityIcon style={{ color: "white" }} />
@@ -129,7 +129,7 @@ const SideBar = () => {
               <Link
                 to="bill"
                 className={`${
-                  location === "medias" ? "font-bold" : "hover:font-bold"
+                  location === "bill" ? "font-bold" : "hover:font-bold"
                 } flex items-center gap-[10px]`}
               >
                 <RequestQuoteIcon style={{ color: "white" }} />
@@ -143,7 +143,7 @@ const SideBar = () => {
               <Link
                 to="order"
                 className={`${
-                  location === "medias" ? "font-bold" : "hover:font-bold"
+                  location === "order" ? "font-bold" : "hover:font-bold"
                 } flex items-center gap-[10px]`}
               >
                 <ReorderIcon style={{ color: "white" }} />
@@ -157,7 +157,7 @@ const SideBar = () => {
               <Link
                 to="report"
                 className={`${
-                  location === "medias" ? "font-bold" : "hover:font-bold"
+                  location === "report" ? "font-bold" : "hover:font-bold"
                 } flex items-center gap-[10px]`}
               >
                 <ReportIcon style={{ color: "white" }} />
@@ -171,7 +171,7 @@ const SideBar = () => {
               <Link
                 to="news"
                 className={`${
-                  location === "medias" ? "font-bold" : "hover:font-bold"
+                  location === "news" ? "font-bold" : "hover:font-bold"
                 } flex items-center gap-[10px]`}
               >
                 <FeedIcon style={{ color: "white" }} />
@@ -185,7 +185,7 @@ const SideBar = () => {
               <Link
                 to="rating"
                 className={`${
-                  location === "medias" ? "font-bold" : "hover:font-bold"
+                  location === "rating" ? "font-bold" : "hover:font-bold"
                 } flex items-center gap-[10px]`}
               >
                 <GradeIcon style={{ color: "white" }} />

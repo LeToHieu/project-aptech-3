@@ -20,7 +20,7 @@ import GetCate from "./components/admin/Categories/GetCate";
 import GetArtists from "./components/admin/Artists/GetArtists";
 import GetAlbums from "./components/admin/Albums/GetAlbums";
 import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
-
+import Permission from "./components/admin/Permission/Permission";
 //Video
 import Index from "./pages/Index";
 import Home from "./components/Home/Home";
@@ -72,6 +72,7 @@ function App() {
             <Route path="" element={<GetMedias />} />
             <Route path="addMedia" element={<AddMedia />} />
           </Route>
+          <Route path="permisson" element={<Permission />}></Route>
         </Route>
 
         {/* catch all */}

@@ -75,18 +75,18 @@ input[type="checkbox"] {
 @keyframes fadeInUpBig {
   0% {
     /* transform: translateY(0); */
-    opacity: 1;
+    opacity: 1 !important;
   }
   100% {
     /* transform: translateY(100%); */
-    opacity: 0;
+    opacity: 0 !important;
   }
 }
 
 @keyframes fadeOutDownBig {
   0% {
     /* transform: translateY(0); */
-    opacity: 1;
+    opacity: 1 !important;
   }
   100% {
     /* transform: translateY(100%); */

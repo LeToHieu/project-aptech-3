@@ -1,8 +1,9 @@
 import axios from "../../api/axios"
+import { usersError } from "../reducer/users";
 const LOGIN_URL = 'user/loginWithJwt';
 const loginUserWithJwt = async (jwt, dispatch) => {
   try {
-    // dispatch('usersStart')
+    dispatch('usersStart')
     console.log(jwt);
     const config = {
       headers: {
@@ -11,18 +12,18 @@ const loginUserWithJwt = async (jwt, dispatch) => {
     }
     console.log(config.headers);
 
-    // const {data} = await axios.post(LOGIN_URL, "", {
-    //     headers: {
-    //       Authorization: 'Bearer ' + jwt,
-    //     }
-    //   },
-    //   )
-    const {data} = await axios.get('/artistAlbum', {
-      headers: 
-        {
-          "Content-Type": "application/json",
+    const {data} = await axios.post(LOGIN_URL, "", {
+        headers: {
+          Authorization: 'Bearer ' + jwt,
         }
-    }) 
+      },
+      )
+    // const {data} = await axios.get('/artistAlbum', {
+    //   headers: 
+    //     {
+    //       "Content-Type": "application/json",
+    //     }
+    // }) 
       
     console.log(data);
     let json = JSON.parse(data.json)
@@ -30,7 +31,7 @@ const loginUserWithJwt = async (jwt, dispatch) => {
     // dispatch('usersSuccess')
   } catch (error) {
     console.log(error);
-    // dispatch('usersError', error.response.message.data)
+    dispatch(usersError(),)
   }
 }
 

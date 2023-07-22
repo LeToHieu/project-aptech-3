@@ -496,3 +496,35 @@ END;
 
 EXEC InsertMedia 'Tên media', 'Đường dẫn ảnh', 'Đường dẫn media', 10.99, 1;
 EXEC UpdateMedia 1, 'Tên media mới', 'Đường dẫn ảnh mới', 'Đường dẫn media mới', 15.99, 2;
+
+CREATE PROCEDURE InsertPromotion
+    @promotion_name VARCHAR(255),
+    @discount DECIMAL(10,2),
+    @description VARCHAR(255),
+    @start_date DATE,
+    @end_date DATE
+AS
+BEGIN
+    INSERT INTO Promotions (promotion_name, discount, description, start_date, end_date)
+    VALUES (@promotion_name, @discount, @description, @start_date, @end_date);
+	SELECT * FROM Promotions WHERE Id = @@IDENTITY
+END
+
+CREATE PROCEDURE UpdatePromotion
+    @id INT,
+    @promotion_name VARCHAR(255),
+    @discount DECIMAL(10,2),
+    @description VARCHAR(255),
+    @start_date DATE,
+    @end_date DATE
+AS
+BEGIN
+    UPDATE Promotions SET
+        promotion_name = @promotion_name,
+        discount = @discount,
+        description = @description,
+        start_date = @start_date,
+        end_date = @end_date
+    WHERE Id = @id;
+	SELECT * FROM Promotions WHERE Id = @id
+END

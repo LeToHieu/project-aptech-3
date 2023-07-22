@@ -13,6 +13,15 @@ import { Cart } from "./components/userPage/index";
 // User with retrics
 
 // Admin
+import Index from './pages/Index';
+import Home from './components/Home/Home';
+import Video from './components/Video/Video';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux'
+import { loginUserWithJwt } from './redux/actions/users';
+import Music from './pages/Music';
+import 'animate.css';
+
 import Dashboard from "./components/admin/Dashboard/Dashboard";
 import AdminIndex from "./components/admin/AdminIndex";
 import GetUsers from "./components/admin/User/GetUsers";
@@ -22,12 +31,6 @@ import GetAlbums from "./components/admin/Albums/GetAlbums";
 import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
 import Permission from "./components/admin/Permission/Permission";
 //Video
-import Index from "./pages/Index";
-import Home from "./components/Home/Home";
-import Video from "./components/Video/Video";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { loginUserWithJwt } from "./redux/actions/users";
 
 function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
@@ -39,14 +42,16 @@ function App() {
   }, []);
   return (
     <>
-      <Routes>
-        {/* public route */}
-        <Route path="/" element={<Index />}>
-          <Route index path="" element={<Home />} />
-          <Route path="video/:id" element={<Video />} />
-        </Route>
-        <Route path="/login" element={<LoginIndex />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+    <Routes>
+      {/* public route */}
+      <Route path='/' element={<Index/>}>
+        <Route index path='' element={<Home />} />
+        <Route path='video/:id' element={<Video />} />
+        <Route path='music' element={<Music />} />
+      </Route>
+      {/* <Route path='/music' element={<Music />}></Route> */}
+      <Route path='/login' element={<LoginIndex/>}/>
+      <Route path='/resetpassword' element={<ResetPassword/>}/>
 
         {/* protected route user */}
         <Route element={<RequireAuth allowedRole={[0, 1]} />}>

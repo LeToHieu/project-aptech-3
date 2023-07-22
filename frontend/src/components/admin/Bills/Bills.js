@@ -1,25 +1,26 @@
 import React, { useState } from "react";
 import AddPermission from "./AddPermission";
 import EditPermission from "./EditPermission";
+import { Edit } from "@mui/icons-material";
 function Permission() {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   return (
     <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
-      <AddPermission
+      <AddBills
         isOpen={isOpenAdd}
         closeModal={() => setIsOpenAdd(false)}
-      ></AddPermission>
-      <EditPermission
+      ></AddBills>
+      <EditBills
         isOpen={isOpenEdit}
         closeModal={() => setIsOpenEdit(false)}
-      ></EditPermission>
+      ></EditBills>
       <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
         <div class="rounded-t mb-0 px-4 py-3 border-0">
           <div class="flex flex-wrap items-center">
             <div class="relative w-full px-4 max-w-full flex-grow flex-1">
               <h3 class="font-semibold text-base text-blueGray-700">
-                Danh sách quản trị viên
+                Danh sách hoá đơn
               </h3>
             </div>
             <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -28,7 +29,7 @@ function Permission() {
                 type="button"
                 onClick={() => setIsOpenAdd(true)}
               >
-                Cấp quyền
+                Thêm hoá đơn
               </button>
             </div>
           </div>
@@ -41,7 +42,7 @@ function Permission() {
                   ID
                 </th>
                 <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Tên quản trị viên
+                  Tên khách hàng
                 </th>
                 <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Sửa

@@ -7,11 +7,23 @@
   -webkit-box-orient: vertical;
 }
 
+.text-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 /* Thiết lập chiều rộng và màu sắc cho thanh cuộn */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
   background-color: #f5f5f5;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 0 !important;
+  display: none; 
 }
 
 /* Thiết lập màu sắc cho phần thanh cuộn hiển thị */
@@ -20,18 +32,68 @@
   background-color: black;
 }
 
+.scroll-white::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: white;
+}
 /* Thiết lập màu sắc cho phần thanh cuộn hover */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #999;
 }
 
-
+input[type=range]{
+  -webkit-appearance: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 2px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 15px white;
+  border-radius: 50%;
+  background: white;
+}
 input[type="checkbox"] {
   display: none;
 }
-/* input[type="checkbox"][id="toggle"] {
-  display: none;
-} */
+
+
+.animate.fadeInUpBig {
+  animation-name: fadeInUpBig;
+  animation-duration: 0.5s;
+}
+
+.animate.fadeOutDownBig {
+  animation-name: fadeOutDownBig;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeInUpBig {
+  0% {
+    /* transform: translateY(0); */
+    opacity: 1;
+  }
+  100% {
+    /* transform: translateY(100%); */
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOutDownBig {
+  0% {
+    /* transform: translateY(0); */
+    opacity: 1;
+  }
+  100% {
+    /* transform: translateY(100%); */
+    opacity: 0 !important;
+  }
+}
+
 
 input[type="checkbox"][id="toggle"]:checked ~ .home .menu-1 {
   display: none;
@@ -68,4 +130,8 @@ input[type="checkbox"][id="show-desc"]:checked ~ .show::before {
   justify-content: center;
   color: black;
   font-weight: bold;
+}
+
+.flex-flow {
+  flex-flow: column wrap;
 }

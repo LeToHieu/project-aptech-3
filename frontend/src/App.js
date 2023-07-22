@@ -24,6 +24,9 @@ import Video from './components/Video/Video';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { loginUserWithJwt } from './redux/actions/users';
+import Music from './pages/Music';
+import 'animate.css';
+
 
 function App() {
   const jwt = localStorage.getItem('jwt') ?? null
@@ -40,7 +43,9 @@ function App() {
       <Route path='/' element={<Index/>}>
         <Route index path='' element={<Home />} />
         <Route path='video/:id' element={<Video />} />
+        <Route path='music' element={<Music />} />
       </Route>
+      {/* <Route path='/music' element={<Music />}></Route> */}
       <Route path='/login' element={<LoginIndex/>}/>
       <Route path='/resetpassword' element={<ResetPassword/>}/>
 

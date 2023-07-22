@@ -47,6 +47,11 @@ namespace MediaWebApi
             builder.Services.AddScoped<IArtistAlbumRepository, ArtistAlbumRepository>();
             //builder.Services.AddScoped<IArtistAlbumService, ArtistAlbumService>();
 
+            builder.Services.AddScoped<IArtistMediaRepository, ArtistMediaRepository>();
+
+            builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
+            builder.Services.AddScoped<IPromotionService, PromotionService>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -74,7 +79,7 @@ namespace MediaWebApi
             }
             app.UseCors(builder =>
             {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); 
             });
             app.UseHttpsRedirection();
 

@@ -135,6 +135,7 @@ CREATE TABLE Order_Detail(
 	order_id INT NOT NULL,
 	album_id INT,
 	media_id INT,
+    status_order BIT DEFAULT 0,
 	price DECIMAL(10,2) NOT NULL,
 	FOREIGN KEY (order_id) REFERENCES Orders(id),
 	FOREIGN KEY (album_id) REFERENCES Albums(id),
@@ -528,3 +529,36 @@ BEGIN
     WHERE Id = @id;
 	SELECT * FROM Promotions WHERE Id = @id
 END
+
+CREATE PROCEDURE UpdateOrder
+  @order_id INT,
+  @user_id INT,
+  @order_date DATETIME,
+  @total_amount DECIMAL(10, 2)
+AS
+BEGIN
+  UPDATE Orders
+  SET user_id = @user_id,
+      order_date = @order_date,
+      total_amount = @total_amount
+  WHERE Id = @order_id
+END;
+
+CREATE PROCEDURE SelectOrder
+  @order_id INT
+AS
+BEGIN
+  SELECT *
+  FROM Orders
+  WHERE Id = @order_id
+END;
+
+CREATE PROCEDURE InsertOrder
+  @user_id INT,
+  @order_date DATETIME,
+  @total_amount DECIMAL(10, 2)
+AS
+BEGIN
+  INSERT INTO Orders (user_id, order_date, total_amount)
+  VALUES (@user_id, @order_date, @total_amount)
+END;

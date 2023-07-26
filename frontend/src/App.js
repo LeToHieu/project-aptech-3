@@ -30,6 +30,7 @@ import GetArtists from "./components/admin/Artists/GetArtists";
 import GetAlbums from "./components/admin/Albums/GetAlbums";
 import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
 import Permission from "./components/admin/Permission/Permission";
+import Bills from "./components/admin/Bills/Bills"
 //Video
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
             <Route path="addMedia" element={<AddMedia />} />
           </Route>
           <Route path="permisson" element={<Permission />}></Route>
+          <Route path="bill" element={<Bills />}></Route>
         </Route>
 
         {/* catch all */}

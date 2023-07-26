@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import AddPermission from "./AddPermission";
-import EditPermission from "./EditPermission";
-import { Edit } from "@mui/icons-material";
-function Permission() {
+import AddBills from "./AddBills";
+import EditBills from "./EditBills";
+
+function Bills() {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   return (
@@ -45,11 +45,12 @@ function Permission() {
                   Tên khách hàng
                 </th>
                 <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Sửa
+                  Tên sản phẩm
                 </th>
                 <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Xoá
+                  Giá hoá đơn
                 </th>
+                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"></th>
               </tr>
             </thead>
 
@@ -61,13 +62,19 @@ function Permission() {
                 <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                   Trần Quang Phúc
                 </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                  Album nhạc Trịnh
+                </td>
+                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                  1.00$
+                </td>
                 <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                  onClick={() => setIsOpenEdit(true)}>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+                    onClick={() => setIsOpenEdit(true)}
+                  >
                     Edit
                   </button>
-                </td>
-                <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded">
                     Delete
                   </button>
@@ -81,4 +88,4 @@ function Permission() {
   );
 }
 
-export default Permission;
+export default Bills;

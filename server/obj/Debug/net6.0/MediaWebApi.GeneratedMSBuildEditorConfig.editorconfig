@@ -9,17 +9,9 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MediaWebApi
 build_property.RootNamespace = MediaWebApi
-<<<<<<< HEAD
-build_property.ProjectDir = e:\Template\manlly-song-movie\server\
-build_property.RazorLangVersion = 6.0
-build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = e:\Template\manlly-song-movie\server
-=======
 build_property.ProjectDir = d:\C2109L\project-aptech-3\project-aptech-3\server\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = d:\C2109L\project-aptech-3\project-aptech-3\server
->>>>>>> b055e3aed3c98b67d55e01c2307a33071fc35f01
 build_property._RazorSourceGeneratorDebug = 

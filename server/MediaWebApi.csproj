@@ -21,10 +21,12 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Uploads\Images\" />
+    <Folder Include="Uploads\Songs\" />
     <Folder Include="Uploads\Videos\" />
   </ItemGroup>
 

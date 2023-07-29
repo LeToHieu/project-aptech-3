@@ -34,6 +34,9 @@ namespace MediaWebApi.Models
         [ForeignKey("Categories")]
         [Column("category_id")]
         public int CategoryId { get; set; }
+        [Column("duration")]
+        public decimal Duration { get; set; } = decimal.Zero;
+
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }

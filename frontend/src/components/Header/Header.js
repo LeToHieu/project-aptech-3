@@ -5,6 +5,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import { useLocation } from 'react-router-dom';
 import {useNavigate} from "react-router-dom"
+import { useSelector } from 'react-redux';
+import Dropdown from '../dropdown/Dropdown'
 const Header = () => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false)
@@ -13,6 +15,7 @@ const Header = () => {
   const handleLogin = () => {
     navigate("/login");
   }
+  const {user} = useSelector(state => state.user)
   return (
     <>
     <div className={`header shadow-lg shadow-blue-500/50 z-20  pb-2 fixed w-full ${location === 'music' ? 'bg-black text-white' : 'bg-white'}`}>
@@ -38,6 +41,11 @@ const Header = () => {
               <SearchIcon fontSize="medium" />
             </label>
           </div>
+          {user ? 
+          <>
+            <Dropdown />
+          </>
+            :
           <button className='p-2 flex items-center gap-2 text-blue-400 rounded-lg shadow-lg shadow-blue-500/50 
             max-[640px]:gap-0
           '
@@ -45,6 +53,7 @@ const Header = () => {
             <PersonIcon />
             <span className='max-[640px]:text-xs'>Đăng nhập</span>
           </button>
+          }
         </div>
       </div>
       {toggle &&

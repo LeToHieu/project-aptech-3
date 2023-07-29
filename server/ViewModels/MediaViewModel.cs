@@ -22,6 +22,8 @@ namespace MediaWebApi.ViewModels
         [Required]
         public int CategoryId { get; set; }
 
+        public decimal Duration { get; set; } = decimal.Zero;
+
         public DateTime? Created_At { get; set; }
         public IFormFile? fileImage { get; set; }
         public IFormFile? fileVideo { get; set; }

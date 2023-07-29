@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LztsXuyphkzgLQZcgTRMx57CrHmpIzc72ugAbglNtuqSBbyc6F7oGrfqblPSeU0wN6X9s4K5iVSY0K1oFkDudQ==",
+  "dgSpecHash": "CIogQvR4NkCEm3SzKyFpfgBzyu6cKe9EKcKAgwgeu8zhadpFvI/Jv7ZRZXDldLOcIkHuzxjwai/fu/AOuuH5kA==",
   "success": true,
   "projectFilePath": "D:\\C2109L\\project-aptech-3\\project-aptech-3\\server\\MediaWebApi.csproj",
   "expectedPackageFiles": [
@@ -143,7 +143,8 @@
     "C:\\Users\\bomch\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\bomch\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512",
     "C:\\Users\\bomch\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\bomch\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
+    "C:\\Users\\bomch\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\bomch\\.nuget\\packages\\taglib-sharp-netstandard2.0\\2.1.0\\taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512"
   ],
   "logs": [
     {

@@ -73,7 +73,7 @@ namespace MediaWebApi.Controllers
         {
             try
             {
-                List<Media> medias = await _mediaService.GetAllMedia();
+                List<ArtistMedia> medias = await _mediaService.GetAllMedia();
                 return Ok(new
                 {
                     medias,
@@ -93,7 +93,7 @@ namespace MediaWebApi.Controllers
         {
             try
             {
-                Media media = await _mediaService.GetMediaById(id);
+                ArtistMedia media = await _mediaService.GetMediaById(id);
                 return Ok(new
                 {
                     media,

@@ -32,8 +32,9 @@ CREATE TABLE Categories(
 
 CREATE TABLE Artists(
 	Id INT NOT NULL IDENTITY PRIMARY KEY,
-	artist_name VARCHAR(255) NOT NULL,
-	description VARCHAR(255) NOT NULL,
+	artist_name NVARCHAR(255) NOT NULL,
+	artist_image VARCHAR(255),
+	description NVARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Albums (
@@ -48,11 +49,14 @@ CREATE TABLE Medias (
 	media_name VARCHAR(255) NOT NULL,
 	media_image VARCHAR(255),
 	media_url VARCHAR(255) NOT NULL,
+	duration DECIMAL(10,2),
 	price DECIMAL(10,2) NOT NULL DEFAULT 0,
 	category_id INT NOT NULL,
 	created_at DATETIME DEFAULT GETDATE(),
 	FOREIGN KEY (category_id) REFERENCES Categories(Id)
 );
+Alter table Medias Add duration DECIMAL(10,2);
+
 Alter table Medias ADD created_at DATETIME DEFAULT GETDATE();
 
 CREATE TABLE Artist_Album (
@@ -420,11 +424,12 @@ BEGIN
 END
 
 CREATE PROCEDURE InsertArtist
-    @artist_name VARCHAR(255),
-    @description VARCHAR(255)
+    @artist_name NVARCHAR(255),
+	@artist_image VARCHAR(255),
+    @description NVARCHAR(255)
 AS
 BEGIN
-    INSERT INTO Artists (artist_name, description) VALUES (@artist_name, @description);
+    INSERT INTO Artists (artist_name, artist_image, description) VALUES (@artist_name, @artist_image, @description);
 	SELECT * FROM Artists WHERE ID = @@IDENTITY
 END
 
@@ -465,20 +470,21 @@ CREATE PROCEDURE InsertMedia
 	@media_name VARCHAR(255),
 	@media_image VARCHAR(255),
 	@media_url VARCHAR(255),
+	@duration DECIMAL(10, 2),
 	@price DECIMAL(10,2),
 	@category_id INT
 AS
 BEGIN
-	INSERT INTO Medias (media_name, media_image, media_url, price, category_id)
-	VALUES (@media_name, @media_image, @media_url, @price, @category_id);
+	INSERT INTO Medias (media_name, media_image, media_url, duration, price, category_id)
+	VALUES (@media_name, @media_image, @media_url, @duration, @price, @category_id);
 	SELECT * FROM Medias WHERE ID = @@IDENTITY
 END;
-
 CREATE PROCEDURE UpdateMedia
 	@media_id INT,
 	@media_name VARCHAR(255),
 	@media_image VARCHAR(255),
 	@media_url VARCHAR(255),
+	@duration DECIMAL(10, 2),
 	@price DECIMAL(10,2),
 	@category_id INT
 AS
@@ -488,6 +494,7 @@ BEGIN
 		media_image = @media_image,
 		media_url = @media_url,
 		price = @price,
+		duration = @duration,
 		category_id = @category_id
 	WHERE ID = @media_id;
 	SELECT * FROM Medias WHERE ID = @media_id;
@@ -528,6 +535,44 @@ BEGIN
 	SELECT * FROM Promotions WHERE Id = @id
 END
 
+<<<<<<< HEAD
+select * from Artists
+
+select * from Medias
+
+select * from Artist_Media
+media_name			artist_name
+24						19 kix
+25						20 sơn tung
+23						21 khac viet
+21						22 đen
+22						23 hoang thuy linh
+26						20 son tung
+28						22
+29						20
+30						20
+INSERT INTO Artist_Media (artist_id, media_id) VALUES 
+(19, 24), (20, 25), (21, 23), (22, 21), (23,22), (20, 26);
+INSERT INTO Artist_Media (artist_id, media_id)
+VALUES (22, 28), (20, 29), (20, 30)
+
+SELECT * FROM Artists JOIN Artist_Media ON Artists.Id = Artist_Media.artist_id
+		JOIN Medias ON Medias.ID = Artist_Media.media_id
+
+SELECT artist_id, media_id, artist_name, artist_image, media_name, media_image, media_url FROM Artists JOIN Artist_Media ON Artists.Id = Artist_Media.artist_id
+		JOIN Medias ON Medias.ID = Artist_Media.media_id
+CREATE PROCEDURE GetArtistMedia
+AS
+BEGIN 
+	SELECT artist_id, media_id, artist_name, artist_image, media_name, media_image, media_url FROM Artists 
+			JOIN Artist_Media ON Artists.Id = Artist_Media.artist_id
+			JOIN Medias ON Medias.ID = Artist_Media.media_id
+END
+EXECUTE GetArtistMedia
+
+select * from Users
+
+=======
 CREATE PROCEDURE UpdateOrder
   @order_id INT,
   @user_id INT,
@@ -551,71 +596,4 @@ BEGIN
   INSERT INTO Orders (user_id, order_date, total_amount)
   VALUES (@user_id, @order_date, @total_amount)
 END;
-
-CREATE PROCEDURE InsertOrderDetail
-    @order_id INT,
-    @album_id INT,
-    @media_id INT,
-    @status_order BIT,
-    @price DECIMAL(10,2)
-AS
-BEGIN
-    INSERT INTO Order_Detail (order_id, album_id, media_id, status_order, price)
-    VALUES (@order_id, @album_id, @media_id, @status_order, @price);
-END;
-
-CREATE PROCEDURE UpdateOrderDetail
-    @Id INT,
-    @order_id INT,
-    @album_id INT,
-    @media_id INT,
-    @status_order BIT,
-    @price DECIMAL(10,2)
-AS
-BEGIN
-    UPDATE Order_Detail
-    SET order_id = @order_id,
-        album_id = @album_id,
-        media_id = @media_id,
-        status_order = @status_order,
-        price = @price
-    WHERE Id = @Id;
-END;
-
-CREATE PROCEDURE InsertPermission
-    @permission INT
-AS
-BEGIN
-    INSERT INTO Permissions (permission)
-    VALUES (@permission);
-END
-
-CREATE PROCEDURE UpdatePermission
-    @Id INT,
-    @permission INT
-AS
-BEGIN
-    UPDATE Permissions
-    SET permission = @permission
-    WHERE Id = @Id;
-END
-
-CREATE PROCEDURE InsertPermissionUser
-    @user_id INT,
-    @permission_id INT
-AS
-BEGIN
-    INSERT INTO Permission_User (user_id, permission_id)
-    VALUES (@user_id, @permission_id);
-END
-
-CREATE PROCEDURE UpdatePermissionUser
-    @user_id INT,
-    @permission_id INT
-AS
-BEGIN
-    UPDATE Permission_User
-    SET permission_id = @permission_id
-    WHERE user_id = @user_id;
-END
-
+>>>>>>> 38d6ea523e10762a5d40eaf633f01878d65ced1b

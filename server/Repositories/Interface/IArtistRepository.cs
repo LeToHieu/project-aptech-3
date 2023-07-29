@@ -10,5 +10,7 @@ namespace MediaWebApi.Repositories.Interface
         Task<Artist?> CreateArtist(ArtistViewModel artist);
         Task<bool?> UpdateArtist(Artist artist);
         Task<bool?> DeleteArtist(int id);
+        Task<string?> UpLoadFile(IFormFile file);
+
     }
 }

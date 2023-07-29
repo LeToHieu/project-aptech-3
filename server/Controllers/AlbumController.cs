@@ -1,5 +1,5 @@
 ﻿using MediaWebApi.Models;
-using MediaWebApi.Services;
+using MediaWebApi.Services.Interface;
 using MediaWebApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 

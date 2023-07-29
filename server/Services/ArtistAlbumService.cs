@@ -1,5 +1,6 @@
 ﻿using MediaWebApi.Models;
 using MediaWebApi.Repositories;
+using MediaWebApi.Services.Interface;
 
 namespace MediaWebApi.Services
 {

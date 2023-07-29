@@ -29,10 +29,8 @@ import GetCate from "./components/admin/Categories/GetCate";
 import GetArtists from "./components/admin/Artists/GetArtists";
 import GetAlbums from "./components/admin/Albums/GetAlbums";
 import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
-import Permission from "./components/admin/Permission/Permission";
 import Bills from "./components/admin/Bills/Bills"
-//Video
-
+import Feedback from "./components/admin/Feedback/Feedback"
 function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
@@ -78,8 +76,8 @@ function App() {
             <Route path="" element={<GetMedias />} />
             <Route path="addMedia" element={<AddMedia />} />
           </Route>
-          <Route path="permisson" element={<Permission />}></Route>
           <Route path="bill" element={<Bills />}></Route>
+          <Route path="report" element={<Feedback />}></Route>
         </Route>
 
         {/* catch all */}

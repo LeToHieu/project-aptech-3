@@ -4,49 +4,73 @@ import CloseIcon from "@mui/icons-material/Close";
 function AddBills({ isOpen, closeModal }) {
   return (
     <div
-      className={`modal ${
+      className={`fixed inset-0 z-10 flex items-center justify-center ${
         isOpen ? "" : "hidden"
-      }  place-content-center fixed z-10 inset-0 flex`}
+      }`}
       style={{
-        backgroundColor: "gray",
-        width: "100%",
-        height: "100%",
-        background: "rgba(0,0,0,0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
       }}
     >
-      <div className="rounded-lg bg-white lg:min-w-[40rem] h-[20rem] min-h-[4rem] mt-5">
-        <div className="flex rounded-t-lg bg-slate-300 h-[2.25rem] items-center justify-between px-3">
-          <div className="flex justify-end">Add Categories</div>
-          <CloseIcon
-            className="justify-end float-right hover:opacity-50 cursor-pointer"
-            onClick={closeModal}
-          />
-        </div>
+      <div
+        id="section2"
+        className="p-8 mt-6 lg:mt-0 rounded shadow bg-white relative"
+      >
+        <CloseIcon
+          className="absolute top-2 right-2 hover:opacity-50 cursor-pointer"
+          onClick={closeModal}
+        />
 
-        <div className="">
-          <div className="flex px-2">
-            <label className="flex w-[7rem] justify-start items-center">
-              Name:{" "}
-            </label>
-            <input
-              className="w-[80%] rounded-md h-[2rem] border-2 border-black-600 hover:border-blue-300 m-3"
-              placeholder="Categories Name"
-            ></input>
+        <form>
+          <div className="md:flex mb-6">
+          <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Text Field
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
           </div>
-          <div className="flex px-2">
-            <label className=" flex w-[7rem] pt-3 justify-start">
-              Description:{" "}
-            </label>
-            <textarea
-              className="w-[80%] h-[8rem] rounded-md h-[2rem] border-2 border-black-600 hover:border-blue-300 m-3"
-              placeholder="Categories Description"
-            ></textarea>
-          </div>
-        </div>
 
-        <button className="mt-3 mx-5 float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Submit
-        </button>
+          <div className="md:flex mb-6">
+          <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4"
+                for="my-textarea"
+              >
+                Text Area
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <textarea
+                class="form-textarea block w-full focus:bg-white"
+                id="my-textarea"
+                value=""
+                rows="8"
+              ></textarea>
+            </div>
+          </div>
+
+          <div className="md:flex md:items-center">
+            <div className="md:w-1/3"></div>
+            <div className="md:w-2/3">
+              <button
+                className="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );

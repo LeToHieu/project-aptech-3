@@ -11,37 +11,66 @@ function EditBills({ isOpen, closeModal }) {
         backgroundColor: "rgba(0, 0, 0, 0.5)",
       }}
     >
-      <div className="bg-white rounded-lg shadow-lg lg:min-w-[40rem] h-[20rem] min-h-[4rem]">
-        <div className="flex items-center justify-between px-3 py-2 bg-slate-300 rounded-t-lg">
-          <div className="text-xl font-bold">Thêm hoá đơn</div>
-          <CloseIcon
-            className="text-gray-600 hover:text-gray-800 cursor-pointer"
-            onClick={closeModal}
-          />
-        </div>
+      <div
+        id="section2"
+        className="p-8 mt-6 lg:mt-0 rounded shadow bg-white relative"
+      >
+        <CloseIcon
+          className="absolute top-2 right-2 hover:opacity-50 cursor-pointer"
+          onClick={closeModal}
+        />
 
-        <div className="p-4">
-          <div className="flex mb-4">
-            <label className="w-[7rem] flex-shrink-0">Name: </label>
-            <input
-              className="flex-1 ml-3 px-4 py-2 border-2 border-black-600 rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
-              placeholder="Categories Name"
-            />
+        <form>
+          <div className="md:flex mb-6">
+          <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Text Field
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
           </div>
-          <div className="flex">
-            <label className="w-[7rem] flex-shrink-0">Description: </label>
-            <textarea
-              className="flex-1 ml-3 px-4 py-2 border-2 border-black-600 rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
-              placeholder="Categories Description"
-            />
-          </div>
-        </div>
 
-        <div className="flex justify-end px-4 py-2">
-          <button className="px-4 py-2 text-white font-bold bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
-            Submit
-          </button>
-        </div>
+          <div className="md:flex mb-6">
+          <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4"
+                for="my-textarea"
+              >
+                Text Area
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <textarea
+                class="form-textarea block w-full focus:bg-white"
+                id="my-textarea"
+                value=""
+                rows="8"
+              ></textarea>
+            </div>
+          </div>
+
+          <div className="md:flex md:items-center">
+            <div className="md:w-1/3"></div>
+            <div className="md:w-2/3">
+              <button
+                className="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );

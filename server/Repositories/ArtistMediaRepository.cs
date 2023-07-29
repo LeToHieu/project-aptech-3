@@ -1,4 +1,5 @@
 ﻿using MediaWebApi.Models;
+using MediaWebApi.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaWebApi.Repositories

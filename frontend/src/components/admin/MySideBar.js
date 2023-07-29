@@ -113,20 +113,6 @@ const SideBar = () => {
           <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
             <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
               <Link
-                to="permisson"
-                className={`${
-                  location === "permisson" ? "font-bold" : "hover:font-bold"
-                } flex items-center gap-[10px]`}
-              >
-                <PermIdentityIcon style={{ color: "white" }} />
-                <p className="text-[14px] leading-[20px] text-white">Permission</p>
-              </Link>
-            </div>
-          </div>
-
-          <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
-            <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
-              <Link
                 to="bill"
                 className={`${
                   location === "bill" ? "font-bold" : "hover:font-bold"
@@ -134,20 +120,6 @@ const SideBar = () => {
               >
                 <RequestQuoteIcon style={{ color: "white" }} />
                 <p className="text-[14px] leading-[20px] text-white">Bills</p>
-              </Link>
-            </div>
-          </div>
-
-          <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
-            <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
-              <Link
-                to="order"
-                className={`${
-                  location === "order" ? "font-bold" : "hover:font-bold"
-                } flex items-center gap-[10px]`}
-              >
-                <ReorderIcon style={{ color: "white" }} />
-                <p className="text-[14px] leading-[20px] text-white">Orders</p>
               </Link>
             </div>
           </div>
@@ -180,19 +152,6 @@ const SideBar = () => {
             </div>
           </div>
 
-          <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
-            <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
-              <Link
-                to="rating"
-                className={`${
-                  location === "rating" ? "font-bold" : "hover:font-bold"
-                } flex items-center gap-[10px]`}
-              >
-                <GradeIcon style={{ color: "white" }} />
-                <p className="text-[14px] leading-[20px] text-white">Rating</p>
-              </Link>
-            </div>
-          </div>
           <div className="pt-[15px]">
             <div className="flex items-center justify-center">
               <div className="h-[40px] w-[40px] bg-[#3C5EC1] rounded-full flex items-center justify-center cursor-pointer">

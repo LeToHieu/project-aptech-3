@@ -1,9 +1,9 @@
 ﻿using MediaWebApi.Models;
-using MediaWebApi.Services;
 using MediaWebApi.ViewModels;
 using MediaWebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using MediaWebApi.Extensions;
+using MediaWebApi.Services.Interface;
 
 namespace MediaWebApi.Controllers
 {

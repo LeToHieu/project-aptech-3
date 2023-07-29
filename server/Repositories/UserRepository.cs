@@ -1,4 +1,5 @@
 ﻿using MediaWebApi.Models;
+using MediaWebApi.Repositories.Interface;
 using MediaWebApi.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

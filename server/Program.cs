@@ -1,6 +1,8 @@
 using MediaWebApi.Models;
 using MediaWebApi.Repositories;
+using MediaWebApi.Repositories.Interface;
 using MediaWebApi.Services;
+using MediaWebApi.Services.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +48,15 @@ namespace MediaWebApi
 
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+
+            builder.Services.AddScoped<IOrder_DetailRepository, Order_DetailRepository>();
+            builder.Services.AddScoped<IOrder_DetailService, Order_DetailService>();
+
+            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+            builder.Services.AddScoped<IPermissionService, PermissionService>();
+
+            builder.Services.AddScoped<IPermission_UserRepository, Permission_UserRepository>();
+            builder.Services.AddScoped<IPermission_UserService, Permission_UserService>();
 
             builder.Services.AddScoped<IArtistAlbumRepository, ArtistAlbumRepository>();
             //builder.Services.AddScoped<IArtistAlbumService, ArtistAlbumService>();

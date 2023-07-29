@@ -1,5 +1,5 @@
 ﻿using MediaWebApi.Models;
-using MediaWebApi.Repositories;
+using MediaWebApi.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

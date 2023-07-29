@@ -11,10 +11,9 @@ CREATE TABLE Users(
 	role INT NOT NULL DEFAULT 0,
 );
 
-
 CREATE TABLE Permissions(
 	Id INT NOT NULL IDENTITY PRIMARY KEY,
-	permission_name VARCHAR(255) NOT NULL,
+	permission INT NOT NULL DEFAULT 0, 
 );
 
 CREATE TABLE Permission_User(
@@ -55,7 +54,6 @@ CREATE TABLE Medias (
 	FOREIGN KEY (category_id) REFERENCES Categories(Id)
 );
 Alter table Medias ADD created_at DATETIME DEFAULT GETDATE();
-SELECT * FROM Medias;
 
 CREATE TABLE Artist_Album (
 	artist_id INT NOT NULL,
@@ -382,13 +380,13 @@ CREATE PROCEDURE RegisterUser
     @Email VARCHAR(255)
 AS
 BEGIN
-    INSERT INTO Users (username, userimage, password, phone, email)
-    VALUES (@Username, @UserImage, @Password, @Phone, @Email);
+    INSERT INTO Users (username, userimage, password, phone, email, role)
+    VALUES (@Username, @UserImage, @Password, @Phone, @Email, 0);
 	SELECT * FROM Users WHERE Id = @@IDENTITY;
 END
 
 EXEC RegisterUser 'cuong', 'image', 'cuong123', '01234567', 'cuong@gmail.com';
-SELECT * FROM Users
+SELECT * FROM Users;
 
 
 CREATE PROCEDURE loginUser
@@ -544,15 +542,6 @@ BEGIN
   WHERE Id = @order_id
 END;
 
-CREATE PROCEDURE SelectOrder
-  @order_id INT
-AS
-BEGIN
-  SELECT *
-  FROM Orders
-  WHERE Id = @order_id
-END;
-
 CREATE PROCEDURE InsertOrder
   @user_id INT,
   @order_date DATETIME,
@@ -562,3 +551,71 @@ BEGIN
   INSERT INTO Orders (user_id, order_date, total_amount)
   VALUES (@user_id, @order_date, @total_amount)
 END;
+
+CREATE PROCEDURE InsertOrderDetail
+    @order_id INT,
+    @album_id INT,
+    @media_id INT,
+    @status_order BIT,
+    @price DECIMAL(10,2)
+AS
+BEGIN
+    INSERT INTO Order_Detail (order_id, album_id, media_id, status_order, price)
+    VALUES (@order_id, @album_id, @media_id, @status_order, @price);
+END;
+
+CREATE PROCEDURE UpdateOrderDetail
+    @Id INT,
+    @order_id INT,
+    @album_id INT,
+    @media_id INT,
+    @status_order BIT,
+    @price DECIMAL(10,2)
+AS
+BEGIN
+    UPDATE Order_Detail
+    SET order_id = @order_id,
+        album_id = @album_id,
+        media_id = @media_id,
+        status_order = @status_order,
+        price = @price
+    WHERE Id = @Id;
+END;
+
+CREATE PROCEDURE InsertPermission
+    @permission INT
+AS
+BEGIN
+    INSERT INTO Permissions (permission)
+    VALUES (@permission);
+END
+
+CREATE PROCEDURE UpdatePermission
+    @Id INT,
+    @permission INT
+AS
+BEGIN
+    UPDATE Permissions
+    SET permission = @permission
+    WHERE Id = @Id;
+END
+
+CREATE PROCEDURE InsertPermissionUser
+    @user_id INT,
+    @permission_id INT
+AS
+BEGIN
+    INSERT INTO Permission_User (user_id, permission_id)
+    VALUES (@user_id, @permission_id);
+END
+
+CREATE PROCEDURE UpdatePermissionUser
+    @user_id INT,
+    @permission_id INT
+AS
+BEGIN
+    UPDATE Permission_User
+    SET permission_id = @permission_id
+    WHERE user_id = @user_id;
+END
+

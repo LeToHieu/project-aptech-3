@@ -45,6 +45,9 @@ namespace MediaWebApi
             builder.Services.AddScoped<IMediaRepository, MediaRepository>();
             builder.Services.AddScoped<IMediaService, MediaService>();
 
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+
             builder.Services.AddScoped<IArtistAlbumRepository, ArtistAlbumRepository>();
             //builder.Services.AddScoped<IArtistAlbumService, ArtistAlbumService>();
 

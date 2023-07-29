@@ -14,6 +14,7 @@ namespace MediaWebApi.Models
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Album> Albums { get; set; }
         public DbSet<Media> Medias { get; set; }
+        public DbSet<Orders> Orders { get; set; }
         public DbSet<ArtistAlbum> ArtistAlbums { get; set; }
         public DbSet<ArtistMedia> ArtistMedias { get; set; }
         public DbSet<Promotion> Promotions { get; set; }

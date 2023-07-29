@@ -15,7 +15,7 @@ namespace MediaWebApi.Repositories
 
         public async Task<Promotion?> CreatePromotion(PromotionViewModal promotion)
         {
-            string sql = "EXECUTE InsertPromotion @promotion_name, @discount, @description, @start_date, @end_date";
+            string sql = "EXECUTE Insert Promotion @promotion_name, @discount, @description, @start_date, @end_date";
             IEnumerable<Promotion> result = await _context.Promotions.FromSqlRaw(sql,
                                     new SqlParameter("@promotion_name", promotion.PromotionName),
                                     new SqlParameter("@discount", promotion.Discount),

@@ -31,6 +31,7 @@ import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
 import Permission from "./components/admin/Permission/Permission";
 import { usersError, usersStart, usersSuccess } from "./redux/reducer/users";
 import axios from "./api/axios";
+import Bills from "./components/admin/Bills/Bills"
 //Video
 
 function App() {
@@ -95,6 +96,7 @@ function App() {
             <Route path="addMedia" element={<AddMedia />} />
           </Route>
           <Route path="permisson" element={<Permission />}></Route>
+          <Route path="bill" element={<Bills />}></Route>
         </Route>
 
         {/* catch all */}

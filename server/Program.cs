@@ -3,6 +3,7 @@ using MediaWebApi.Repositories;
 using MediaWebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace MediaWebApi
 {
@@ -82,6 +83,13 @@ namespace MediaWebApi
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); 
             });
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(builder.Environment.ContentRootPath, "Uploads")),
+                RequestPath = "/Resources"
+            });
 
             app.UseAuthorization();
 

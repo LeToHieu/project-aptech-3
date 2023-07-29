@@ -15,7 +15,7 @@ namespace MediaWebApi.Controllers
             _artistService = artistService;
         }
         [HttpPost("add")]
-        public async Task<IActionResult> CreateArtist(ArtistViewModel artist)
+        public async Task<IActionResult> CreateArtist([FromForm] ArtistViewModel artist)
         {
             try
             {

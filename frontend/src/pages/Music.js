@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Tag from "../components/Tag/Tag";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import ThumbDownRoundedIcon from "@mui/icons-material/ThumbDownRounded";
@@ -11,6 +11,7 @@ import { chooseMusic, showMusic, playOrPause, showCurrentTime } from "../redux/r
 import au from "../assets/audio.mp3";
 import au2 from "../assets/audio2.mp3";
 import au3 from "../assets/audio3.mp3";
+import axios from "../api/axios";
 const Music = () => {
   const [musics, setMusics] = useState([])
   const {music, isMusic } = useSelector((state) => state.config);
@@ -44,27 +45,70 @@ const Music = () => {
     if (hours == 0) return `${minutes}:${seconds}`
     return `${hours}:${minutes}:${seconds}`
   }
-  const getDuration = (src) => {
-      return new Promise(function(resolve) {
-          var audio = new Audio();
-          audio.addEventListener("loadedmetadata", function(){
-              resolve(audio.duration);
-          });
-          audio.src = src;
-      });
-  }
+  // const getDuration = (src) => {
+  //     return new Promise(function(resolve) {
+  //         var audio = new Audio();
+  //         audio.addEventListener("loadedmetadata", function(){
+  //             resolve(audio.duration);
+  //         });
+  //         audio.src = src;
+  //     });
+  // }
+  // useEffect(async () => {
+  //   const {data} = await axios.get('/media', {
+  //     headers: 
+  //       {
+  //         "Content-Type": "application/json",
+  //       }
+  //   }) 
+  //   setMusics(data.medias)
+  // }, [])
+
+  // useEffect(() => {
+  //   Promise.all(music.map(audio => {
+  //     return getDuration(audio.media_url).then(duration => {
+  //       audio.duration = duration;
+  //       audio.currentTime = 0
+  //       return audio;
+  //     });
+  //   })).then(newMusics => {
+  //     setMusics(newMusics);
+  //   });
+  // }, []);
+  // const getDuration = useCallback(async (mediaUrl) => {
+  //   // TODO: Tối ưu phương thức getDuration.
+  //   // Ví dụ: sử dụng bộ đệm để lưu trữ thông tin của các file audio đã được tải trước đó.
+  //   const audio = new Audio(mediaUrl);
+  //   await audio.load();
+  //   return audio.duration;
+  // }, []);
   useEffect(() => {
-    Promise.all(audioList.map(audio => {
-      return getDuration(audio.media_url).then(duration => {
-        audio.duration = duration;
-        audio.currentTime = 0
-        return audio;
+    async function loadMusics() {
+      const { data } = await axios.get('/media', {
+        headers: {
+          "Content-Type": "application/json",
+        }
       });
-    })).then(newMusics => {
-      setMusics(newMusics);
-    });
+      setMusics(data.medias);
+    }
+    loadMusics();
   }, []);
-  console.log(music?.currentTime);
+
+  // const memoizedMusics = useMemo(() => {
+  //   return musics.map((music) => ({ ...music }));
+  // }, [musics]);
+
+  // useEffect(() => {
+  //   Promise.all(memoizedMusics.map((audio) => {
+  //     return getDuration(audio.media_url).then((duration) => {
+  //       audio.duration = duration;
+  //       audio.currentTime = 0;
+  //       return audio;
+  //     });
+  //   })).then((newMusics) => {
+  //     setMusics(newMusics);
+  //   });
+  // }, [memoizedMusics, getDuration]);
 
   return (
     <>
@@ -160,21 +204,21 @@ const Music = () => {
                         <PlayArrowRoundedIcon />
                       </div>
                       <img
-                        src={music?.media_image}
+                        src={"https://localhost:7023/resources/" + music?.media.mediaImage}
                         alt=""
                         className="w-12 h-12 group-hover:brightness-50"
                       />
                     </div>
                     <div className="">
-                      <p className="font-bold">Đen</p>
+                      <p className="font-bold text-1">{music?.media.mediaName}</p>
                       <p className="flex gap-2 items-center">
                         <span className="block text-gray-400 min-w-10 text-1">
-                          Son Tung MTP{" "}
+                        {music.artist.artistName}
                         </span>
-                        <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
+                        {/* <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
                         <span className="block text-gray-400 min-w-10 text-1">
                           Son Tung MTP{" "}
-                        </span>
+                        </span> */}
                       </p>
                     </div>
                     <div className="items-center gap-5 flex-1 justify-between px-5 hidden group-hover:flex ">
@@ -221,7 +265,7 @@ const Music = () => {
             <source src=''></source>
           </video> */}
           <img
-            src={music?.media_image}
+            src={"https://localhost:7023/resources/" + music?.media.mediaImage}
             alt=""
             className={`video h-[200px] w-full group-hover:brightness-50`}
           />
@@ -252,7 +296,7 @@ const Music = () => {
               </div>
               <div>
                 <img
-                  src={music?.media_image}
+                  src={"https://localhost:7023/resources/" + music?.media.mediaImage}
                   alt=""
                   className={`h-[90%] animate__animated ${
                     isMusic ? "animate animate__fadeInBottomRight" : ""
@@ -282,26 +326,26 @@ const Music = () => {
                         <PlayArrowRoundedIcon sx={{ color: "white" }} />
                       </div>
                       <img
-                        src={music?.media_image}
+                        src={"https://localhost:7023/resources/" + music.media.mediaImage}
                         alt=""
                         className="w-12 h-12 group-hover:brightness-50"
                       />
                     </div>
                     <div className="">
-                      <p className="font-bold text-white">Đen</p>
+                      <p className="font-bold text-white">{music.media.mediaName}</p>
                       <p className="flex gap-2 items-center">
                         <span className="block text-gray-400 min-w-10 text-1">
-                          Son Tung MTP{" "}
+                          {music.artist.artistName}
                         </span>
-                        <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
+                        {/* <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
                         <span className="block text-gray-400 min-w-10 text-1">
                           Son Tung MTP{" "}
-                        </span>
+                        </span> */}
                       </p>
                     </div>
                     <div className="items-center gap-5 flex-1 justify-between px-5 flex group-hover:hidden ">
                       <div className="w-9 h-9 flex items-center justify-center rounded-full ml-auto text-white">
-                        {formatTime(music?.duration)}
+                        {formatTime(music?.media.duration)}
                       </div>
                     </div>
                     <div className="items-center gap-5 flex-1 justify-between px-5 hidden group-hover:flex ">

@@ -43,7 +43,7 @@ const Index = () => {
     const span = document.getElementById("audio-player");
     const audio = new Audio();
     if (music) {
-      audio.src = music.media_url
+      audio.src = 'https://localhost:7023/resources/' + music.media.mediaUrl
       // Xóa đối tượng audio cũ (nếu có)
       const oldAudio = span.querySelector("audio");
       if (oldAudio) {
@@ -87,7 +87,7 @@ const Index = () => {
         <Menu />
         <div
           className={`home-container flex-[5] ${
-            location === "music" ? "h-full" : " pl-2 py-5"
+            location === "music" ? "h-full" : " pl-2 py-5 overflow-auto"
           } max-sm:pl-1 w-full mt-[11vh] relative`}
         >
           <Outlet />
@@ -96,7 +96,7 @@ const Index = () => {
       {music && (
         <>
           <div className="z-30 h-[3px] w-full absolute bottom-16 bg-gray-400 group" ref={width} onClick={handleTimeLine}>
-            <div style={{ width: `${currentTime/music.duration * 100}%` }}  className="relative h-full bg-red-600 before:w-3 before:h-3 before:-bottom-1 before:right-0 before:bg-red-600 group-hover:before:absolute before:rounded-full"></div>
+            <div style={{ width: `${currentTime/music.media.duration * 100}%` }}  className="relative h-full bg-red-600 before:w-3 before:h-3 before:-bottom-1 before:right-0 before:bg-red-600 group-hover:before:absolute before:rounded-full"></div>
           </div>
         <div className="z-20 absolute bottom-0 bg-zinc-800 h-16 w-full flex items-center">
           <span id="audio-player">
@@ -118,28 +118,28 @@ const Index = () => {
             <div>
               <SkipNextRoundedIcon sx={{ color: "white", fontSize: 30 }} />
             </div>
-            <div className="text-gray-400 text-xs">{formatTime(currentTime)} / {formatTime(music.duration)}</div>
+            <div className="text-gray-400 text-xs">{formatTime(currentTime)} / {formatTime(music.media.duration)}</div>
           </div>
           <div className="flex-1">
             <label htmlFor="music-toggle">
               <div className="flex gap-2 w-fit shrink-0 py-2 pr-5 cursor-pointer mx-auto">
                 <div className="relative shrink-0">
                   <img
-                    src={music.media_image}
+                    src={"https://localhost:7023/resources/" + music.media.mediaImage}
                     alt=""
                     className="w-12 h-12"
                   />
                 </div>
                 <div className="">
-                  <p className="font-bold text-white">Đen</p>
+                  <p className="font-bold text-white">{music.artist.artistName}</p>
                   <p className="flex gap-2 items-center">
                     <span className="block text-gray-400 min-w-10 text-1">
-                      Son Tung MTP{" "}
+                      {music.media.mediaName}
                     </span>
-                    <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
+                    {/* <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
                     <span className="block text-gray-400 min-w-10 text-1">
                       Son Tung MTP{" "}
-                    </span>
+                    </span> */}
                   </p>
                 </div>
                 <div className="items-center gap-5 flex-1 justify-between px-5 flex ">

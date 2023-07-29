@@ -16,9 +16,11 @@ namespace MediaWebApi.Services
         {
             var urlImage = await _mediaRepository.UpLoadFile(media.fileImage);
             var urlVideo = await _mediaRepository.UpLoadFile(media.fileVideo);
+            var duration = await _mediaRepository.GetDuration("uploads/" + urlVideo);
 
             media.MediaImage = urlImage;
             media.MediaUrl = urlVideo;
+            media.Duration = duration;
             return await _mediaRepository.AddMedia(media);
         }
 
@@ -33,12 +35,12 @@ namespace MediaWebApi.Services
             return await _mediaRepository.DeleteMedia(id);
         }
 
-        public async Task<List<Media?>?> GetAllMedia()
+        public async Task<List<ArtistMedia?>?> GetAllMedia()
         {
             return await _mediaRepository.GetAllMedia();
         }
 
-        public async Task<Media?> GetMediaById(int id)
+        public async Task<ArtistMedia?> GetMediaById(int id)
         {
             return await _mediaRepository.GetMediaById(id);
         }

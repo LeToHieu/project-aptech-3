@@ -18,7 +18,6 @@ import Home from './components/Home/Home';
 import Video from './components/Video/Video';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
-import { loginUserWithJwt } from './redux/actions/users';
 import Music from './pages/Music';
 import 'animate.css';
 
@@ -30,16 +29,34 @@ import GetArtists from "./components/admin/Artists/GetArtists";
 import GetAlbums from "./components/admin/Albums/GetAlbums";
 import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
 import Permission from "./components/admin/Permission/Permission";
+import { usersError, usersStart, usersSuccess } from "./redux/reducer/users";
+import axios from "./api/axios";
 //Video
 
 function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
   useEffect(() => {
-    if (jwt) {
-      loginUserWithJwt(jwt, dispatch);
+    const loginUserWithJwt = async () => {
+      dispatch(usersStart())     
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + jwt
+        }
+      }
+      try{
+        const {data} = await axios.post('user/loginWithJwt', "", config)
+        console.log(data);
+        dispatch(usersSuccess(data.user))
+      }catch (e) {
+        console.log(e.message);
+        dispatch(usersError(e.message))
+      }
     }
-  }, []);
+    if (jwt) {
+      loginUserWithJwt();
+    }
+  }, [jwt]);
   return (
     <>
     <Routes>

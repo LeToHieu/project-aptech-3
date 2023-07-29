@@ -30,8 +30,8 @@ const loginUserWithJwt = async (jwt, dispatch) => {
     console.log(json);
     // dispatch('usersSuccess')
   } catch (error) {
-    console.log(error);
-    dispatch(usersError(),)
+    // console.log(error);
+    // dispatch(usersError(error))
   }
 }
 

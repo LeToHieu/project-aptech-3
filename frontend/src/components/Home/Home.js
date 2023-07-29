@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Tag from "../Tag/Tag";
 import Card from "../Card/Card";
+import axios from "../../api/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getList } from "../../redux/reducer/video";
 
 const Home = () => {
+  // const [videos, setVideos] = useState([])
+  const dispatch = useDispatch()
+  const {listVideos} = useSelector(state => state.video)
+  useEffect(() => {
+    async function loadVideos() {
+      let { data } = await axios.get('/media', {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      data.medias = data.medias.filter(video => video.media.mediaUrl.includes("Videos"))
+      dispatch(getList(data.medias))
+      // setVideos(data.medias);
+    }
+    loadVideos();
+  }, []);
+  // console.log(videos);
   return (
     <>
       <div className="top flex items-center gap-5 h-[8%] max-lg:overflow-x-auto w-full overflow-hidden">
@@ -23,24 +43,11 @@ const Home = () => {
 
                     `}
         >
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {listVideos.map((video, index) => {
+            return (
+              <Card video = {video} />
+            )
+          })}
         </div>
       </div>
     </>

@@ -1,9 +1,10 @@
 import "./Login.css";
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import AuthContext from "../../context/AuthProvider";
 import axios from '../../api/axios';
 import {toast} from 'react-toastify'
 import { useLocation, Navigate, Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const LOGIN_URL = 'user/login';
 
@@ -12,7 +13,7 @@ const Login = (props) => {
   const navigate = useNavigate();
   const loaction = useLocation();
   const from = loaction.state?.from?.pathname ?? "/";
-
+  const {user } = useSelector(state => state.user)
   const { setAuth } = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
@@ -48,6 +49,11 @@ const Login = (props) => {
   //     }
   //   }
   // }
+  useEffect(()=> {
+    if (user) {
+      navigate('/')
+    }
+  }, [user])
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = {
@@ -60,7 +66,8 @@ const Login = (props) => {
     try {
       const response =  await axios.post(LOGIN_URL, user ,config)
       localStorage.setItem('jwt', response.data.jwt)
-      console.log(response.data);
+      navigate('/')
+      window.location.reload()
     } catch (error) {
       console.log(error.message);
     }

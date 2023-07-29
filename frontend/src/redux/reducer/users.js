@@ -20,16 +20,17 @@ export const userSlice = createSlice({
       state.error = action.payload
     },
     usersSuccess: (state, action) => {
-      state.user = action.payload.user
+      state.user = action.payload
       state.loading = false
       state.error = ''
-      state.role = action.payload.user.role
+      state.role = action.payload.role
     },
     usersRegisterSuccess: (state) => {
       state.loading = false
     },
     userLogOut: (state) => {
-      state = initialState
+      localStorage.removeItem('jwt')
+      state.user = null
     },
     userLogIn: (state, action) => {
       state.user = action.payload

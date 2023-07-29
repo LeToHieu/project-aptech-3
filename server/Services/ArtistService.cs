@@ -18,6 +18,8 @@ namespace MediaWebApi.Services
             {
                 throw new ArgumentException("Artist name must be required");
             }
+            var path = await _artistRepository.UpLoadFile(artist.file);
+            artist.ArtistImage = path;
             return await _artistRepository.CreateArtist(artist);
         }
 

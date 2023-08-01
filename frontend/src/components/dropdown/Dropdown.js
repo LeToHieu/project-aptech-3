@@ -8,14 +8,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example({setIsOpenCart}) {
+export default function Example() {
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(userLogOut())
     } 
     const handleCart = () => {
-      setIsOpenCart(true)
+      
     }
   return (
     <Menu as="div" className="relative inline-block text-left">

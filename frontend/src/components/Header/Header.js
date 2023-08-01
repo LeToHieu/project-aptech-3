@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import {useNavigate} from "react-router-dom"
 import { useSelector } from 'react-redux';
 import Dropdown from '../dropdown/Dropdown'
-const Header = ({setIsOpenCart}) => {
+const Header = () => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false)
   const location = useLocation().pathname.split('/')[1]
@@ -43,7 +43,7 @@ const Header = ({setIsOpenCart}) => {
           </div>
           {user ? 
           <>
-            <Dropdown setIsOpenCart={setIsOpenCart}/> 
+            <Dropdown/> 
           </>
             :
           <button className='p-2 flex items-center gap-2 text-blue-400 rounded-lg shadow-lg shadow-blue-500/50 

@@ -75,6 +75,31 @@ namespace MediaWebApi.Controllers
             try
             {
                 List<Orders> order = await _orderService.GetAllOrder();
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var json = JsonConvert.SerializeObject(order, settings);
+                return Ok(new
+                {
+                    json,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    status = false,
+                });
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrderById(int id)
+        {
+            try
+            {
+                Orders order = await _orderService.GetOrderById(id);
                 return Ok(new
                 {
                     order,

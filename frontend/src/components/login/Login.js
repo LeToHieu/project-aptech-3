@@ -62,13 +62,13 @@ const Login = (props) => {
       }
     }
     let user = JSON.stringify({ username: email, password })
-    console.log(user);
     try {
       const response =  await axios.post(LOGIN_URL, user ,config)
       localStorage.setItem('jwt', response.data.jwt)
       navigate('/')
       window.location.reload()
     } catch (error) {
+      toast.error("Tài khoản không hợp lệ");
       console.log(error.message);
     }
 
@@ -79,7 +79,7 @@ const Login = (props) => {
         <div className="field">
           <input 
             type="text" 
-            placeholder="Usser name" 
+            placeholder="User name" 
             required  
             value={email}
             onChange={(e)=>setEmail(e.target.value)}  

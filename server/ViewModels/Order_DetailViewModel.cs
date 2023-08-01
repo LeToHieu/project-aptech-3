@@ -1,21 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using MediaWebApi.Models;
+
 namespace MediaWebApi.ViewModels
 {
     public class Order_DetailViewModel
     {
-        public int Id { get; set; }
 
         [Required]        
-        public int order_id { get; set; }
+        public int OrderId { get; set; }
 
-        public int album_id { get; set; }
+        public int? AlbumId { get; set; }
 
-        public int media_id { get; set; }
-
-        public byte? status_order { get; set; } = 0;
+        public int? MediaId { get; set; }
 
         [Required]
-        public decimal? price { get; set; } = decimal.Zero;
+        public decimal? Price { get; set; } = decimal.Zero;
+        
     }
 }

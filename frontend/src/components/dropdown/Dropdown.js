@@ -3,17 +3,20 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useDispatch } from 'react-redux'
 import { userLogOut } from '../../redux/reducer/users'
-
+import React, { useEffect, useState } from "react";
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Example({setIsOpenCart}) {
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(userLogOut())
     } 
+    const handleCart = () => {
+      setIsOpenCart(true)
+    }
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -35,43 +38,19 @@ export default function Example() {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                  <button
+                  type="submit"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
+                    'block w-full px-4 py-2 text-left text-sm'
                   )}
+                  onClick={handleCart}
                 >
-                  Account settings
-                </a>
+                  Cart
+                </button>
               )}
             </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Support
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  License
-                </a>
-              )}
-            </Menu.Item>
+    
             <form method="POST" action="#" onSubmit={handleSubmit}>
               <Menu.Item>
                 {({ active }) => (

@@ -10,23 +10,24 @@ namespace MediaWebApi.Models
         [Column("Id")]
         public int Id { get; set; }
 
+        [Required]
         [ForeignKey("Orders")]
         [Column("order_id")]
-        public int order_id { get; set; }
+        public int OrderId { get; set; }
 
         [ForeignKey("Albums")]
         [Column("album_id")]
-        public int album_id { get; set; }
+        public int? AlbumId { get; set; }
 
         [ForeignKey("Medias")]
         [Column("media_id")]
-        public int media_id { get; set; }
-
-        [Column("status_order")]
-        public byte? status_order { get; set; }
+        public int? MediaId { get; set; }
 
         [Required]
         [Column("price")]
         public decimal? price { get; set; }
+        public Orders? Order { get; set; }
+        public Album? Album { get; set; }
+        public Media? Media { get; set; }
     }
 }

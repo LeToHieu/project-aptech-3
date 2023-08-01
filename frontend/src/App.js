@@ -13,13 +13,13 @@ import { Cart } from "./components/userPage/index";
 // User with retrics
 
 // Admin
-import Index from './pages/Index';
-import Home from './components/Home/Home';
-import Video from './components/Video/Video';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux'
-import Music from './pages/Music';
-import 'animate.css';
+import Index from "./pages/Index";
+import Home from "./components/Home/Home";
+import Video from "./components/Video/Video";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import Music from "./pages/Music";
+import "animate.css";
 
 import Dashboard from "./components/admin/Dashboard/Dashboard";
 import AdminIndex from "./components/admin/AdminIndex";
@@ -30,44 +30,44 @@ import GetAlbums from "./components/admin/Albums/GetAlbums";
 import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
 import { usersError, usersStart, usersSuccess } from "./redux/reducer/users";
 import axios from "./api/axios";
-import Bills from "./components/admin/Bills/Bills"
-import Feedback from "./components/admin/Feedback/Feedback"
+import Bills from "./components/admin/Bills/Bills";
+import Feedback from "./components/admin/Feedback/Feedback";
 function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
   useEffect(() => {
     const loginUserWithJwt = async () => {
-      dispatch(usersStart())     
+      dispatch(usersStart());
       const config = {
         headers: {
-          Authorization: 'Bearer ' + jwt
-        }
-      }
-      try{
-        const {data} = await axios.post('user/loginWithJwt', "", config)
+          Authorization: "Bearer " + jwt,
+        },
+      };
+      try {
+        const { data } = await axios.post("user/loginWithJwt", "", config);
         console.log(data);
-        dispatch(usersSuccess(data.user))
-      }catch (e) {
+        dispatch(usersSuccess(data.user));
+      } catch (e) {
         console.log(e.message);
-        dispatch(usersError(e.message))
+        dispatch(usersError(e.message));
       }
-    }
+    };
     if (jwt) {
       loginUserWithJwt();
     }
   }, [jwt]);
   return (
     <>
-    <Routes>
-      {/* public route */}
-      <Route path='/' element={<Index/>}>
-        <Route index path='' element={<Home />} />
-        <Route path='video/:id' element={<Video />} />
-        <Route path='music' element={<Music />} />
-      </Route>
-      {/* <Route path='/music' element={<Music />}></Route> */}
-      <Route path='/login' element={<LoginIndex/>}/>
-      <Route path='/resetpassword' element={<ResetPassword/>}/>
+      <Routes>
+        {/* public route */}
+        <Route path="/" element={<Index />}>
+          <Route index path="" element={<Home />} />
+          <Route path="video/:id" element={<Video />} />
+          <Route path="music" element={<Music />} />
+        </Route>
+        {/* <Route path='/music' element={<Music />}></Route> */}
+        <Route path="/login" element={<LoginIndex />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
 
         {/* protected route user */}
         <Route element={<RequireAuth allowedRole={[0, 1]} />}>

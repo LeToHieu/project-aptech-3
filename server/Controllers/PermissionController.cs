@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Newtonsoft.Json;
 using MediaWebApi.Services.Interface;
+using MediaWebApi.Services;
 
 namespace MediaWebApi.Controllers
 {
@@ -78,6 +79,26 @@ namespace MediaWebApi.Controllers
                 return Ok(new
                 {
                     permission,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    status = false,
+                });
+            }
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPermissionById(int id)
+        {
+            try
+            {
+                Permissions permissions = await _permissionService.GetPermissionById(id);
+                return Ok(new
+                {
+                    permissions,
                 });
             }
             catch (ArgumentException ex)

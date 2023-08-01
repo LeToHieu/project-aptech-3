@@ -87,5 +87,25 @@ namespace MediaWebApi.Controllers
                 });
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrderById(int id)
+        {
+            try
+            {
+                Permission_User permission_User = await _permission_user_service.GetPermission_UserById(id);
+                return Ok(new
+                {
+                    permission_User,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    status = false,
+                });
+            }
+        }
     }
 }

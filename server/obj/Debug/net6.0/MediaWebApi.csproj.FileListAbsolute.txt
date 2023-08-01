@@ -187,3 +187,4 @@ D:\C2109L\project-aptech-3\project-aptech-3\server\obj\Debug\net6.0\MediaWebApi.
 D:\C2109L\project-aptech-3\project-aptech-3\server\obj\Debug\net6.0\MediaWebApi.genruntimeconfig.cache
 D:\C2109L\project-aptech-3\project-aptech-3\server\obj\Debug\net6.0\ref\MediaWebApi.dll
 E:\Template\manlly-song-movie\server\bin\Debug\net6.0\taglib-sharp.dll
+D:\C2109L\project-aptech-3\project-aptech-3\server\bin\Debug\net6.0\taglib-sharp.dll

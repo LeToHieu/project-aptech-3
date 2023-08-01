@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddBills from "./AddBills";
 import EditBills from "./EditBills";
-import {
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-  Carousel,
-  Typography,
-} from "@material-tailwind/react";
-import Table from "../Table/Table";
+import axios from "../../../api/axios";
 import Single_Table from "../Table/Single_Table";
+const GET_Order = 'Order';
 function Bills() {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
+  useEffect(()=> {
+    async function fetchData() {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+      try {
+        const result = await axios.get(GET_Order, config);
+        console.log(result);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    fetchData()
+  }, [])
   const data1 = [];
   const data2 = [];
   const data = [

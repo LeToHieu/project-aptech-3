@@ -55,9 +55,6 @@ CREATE TABLE Medias (
 	created_at DATETIME DEFAULT GETDATE(),
 	FOREIGN KEY (category_id) REFERENCES Categories(Id)
 );
-Alter table Medias Add duration DECIMAL(10,2);
-
-Alter table Medias ADD created_at DATETIME DEFAULT GETDATE();
 
 CREATE TABLE Artist_Album (
 	artist_id INT NOT NULL,
@@ -137,36 +134,37 @@ CREATE TABLE Order_Detail(
 	order_id INT NOT NULL,
 	album_id INT,
 	media_id INT,
-    status_order BIT DEFAULT 0,
 	price DECIMAL(10,2) NOT NULL,
 	FOREIGN KEY (order_id) REFERENCES Orders(id),
 	FOREIGN KEY (album_id) REFERENCES Albums(id),
 	FOREIGN KEY (media_id) REFERENCES Medias(id),
 );
 
-INSERT INTO Users (username, password, email, role)
-VALUES ('user1', 'password1', 'user1@example.com', 1),
-       ('user2', 'password2', 'user2@example.com', 2),
-       ('user3', 'password3', 'user3@example.com', 1),
-       ('user4', 'password4', 'user4@example.com', 2),
-       ('user5', 'password5', 'user5@example.com', 1),
-       ('user6', 'password6', 'user6@example.com', 2),
-       ('user7', 'password7', 'user7@example.com', 1),
-       ('user8', 'password8', 'user8@example.com', 2),
-       ('user9', 'password9', 'user9@example.com', 1),
-       ('user10', 'password10', 'user10@example.com', 2);
+INSERT INTO Users (username, userimage, password, email, phone, role)
+VALUES
+('user1', NULL, 'password1', 'user1@example.com', '1234567890', 0),
+('user2', NULL, 'password2', 'user2@example.com', '9876543210', 0),
+('user3', NULL, 'password3', 'user3@example.com', '1234567890', 0),
+('user4', NULL, 'password4', 'user4@example.com', '9876543210', 0),
+('user5', NULL, 'password5', 'user5@example.com', '1234567890', 0),
+('user6', NULL, 'password6', 'user6@example.com', '9876543210', 0),
+('user7', NULL, 'password7', 'user7@example.com', '1234567890', 0),
+('user8', NULL, 'password8', 'user8@example.com', '9876543210', 0),
+('user9', NULL, 'password9', 'user9@example.com', '1234567890', 0),
+('user10', NULL, 'password10', 'user10@example.com', '9876543210', 0);
 
-INSERT INTO Permissions (permission_name)
-VALUES ('Admin'),
-       ('User'),
-       ('Guest'),
-       ('Manager'),
-       ('Developer'),
-       ('Editor'),
-       ('Subscriber'),
-       ('Contributor'),
-       ('Moderator'),
-       ('Superuser');
+INSERT INTO Permissions (permission)
+VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
 
 INSERT INTO Permission_User (user_id, permission_id)
 VALUES (1, 1),
@@ -192,41 +190,44 @@ VALUES ('Pop', 'Popular music'),
        ('R&B', 'Rhythm and Blues'),
        ('Folk', 'Folk music');
 
-INSERT INTO Artists (artist_name, description)
-VALUES ('Adele', 'British singer-songwriter'),
-       ('Ed Sheeran', 'English singer-songwriter'),
-       ('BTS', 'South Korean boy band'),
-       ('Taylor Swift', 'American singer-songwriter'),
-       ('Post Malone', 'American rapper and singer'),
-       ('Drake', 'Canadian rapper and singer'),
-       ('Ariana Grande', 'American singer and actress'),
-       ('Eminem', 'American rapper'),
-       ('Coldplay', 'British rock band'),
-       ('Shawn Mendes', 'Canadian singer-songwriter');
+INSERT INTO Artists (artist_name, artist_image, description)
+VALUES
+  ('Artist 1', 'image1.jpg', 'Description of Artist 1'),
+  ('Artist 2', 'image2.jpg', 'Description of Artist 2'),
+  ('Artist 3', 'image3.jpg', 'Description of Artist 3'),
+  ('Artist 4', 'image4.jpg', 'Description of Artist 4'),
+  ('Artist 5', 'image5.jpg', 'Description of Artist 5'),
+  ('Artist 6', 'image6.jpg', 'Description of Artist 6'),
+  ('Artist 7', 'image7.jpg', 'Description of Artist 7'),
+  ('Artist 8', 'image8.jpg', 'Description of Artist 8'),
+  ('Artist 9', 'image9.jpg', 'Description of Artist 9'),
+  ('Artist 10', 'image10.jpg', 'Description of Artist 10');
 
 INSERT INTO Albums (album_name, price, description)
-VALUES ('21', 12.99, 'Second studio album by Adele'),
-       ('x', 14.99, 'Second studio album by Ed Sheeran'),
-       ('Map of the Soul: 7', 16.99, 'Seventh studio album by BTS'),
-       ('1989', 13.99, 'Fifth studio album by Taylor Swift'),
-       ('Hollywood Bleeding', 15.99, 'Third studio album by Post Malone'),
-       ('Views', 12.99, 'Fourth studio album by Drake'),
-       ('Thank U, Next', 11.99, 'Fifth studio album by Ariana Grande'),
-       ('The Slim Shady LP', 10.99, 'Second studio album by Eminem'),
-       ('A Head Full of Dreams', 14.99, 'Seventh studio album by Coldplay'),
-       ('Illuminate', 12.99, 'Second studio album by Shawn Mendes');
+VALUES
+  ('Album 1', 19.99, 'Description of Album 1'),
+  ('Album 2', 14.95, 'Description of Album 2'),
+  ('Album 3', 12.50, 'Description of Album 3'),
+  ('Album 4', 8.99, 'Description of Album 4'),
+  ('Album 5', 21.75, 'Description of Album 5'),
+  ('Album 6', 16.49, 'Description of Album 6'),
+  ('Album 7', 11.25, 'Description of Album 7'),
+  ('Album 8', 9.99, 'Description of Album 8'),
+  ('Album 9', 13.50, 'Description of Album 9'),
+  ('Album 10', 18.25, 'Description of Album 10');
 
-INSERT INTO Medias (media_name, price, category_id)
-VALUES ('Hello', 1.29, 1),
-       ('Shape of You', 1.29, 2),
-       ('Dynamite', 1.29, 3),
-       ('Bad Blood', 1.29, 4),
-       ('Circles', 1.29, 5),
-       ('One Dance', 1.29, 6),
-       ('7 Rings', 1.29, 7),
-       ('Lose Yourself', 1.29, 8),
-       ('Viva la Vida', 1.29, 9),
-       ('Stitches', 1.29, 10);
+INSERT INTO Medias (media_name, media_image, media_url, duration, price, category_id, created_at)
+VALUES
+  ('Media 1', 'image1.jpg', 'https://example.com/media1', 120.50, 9.99, 1, '2023-07-30 12:34:56'),
+  ('Media 2', 'image2.jpg', 'https://example.com/media2', 180.25, 14.95, 2, '2023-07-30 10:20:30'),
+  ('Media 3', 'image3.jpg', 'https://example.com/media3', 90.75, 12.50, 1, '2023-07-30 09:15:45'),
+  ('Media 4', 'image4.jpg', 'https://example.com/media4', 150.30, 8.99, 3, '2023-07-30 14:45:00'),
+  ('Media 5', 'image5.jpg', 'https://example.com/media5', 240.20, 21.75, 2, '2023-07-30 16:30:10'),
+  ('Media 6', 'image6.jpg', 'https://example.com/media6', 180.10, 16.49, 1, '2023-07-30 18:20:05'),
+  ('Media 7', 'image7.jpg', 'https://example.com/media7', 120.90, 11.25, 3, '2023-07-30 22:05:30'),
+  ('Media 8', 'image8.jpg', 'https://example.com/media8', 210.45, 9.99, 2, '2023-07-30 20:40:15'),
+  ('Media 9', 'image9.jpg', 'https://example.com/media9', 160.15, 13.50, 1, '2023-07-30 13:15:20'),
+  ('Media 10', 'image10.jpg', 'https://example.com/media10', 190.75, 18.25, 3, '2023-07-30 11:10:25');
 
 INSERT INTO Artist_Album (artist_id, album_id)
 VALUES (1, 1), (1, 2), (1,3),
@@ -239,9 +240,6 @@ VALUES (1, 1), (1, 2), (1,3),
        (8, 8),
        (9, 9),
        (10, 10);
-SELECT * FROM Artist_Album;
-DELETE Artist_Album;
-Select * from Artists Join Artist_Album ON Artists.Id = Artist_Album.artist_id JOIN Albums ON Artist_Album.album_id = Albums.ID
 
 INSERT INTO Artist_Media (artist_id, media_id)
 VALUES (1, 1),
@@ -330,22 +328,18 @@ VALUES (1, 29.99),
        (9, 19.95),
        (10, 8.50);
 
-INSERT INTO Order_Detail (order_id, album_id, price)
-VALUES (1, 1, 9.99),
-       (1, 2, 14.99),
-       (2, NULL, 17.50),
-       (3, 3, 12.99),
-       (3, 4, 29.76),
-       (3, NULL, 0.99),
-       (4, NULL, 12.99),
-       (5, 5, 10.00),
-       (5, NULL, 45.00),
-       (6, 6, 9.99),
-       (7, 7, 19.99),
-       (7, NULL, 17.51),
-       (8, 8, 12.49),
-       (9, 9, 9.99),
-       (10, 10, 8.50);
+INSERT INTO Order_Detail (order_id, album_id, media_id, status_order, price)
+VALUES
+  (1, 1, NULL, 1, 50.00),
+  (2, NULL, 1, 0, 20.00),
+  (3, 2, NULL, 1, 35.00),
+  (4, NULL, 2, 0, 15.00),
+  (5, 3, NULL, 1, 45.00),
+  (1, NULL, 3, 1, 25.00),
+  (2, 4, NULL, 1, 40.00),
+  (3, NULL, 5, 0, 30.00),
+  (4, 5, NULL, 1, 55.00),
+  (5, NULL, 4, 1, 28.00);
 
 INSERT INTO Orders (user_id, total_amount)
 VALUES (1, 29.99),
@@ -535,44 +529,6 @@ BEGIN
 	SELECT * FROM Promotions WHERE Id = @id
 END
 
-<<<<<<< HEAD
-select * from Artists
-
-select * from Medias
-
-select * from Artist_Media
-media_name			artist_name
-24						19 kix
-25						20 sơn tung
-23						21 khac viet
-21						22 đen
-22						23 hoang thuy linh
-26						20 son tung
-28						22
-29						20
-30						20
-INSERT INTO Artist_Media (artist_id, media_id) VALUES 
-(19, 24), (20, 25), (21, 23), (22, 21), (23,22), (20, 26);
-INSERT INTO Artist_Media (artist_id, media_id)
-VALUES (22, 28), (20, 29), (20, 30)
-
-SELECT * FROM Artists JOIN Artist_Media ON Artists.Id = Artist_Media.artist_id
-		JOIN Medias ON Medias.ID = Artist_Media.media_id
-
-SELECT artist_id, media_id, artist_name, artist_image, media_name, media_image, media_url FROM Artists JOIN Artist_Media ON Artists.Id = Artist_Media.artist_id
-		JOIN Medias ON Medias.ID = Artist_Media.media_id
-CREATE PROCEDURE GetArtistMedia
-AS
-BEGIN 
-	SELECT artist_id, media_id, artist_name, artist_image, media_name, media_image, media_url FROM Artists 
-			JOIN Artist_Media ON Artists.Id = Artist_Media.artist_id
-			JOIN Medias ON Medias.ID = Artist_Media.media_id
-END
-EXECUTE GetArtistMedia
-
-select * from Users
-
-=======
 CREATE PROCEDURE UpdateOrder
   @order_id INT,
   @user_id INT,
@@ -596,4 +552,31 @@ BEGIN
   INSERT INTO Orders (user_id, order_date, total_amount)
   VALUES (@user_id, @order_date, @total_amount)
 END;
->>>>>>> 38d6ea523e10762a5d40eaf633f01878d65ced1b
+
+CREATE PROCEDURE InsertOrderDetail
+    @order_id INT,
+    @album_id INT,
+    @media_id INT,
+    @price DECIMAL(10,2)
+AS
+BEGIN
+    INSERT INTO Order_Detail (order_id, album_id, media_id, price)
+    VALUES (@order_id, @album_id, @media_id, @price);
+    SELECT * FROM Order_Detail WHERE Id = @@IDENTITY;
+END
+
+CREATE PROCEDURE UpdateOrderDetail
+    @Id INT,
+    @order_id INT,
+    @album_id INT,
+    @media_id INT,
+    @price DECIMAL(10,2)
+AS
+BEGIN
+    UPDATE Order_Detail
+    SET order_id = @order_id,
+        album_id = @album_id,
+        media_id = @media_id,
+        price = @price
+    WHERE Id = @Id;
+END

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using MediaWebApi.Models;
+
 namespace MediaWebApi.ViewModels
 {
     public class OrderViewModel
@@ -13,6 +15,6 @@ namespace MediaWebApi.ViewModels
 
         [Required]
         public decimal? total_amount { get; set; } = decimal.Zero;
-
+        
     }
 }

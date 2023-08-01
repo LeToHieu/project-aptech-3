@@ -36,7 +36,7 @@ namespace MediaWebApi.Repositories
 
         public async Task<List<Orders?>?> GetAllOrder()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders.Include(o => o.Order_Detail).ToListAsync();
         }
         public async Task<Orders?> GetOrderById(int id)
         {

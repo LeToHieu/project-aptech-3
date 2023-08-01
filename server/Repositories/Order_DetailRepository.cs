@@ -20,7 +20,20 @@ namespace MediaWebApi.Repositories
         }
         public async Task<List<Order_Detail?>?> GetAllOrder_Detail()
         {
-            return await _context.Order_Detail.ToListAsync();
+            List<Order_Detail?>? order_Details = await _context.Order_Detail
+                .Select(o => new Order_Detail()
+                {
+                    OrderId = o.OrderId == null ? 0 : o.OrderId,
+                    MediaId = o.MediaId == null ? 0 : o.MediaId,
+                    AlbumId = o.AlbumId == null ? 0 : o.AlbumId,
+                    price = o.price == null ? 0 : o.price,
+                    Order = o.Order,
+                    Album = o.Album,
+                    Media = o.Media
+                })
+                .ToListAsync();
+
+            return order_Details;
         }
         public async Task<Order_Detail?> GetOrder_DetailById(int id)
         {
@@ -34,13 +47,12 @@ namespace MediaWebApi.Repositories
         }
         public async Task<Order_Detail?> AddOrder_Detail(Order_DetailViewModel order_detail)
         {
-            string sql = "EXECUTE InsertOrderDetail @order_id, @album_id, @media_id, @status_order, @price";
+            string sql = "EXECUTE InsertOrderDetail @order_id, @album_id, @media_id, @price";
             IEnumerable<Order_Detail> result = await _context.Order_Detail.FromSqlRaw(sql,
-                    new SqlParameter("@order_id", order_detail.order_id),
-                    new SqlParameter("@album_id", order_detail.album_id),
-                    new SqlParameter("@media_id", order_detail.media_id),
-                    new SqlParameter("@status_order", order_detail.status_order),
-                    new SqlParameter("@price", order_detail.price)
+                    new SqlParameter("@order_id", order_detail.OrderId),
+                    new SqlParameter("@album_id", order_detail.AlbumId),
+                    new SqlParameter("@media_id", order_detail.MediaId == 0 ? DBNull.Value : order_detail.MediaId),
+                    new SqlParameter("@price", order_detail.Price)
 
             ).ToListAsync();
             Order_Detail? newOrder = result.FirstOrDefault();
@@ -49,20 +61,20 @@ namespace MediaWebApi.Repositories
         }
         public async Task<bool?> UpdateOrder_Detail(Order_DetailViewModel order_detail)
         {
-            string sql = "EXECUTE UpdateOrderDetail @Id, @order_id, @album_id, @media_id, @status_order, @price";
-            IEnumerable<Order_Detail> result = await _context.Order_Detail.FromSqlRaw(sql,
-                    new SqlParameter("@Id", order_detail.Id),
-                    new SqlParameter("@order_id", order_detail.order_id),
-                    new SqlParameter("@album_id", order_detail.album_id),
-                    new SqlParameter("@media_id", order_detail.media_id),
-                    new SqlParameter("@status_order", order_detail.status_order),
-                    new SqlParameter("@price", order_detail.price)
-                                ).ToListAsync();
-            Order_Detail? updateOrder = result.FirstOrDefault();
-            if (updateOrder == null)
-            {
-                throw new ArgumentException("Can not update order");
-            }
+            //string sql = "EXECUTE UpdateOrderDetail @Id, @order_id, @album_id, @media_id, @price";
+            //IEnumerable<Order_Detail> result = await _context.Order_Detail.FromSqlRaw(sql,
+            //        new SqlParameter("@Id", order_detail.Id),
+            //        new SqlParameter("@order_id", order_detail.order_id),
+            //        new SqlParameter("@album_id", order_detail.album_id),
+            //        new SqlParameter("@media_id", order_detail.media_id),
+
+            //        new SqlParameter("@price", order_detail.price)
+            //                    ).ToListAsync();
+            //Order_Detail? updateOrder = result.FirstOrDefault();
+            //if (updateOrder == null)
+            //{
+            //    throw new ArgumentException("Can not update order");
+            //}
             return true;
         }
         public async Task<bool?> DeleteOrder_Detail(int id)

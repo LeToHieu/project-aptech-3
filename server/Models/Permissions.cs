@@ -11,7 +11,8 @@ namespace MediaWebApi.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("permission")]
-        public int permission { get; set; }
+        [Column("permission_name")]
+        public string permission { get; set; } = "";
+
     }
 }

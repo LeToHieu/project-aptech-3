@@ -580,3 +580,35 @@ BEGIN
         price = @price
     WHERE Id = @Id;
 END
+
+
+CREATE TABLE Users(
+	Id INT NOT NULL IDENTITY PRIMARY KEY,
+	username VARCHAR(255) NOT NULL,
+	userimage VARCHAR(255),
+	password VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	phone VARCHAR(20) NOT NULL,
+	role INT NOT NULL DEFAULT 0,
+);
+
+CREATE PROCEDURE UpdateUser
+    @UserId INT,
+    @Username VARCHAR(255),
+    @UserImage VARCHAR(255),
+    @Password VARCHAR(255),
+    @Email VARCHAR(255),
+    @Phone VARCHAR(20),
+    @Role INT = 0
+AS
+BEGIN
+    UPDATE Users
+    SET username = @Username,
+        userimage = @UserImage,
+        password = @Password,
+        email = @Email,
+        phone = @Phone,
+        role = @Role
+    WHERE Id = @UserId;
+	SELECT * FROM Users WHERE Id = @UserId;
+END;

@@ -58,7 +58,7 @@ namespace MediaWebApi.Repositories
 
         public async Task<List<Artist?>?> GetArtists()
         {
-            List<Artist> artists = await _context.Artists.ToListAsync();
+            List<Artist?> artists = await _context.Artists.ToListAsync();
             return artists;
         }
 

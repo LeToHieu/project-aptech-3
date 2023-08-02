@@ -27,7 +27,6 @@ namespace MediaWebApi.Repositories
                     MediaId = o.MediaId == null ? 0 : o.MediaId,
                     AlbumId = o.AlbumId == null ? 0 : o.AlbumId,
                     price = o.price == null ? 0 : o.price,
-                    Order = o.Order,
                     Album = o.Album,
                     Media = o.Media
                 })

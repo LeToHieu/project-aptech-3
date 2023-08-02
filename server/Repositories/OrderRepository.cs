@@ -8,6 +8,8 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace MediaWebApi.Repositories
 {
@@ -36,16 +38,25 @@ namespace MediaWebApi.Repositories
 
         public async Task<List<Orders?>?> GetAllOrder()
         {
-            return await _context.Orders.Include(o => o.Order_Detail).ToListAsync();
+            return await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Order_Detail)
+                .ThenInclude(od => od.Album) 
+                .Include(o => o.Order_Detail)
+                .ThenInclude(od => od.Media) 
+                .ToListAsync();
         }
         public async Task<Orders?> GetOrderById(int id)
         {
-            Orders? order = await _context.Orders.FindAsync(id);
+            Orders? order = await _context.Orders
+                .Include(o => o.Order_Detail)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
             if (order == null)
             {
                 throw new ArgumentException("Order not found");
-
             }
+
             return order;
         }
         public async Task<bool?> UpdateOrder(OrderViewModel order)
@@ -58,7 +69,7 @@ namespace MediaWebApi.Repositories
                                     new SqlParameter("@total_amount", order.total_amount)
                                 ).ToListAsync();
             Orders? updateOrder = result.FirstOrDefault();
-            if ( updateOrder == null)
+            if (updateOrder == null)
             {
                 throw new ArgumentException("Can not update order");
             }
@@ -68,11 +79,14 @@ namespace MediaWebApi.Repositories
         {
             var order = await _context.Orders.FindAsync(id);
 
-            if ( order == null)
+            if (order == null)
             {
                 return false;
             }
             _context.Orders.Remove(order);
+
+            var orderDetails = await _context.Order_Detail.Where(od => od.OrderId == id).ToListAsync();
+            _context.Order_Detail.RemoveRange(orderDetails);
             await _context.SaveChangesAsync();
             return true;
         }

@@ -94,15 +94,21 @@ namespace MediaWebApi.Controllers
                 });
             }
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrderById(int id)
         {
             try
             {
                 Orders order = await _orderService.GetOrderById(id);
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var json = JsonConvert.SerializeObject(order, settings);
                 return Ok(new
                 {
-                    order,
+                    json,
                 });
             }
             catch (ArgumentException ex)

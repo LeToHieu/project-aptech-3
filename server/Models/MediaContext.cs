@@ -27,6 +27,7 @@ namespace MediaWebApi.Models
             modelBuilder.Entity<ArtistAlbum>().HasKey(aa => new { aa.ArtistId, aa.AlbumId });
             modelBuilder.Entity<ArtistMedia>().HasKey(aa => new { aa.ArtistId, aa.MediaId });
             modelBuilder.Entity<Order_Detail>().HasKey(aa => new { aa.Id });
+            modelBuilder.Entity<Orders>().HasKey(aa => new { aa.Id });
         }
     }
 }

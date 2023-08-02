@@ -44,7 +44,7 @@ const Home = () => {
       desc: []
     }
   ]
-  // console.log(videos);
+  console.log(listVideos)
   return (
     <>
       <Tabs id="custom-animation" value="1">

@@ -29,13 +29,13 @@ namespace MediaWebApi.Services
         }
         public async Task<bool?> UpdateOrder(OrderViewModel order)
         {
-            var checkExisting = _orderRepository.GetOrderById(order.Id);
+            var checkExisting = await _orderRepository.GetOrderById(order.Id);
             if ( checkExisting == null) { throw new ArgumentException("Id not found"); }
             return await _orderRepository.UpdateOrder(order);
         }
         public async Task<bool?> DeleteOrder(int id)
         {
-            var checkExisting = _orderRepository.GetOrderById(id);
+            var checkExisting = await _orderRepository.GetOrderById(id);
             if (checkExisting == null) { throw new ArgumentException("Id not found"); }
             return await _orderRepository.DeleteOrder(id);
         }

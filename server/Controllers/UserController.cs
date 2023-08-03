@@ -4,16 +4,18 @@ using MediaWebApi.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using MediaWebApi.Extensions;
 using MediaWebApi.Services.Interface;
+using MediaWebApi.Services;
+using Newtonsoft.Json;
 
 namespace MediaWebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController:ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
-        public UserController (IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
@@ -28,10 +30,10 @@ namespace MediaWebApi.Controllers
                     user = newUser,
                 });
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 return BadRequest(new
-                { 
+                {
                     message = ex.Message,
                 });
 
@@ -81,6 +83,30 @@ namespace MediaWebApi.Controllers
 
             }
         }
-
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            try
+            {
+                User? user = await _userService.GetUserById(id);
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var json = JsonConvert.SerializeObject(user, settings);
+                return Ok(new
+                {
+                    json,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    status = false,
+                });
+            }
+        }
     }
 }

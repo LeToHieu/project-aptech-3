@@ -4,29 +4,30 @@ import EditBills from "./EditBills";
 import axios from "../../../api/axios";
 import Single_Table from "../Table/Single_Table";
 import parseJson from "../../../Parse"
+import { toast } from 'react-toastify'
 const GET_Order = 'Order';
-const DELETE_Order = ''
+const DELETE_Order = 'Order/delete'
 
 function Bills() {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [data, setData] = useState();
   const title = "Danh sách hoá đơn";
-  useEffect(() => {
-    async function fetchData() {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        }
-      }
-      try {
-        const result = await axios.get(GET_Order, config);
-        setData(parseJson(result.data.json))
-        console.log(data)
-      } catch (error) {
-        console.log(error.message);
+  const fetchData = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
       }
     }
+    try {
+      const result = await axios.get(GET_Order, config);
+      setData(parseJson(result.data.json))
+      console.log(data)
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  useEffect(() => {
     fetchData()
   }, [])
   const result = [];
@@ -89,8 +90,31 @@ function Bills() {
     ],
     []
   );
-  const handleDelete = (id) => {
-    
+
+  const handleDelete = async (id) => {
+    const shouldDelete = window.confirm("Are you sure you want to delete this order?");
+    if (shouldDelete) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      try {
+        await axios.post(DELETE_Order + "/" + id, config);
+        toast.success("Xoá thành công");
+        fetchData();
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+  };
+  const handleUpdate = async (id) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
   }
   return (
     <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24 z-0">

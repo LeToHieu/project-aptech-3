@@ -33,13 +33,15 @@ namespace MediaWebApi.Controllers
         }
 
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> UpdateArtist(ArtistViewModel artist, int id)
+        public async Task<IActionResult> UpdateArtist([FromForm] ArtistViewModel artist, int id)
         {
-            Artist update = new Artist
+            ArtistViewModel update = new ArtistViewModel
             {
                 Id = id,
                 ArtistName = artist.ArtistName,
                 Description = artist.Description,
+                ArtistImage = artist.ArtistImage,
+                file = artist.file,
             };
             try
             {

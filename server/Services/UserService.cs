@@ -25,7 +25,7 @@ namespace MediaWebApi.Services
             
             if (existingUser != null)
             {
-                if (existingUser.Userimage != "." || existingUser.Userimage != "string" || existingUser.Userimage != " " || existingUser.Userimage != "")
+                if (existingUser.Userimage != "." && existingUser.Userimage != "string" && existingUser.Userimage != " " && existingUser.Userimage != "")
                 {
                     File.Delete("Uploads/" + existingUser.Userimage);
                 }
@@ -51,7 +51,7 @@ namespace MediaWebApi.Services
                 urlImage = await _userRepository.UpLoadFile(user.fileImage);
                 if (existingUser.Userimage != "." && existingUser.Userimage != "string" && existingUser.Userimage != " " && existingUser.Userimage != "")
                 {
-                    File.Delete("Uploads/" + user.Userimage);
+                    File.Delete("Uploads/" + existingUser.Userimage);
                 }
             }
             else

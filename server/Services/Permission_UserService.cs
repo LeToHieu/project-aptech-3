@@ -27,14 +27,18 @@ namespace MediaWebApi.Services
         }
         public async Task<bool?> UpdatePermission_User(Permission_UserViewModel Permission_User)
         {
-            var checkExisting = _permission_UserRepository.GetPermission_UserById(Permission_User.userId);
-            if (checkExisting == null) { throw new ArgumentException("Id not found"); }
+            var checkExisting = await _permission_UserRepository.GetPermission_UserById(Permission_User.userId);
+            if (checkExisting == null) { 
+                throw new ArgumentException("Id not found"); 
+            }
             return await _permission_UserRepository.UpdatePermission_User(Permission_User);
         }
         public async Task<bool?> DeletePermission_User(int id)
         {
-            var checkExisting = _permission_UserRepository.GetPermission_UserById(id);
-            if (checkExisting == null) { throw new ArgumentException("Id not found"); }
+            var checkExisting = await _permission_UserRepository.GetPermission_UserById(id);
+            if (checkExisting == null) {
+                throw new ArgumentException("Id not found"); 
+            }
             return await _permission_UserRepository.DeletePermission_User(id);
         }
     }

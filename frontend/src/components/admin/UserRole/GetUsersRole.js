@@ -1,38 +1,31 @@
-import { useState, useEffect } from "react";
-import AddArtist from "./AddArtist";
-import EditArtist from "./EditArtist";
+import AddUserRole from "./AddUsers";
+import EditUsersRole from "./EditUsers";
 import { toast } from "react-toastify";
 import axios from "../../../api/axios";
+import { useState, useEffect } from "react";
 
-const ARTIST_URL = "Artist";
+const GET_USER_URL = "Permission_User";
 const url = "https://localhost:7023/resources/";
-const GetArtists = () => {
-  const initialArtist = {
-    Id: "",
-    ArtistName: "",
-    ArtistImage: "",
-    Description: "",
-    file: "",
-  };
-  const [Artists, SetArtists] = useState();
-  const [Artist, SetArtist] = useState(initialArtist);
+
+const GetUsersRole = () => {
+  const [Users, SetUsers] = useState();
+  const [User, SetUser] = useState("");
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
   useEffect(() => {
-    GetArtists();
+    getUsersRole();
   }, []);
 
-  const GetArtists = async () => {
+  const getUsersRole = async () => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
-      console.log("ahahaa");
-      const response = await axios.get(ARTIST_URL, config);
-      SetArtists(response.data.artists);
+      const response = await axios.get(GET_USER_URL, config);
+      SetUsers(response.data.users);
     } catch (error) {
       if (!error?.response) {
         toast.error("No server response");
@@ -44,7 +37,7 @@ const GetArtists = () => {
     }
   };
 
-  const DeleteArtit = async (event, id) => {
+  const deleteUsersRole = async (event, id) => {
     event.preventDefault();
     const config = {
       headers: {
@@ -52,12 +45,12 @@ const GetArtists = () => {
       },
     };
     try {
-      const response = await axios.post(ARTIST_URL + "/delete/" + id, config);
+      const response = await axios.post(GET_USER_URL + "/delete/" + id, config);
       if (response) {
-        toast.success("Deleted category successfully!");
-        GetArtists();
+        toast.success("Deleted user successfully!");
+        getUsers();
       } else {
-        toast.error("Cannot delete category!");
+        toast.error("Cannot delete user!");
       }
     } catch (error) {
       if (!error?.response) {
@@ -69,30 +62,31 @@ const GetArtists = () => {
       }
     }
   };
+
   return (
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">
-        <AddArtist
+        <AddUser
           isOpen={isOpenAdd}
           closeModal={() => setIsOpenAdd(false)}
-          GetArtists={() => GetArtists()}
-        ></AddArtist>
-        <EditArtist
+          getUsers={() => getUsers()}
+        ></AddUser>
+        <EditUsers
           isOpen={isOpenEdit}
           closeModal={() => setIsOpenEdit(false)}
-          GetArtists={() => GetArtists()}
-          Artist={Artist}
+          getUsers={() => getUsers()}
+          User={User}
         />
-        <div className="my-2">
+        <div className=" my-2">
           <div className="text-xl float-left my-2 hover:bg-blue-700 font-bold">
-            Artists Table
+            Users Table
           </div>
 
           <button
             className="float-right my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={() => setIsOpenAdd(true)}
           >
-            Add Artists
+            AddUser
           </button>
         </div>
         <table className=" table-fixed rounded-lg lg:table-auto w-full border-solid border-2 border-collapse border border-slate-400">
@@ -101,40 +95,43 @@ const GetArtists = () => {
               <th className="mx-3 px-3 w-[2rem]">Id</th>
               <th>Name</th>
               <th>Image</th>
-              <th>Description</th>
+              <th>Role</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {Artists !== undefined && Artists !== "" && Artists !== null ? (
-              Artists.map((artitst, index) => (
-                <tr
-                  className="even:bg-gray-200 odd:bg-gray-100"
-                  key={artitst.id}
-                >
-                  <td className="mx-3 px-3">{artitst.id}</td>
-                  <td>{artitst.artistName}</td>
-
+            {Users !== undefined && Users !== "" && Users !== null ? (
+              Users.map((user, index) => (
+                <tr className="even:bg-gray-200 odd:bg-gray-100" key={user.id}>
+                  <td className="mx-3 px-3">{index + 1}</td>
+                  <td>{user.username}</td>
                   <td>
                     <img
                       className="h-10 w-10"
-                      src={url + artitst.artistImage}
+                      src={url + user.userimage}
                       alt="..."
                     ></img>
                   </td>
-                  <td>{artitst.description}</td>
+                  <td
+                    style={{
+                      wordWrap: "break-word",
+                      overflowWrap: "break-word",
+                    }}
+                  >
+                    {user.email}
+                  </td>
                   <td>
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
                       onClick={() => {
-                        setIsOpenEdit(true) || SetArtist(artitst);
+                        setIsOpenEdit(true) || SetUser(user);
                       }}
                     >
                       Edit
                     </button>
                     <button
-                      onClick={(event) => DeleteArtit(event, artitst.id)}
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+                      onClick={(event) => deleteUsersRole(event, user.id)}
                     >
                       Delete
                     </button>
@@ -143,7 +140,7 @@ const GetArtists = () => {
               ))
             ) : (
               <tr className="even:bg-gray-200 odd:bg-gray-100">
-                <td colSpan="5" className="py-3 text-center">
+                <td colSpan="6" className="py-3 text-center">
                   Loading...
                 </td>
               </tr>
@@ -155,4 +152,4 @@ const GetArtists = () => {
   );
 };
 
-export default GetArtists;
+export default GetUsersRole;

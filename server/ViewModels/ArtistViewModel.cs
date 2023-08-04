@@ -5,6 +5,7 @@ namespace MediaWebApi.ViewModels
 {
     public class ArtistViewModel
     {
+        public int Id { get; set; } = 0;
         [Required]
         [MaxLength(255)]
         [Column("artist_name")]

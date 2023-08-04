@@ -62,16 +62,17 @@ namespace MediaWebApi.Repositories
             return artists;
         }
 
-        public async Task<bool?> UpdateArtist(Artist artist)
+        public async Task<bool?> UpdateArtist(ArtistViewModel artist)
         {
-            string sql = "EXECUTE UpdateArtist @Id, @@artist_name, @description";
-            IEnumerable<Category> result = await _context.Categories.FromSqlRaw(sql,
+            string sql = "EXECUTE UpdateArtist @Id, @artist_name, @artist_image, @description";
+            IEnumerable<Artist> result = await _context.Artists.FromSqlRaw(sql,
                                     new SqlParameter("@Id", artist.Id),
                                     new SqlParameter("@artist_name", artist.ArtistName),
+                                    new SqlParameter("@artist_image", artist.ArtistImage),
                                     new SqlParameter("@description", artist.Description)
                                 ).ToListAsync();
 
-            Category? updated = result.FirstOrDefault();
+            Artist? updated = result.FirstOrDefault();
             if (updated == null)
             {
                 return false;

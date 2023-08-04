@@ -1,4 +1,5 @@
 ﻿using MediaWebApi.Models;
+using MediaWebApi.Repositories;
 using MediaWebApi.Repositories.Interface;
 using MediaWebApi.Services.Interface;
 using MediaWebApi.ViewModels;
@@ -19,7 +20,12 @@ namespace MediaWebApi.Services
             {
                 throw new ArgumentException("Artist name must be required");
             }
-            var path = await _artistRepository.UpLoadFile(artist.file);
+            var path = ".";
+
+            if (artist.file != null)
+            {
+                path = await _artistRepository.UpLoadFile(artist.file);
+            }
             artist.ArtistImage = path;
             return await _artistRepository.CreateArtist(artist);
         }
@@ -30,6 +36,10 @@ namespace MediaWebApi.Services
             if (existingArtist == null)
             {
                 throw new ArgumentException("Id not found");
+            }
+            if (existingArtist.ArtistImage != "." && existingArtist.ArtistImage != "string" && existingArtist.ArtistImage != " " && existingArtist.ArtistImage != "")
+            {
+                File.Delete("Uploads/" + existingArtist.ArtistImage);
             }
             return await _artistRepository.DeleteArtist(id);
         }
@@ -44,13 +54,29 @@ namespace MediaWebApi.Services
             return await _artistRepository.GetArtists();
         }
 
-        public async Task<bool?> UpdateArtist(Artist artist)
+        public async Task<bool?> UpdateArtist(ArtistViewModel artist)
         {
             var existingArtist = await _artistRepository.GetArtistById(artist.Id);
             if (existingArtist == null)
             {
                 throw new ArgumentException("Id not found");
             }
+            var path = ".";
+
+            if (artist.file != null)
+            {
+                path = await _artistRepository.UpLoadFile(artist.file);
+                if (existingArtist.ArtistImage != "." && existingArtist.ArtistImage != "string" && existingArtist.ArtistImage != " " && existingArtist.ArtistImage != "")
+                {
+                    File.Delete("Uploads/" + existingArtist.ArtistImage);
+                }
+            }
+            else
+            {
+                path = existingArtist.ArtistImage;
+            }
+
+            artist.ArtistImage = path;
             return await _artistRepository.UpdateArtist(artist);
         }
     }

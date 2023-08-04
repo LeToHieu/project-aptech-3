@@ -14,8 +14,13 @@ namespace MediaWebApi.Repositories
         }
         public async Task<List<Permission_User?>?> GetAllPermission_User()
         {
-            return await _context.Permission_User.ToListAsync();
-        }
+            var permissionUserList = await _context.Permission_User
+                .Include(a => a.User)
+                .Include(a => a.Permissions)
+                .ToListAsync();
+
+            return permissionUserList.ToList();
+                }
         public async Task<Permission_User?> GetPermission_UserById(int id)
         {
             Permission_User? permission_user = await _context.Permission_User.FindAsync(id);

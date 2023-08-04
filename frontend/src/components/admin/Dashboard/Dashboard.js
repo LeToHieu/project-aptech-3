@@ -14,14 +14,14 @@ import {
 function Dashboard() {
   const data = [
     {
-      "Đồng ý": 10,
-      "Không đồng ý": 50,
+      "Tích cực": 10,
+      "Tiêu cực": 50,
     },
   ];
   return (
     <div className="p-1 flex flex-col justify-center items-center">
       <Typography className="p-2 text-center" color="black" variant="h5">
-        Thống kê kết quả bỏ phiếu của tất cả đề xuất
+        Thống kê đánh giá của người dùng
       </Typography>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart width="100%" height="100%" data={data}>
@@ -30,8 +30,8 @@ function Dashboard() {
           <YAxis tick={{ fill: "#000000" }} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="Đồng ý" fill="#4890F8" />
-          <Bar dataKey="Không đồng ý" fill="#A663EA" />
+          <Bar dataKey="Tích cực" fill="#4890F8" />
+          <Bar dataKey="Tiêu cực" fill="#A663EA" />
         </BarChart>
       </ResponsiveContainer>
     </div>

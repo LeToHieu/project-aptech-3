@@ -126,6 +126,7 @@ CREATE TABLE Orders(
   user_id INT NOT NULL,
   order_date DATETIME DEFAULT GETDATE(),
   total_amount DECIMAL(10, 2) NOT NULL,
+  status_order INT NOT NULL DEFAULT 0;
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
@@ -419,7 +420,7 @@ END
 
 CREATE PROCEDURE InsertArtist
     @artist_name NVARCHAR(255),
-	@artist_image VARCHAR(255),
+	@artist_image NVARCHAR(255),
     @description NVARCHAR(255)
 AS
 BEGIN
@@ -550,8 +551,20 @@ CREATE PROCEDURE InsertOrder
 AS
 BEGIN
   INSERT INTO Orders (user_id, order_date, total_amount)
-  VALUES (@user_id, @order_date, @total_amount)
+  VALUES (@user_id, @order_date, @total_amount);
+  SELECT * FROM Orders WHERE Id = @@IDENTITY
 END;
+
+CREATE PROCEDURE GetOrderByUserId
+    @user_id INT
+AS
+BEGIN
+    SELECT 
+        * FROM Orders
+    WHERE 
+        user_id = @user_id
+        AND status_order = 0
+END
 
 CREATE PROCEDURE InsertOrderDetail
     @order_id INT,
@@ -579,4 +592,85 @@ BEGIN
         media_id = @media_id,
         price = @price
     WHERE Id = @Id;
+END
+
+
+CREATE TABLE Users(
+	Id INT NOT NULL IDENTITY PRIMARY KEY,
+	username VARCHAR(255) NOT NULL,
+	userimage VARCHAR(255),
+	password VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	phone VARCHAR(20) NOT NULL,
+	role INT NOT NULL DEFAULT 0,
+);
+
+CREATE PROCEDURE UpdateUser
+    @UserId INT,
+    @Username VARCHAR(255),
+    @UserImage VARCHAR(255),
+    @Password VARCHAR(255),
+    @Email VARCHAR(255),
+    @Phone VARCHAR(20),
+    @Role INT = 0
+AS
+BEGIN
+    UPDATE Users
+    SET username = @Username,
+        userimage = @UserImage,
+        password = @Password,
+        email = @Email,
+        phone = @Phone,
+        role = @Role
+    WHERE Id = @UserId;
+	SELECT * FROM Users WHERE Id = @UserId;
+END;
+
+CREATE PROCEDURE UpdatePermissionUser 
+    @user_id INT,
+    @permission_id INT
+AS
+BEGIN
+    
+    -- Update the user's permission in the Permission_User table
+    UPDATE Permission_User
+    SET permission_id = @permission_id
+    WHERE user_id = @user_id;
+    
+    -- Return the updated row from the Permission_User table
+    SELECT *
+    FROM Permission_User
+    WHERE user_id = @user_id AND permission_id = @permission_id;
+END
+
+CREATE PROCEDURE InsertPermissionUser 
+    @user_id INT,
+    @permission_id INT
+AS
+BEGIN
+    -- Check if the user and permission exist in the database
+    
+    -- Insert the new permission user row
+    INSERT INTO Permission_User (user_id, permission_id)
+    VALUES (@user_id, @permission_id);
+    
+    -- Return the newly inserted row from the Permission_User table
+    SELECT *
+    FROM Permission_User
+    WHERE user_id = @user_id AND permission_id = @permission_id;
+END
+CREATE PROCEDURE GetOrderDetailsByOrderId
+    @order_id INT
+AS
+BEGIN
+    SELECT 
+        Id,
+        order_id,
+        album_id,
+        media_id,
+        price
+    FROM 
+        Order_Detail
+    WHERE 
+        order_id = @order_id
 END

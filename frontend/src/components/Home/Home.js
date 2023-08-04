@@ -9,7 +9,6 @@ import {
   TabsHeader,
   TabsBody,
   Tab,
-  TabPanel,
 } from "@material-tailwind/react";
 const Home = () => {
   const [videos, setVideos] = useState([])
@@ -44,7 +43,7 @@ const Home = () => {
       desc: []
     }
   ]
-  // console.log(videos);
+  console.log(listVideos)
   return (
     <>
       <Tabs id="custom-animation" value="1">

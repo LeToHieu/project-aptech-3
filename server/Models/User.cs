@@ -18,7 +18,7 @@ namespace MediaWebApi.Models
 
 
         [Column("userimage")]
-        public string Userimage { get; set; } = "";
+        public string Userimage { get; set; } = ".";
 
 
         [Required(ErrorMessage = "Phone is required")]
@@ -38,5 +38,7 @@ namespace MediaWebApi.Models
 
         [Column("role")]
         public int Role { get; set; } = 0;
+
+  
     }
 }

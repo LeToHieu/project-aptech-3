@@ -34,11 +34,16 @@ namespace MediaWebApi.Repositories
 
             User? newUser = result.FirstOrDefault();
 
+            if (newUser == null)
+            {
+                throw new ArgumentException("Can not create media");
+            }
+
             return newUser;
 
         }
 
-        public async Task<string> Login(LoginViewModel loginUser)
+        public async Task<string?> Login(LoginViewModel loginUser)
         {
             string sql = "EXECUTE LoginUser @Username, @Password";
             IEnumerable<User> result = await _context.Users.FromSqlRaw(sql,
@@ -73,9 +78,9 @@ namespace MediaWebApi.Repositories
             }
         }
 
-        public async Task<List<User>?> GetAllUsers()
+        public async Task<List<User?>?> GetAllUsers()
         {
-            List<User> users = await _context.Users.ToListAsync();
+            List<User?> users = await _context.Users.ToListAsync();
             return users;
         }
 
@@ -91,20 +96,97 @@ namespace MediaWebApi.Repositories
             return user;
         }
 
-        public Task<bool?> UpdateUser(User user)
+        public async Task<User?> UpdateUser(UserViewModel user)
         {
-            throw new NotImplementedException();
+
+            string sql = "EXECUTE UpdateUser @UserId, @Username, @UserImage, @Password, @Email,@Phone, @Role";
+            IEnumerable<User> result = await _context.Users.FromSqlRaw(sql,
+                                    new SqlParameter("@UserId", user.Id),
+                                    new SqlParameter("@Username", user.Username),
+                                    new SqlParameter("@UserImage", user.Userimage),
+                                    new SqlParameter("@Password", user.Password),
+                                    new SqlParameter("@Email", user.Email),
+                                    new SqlParameter("@Phone", user.Phone),
+                                    new SqlParameter("@Role", user.Role)
+                                ).ToListAsync();
+
+            User? newUser = result.FirstOrDefault();
+            if (newUser == null)
+            {
+                throw new ArgumentException("Can not update user");
+            }
+            return newUser;
         }
 
-        public Task<bool?> DeleteUser(int id)
+        public async Task<bool?> DeleteUser(int id)
         {
-            throw new NotImplementedException();
+
+            var user = await _context.Users.FindAsync(id);        
+
+            if (user == null)
+            {
+                throw new ArgumentException("User not found");
+            }
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<User?> GetById(int userId)
         {
             User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User not found");
+
+            }
             return user;
         }
+
+        public async Task<string?> UpLoadFile(IFormFile file)
+        {
+            string type = "";
+            bool flag = false;
+            var allowedExtensionsVideo = new[] { ".mp4", ".avi", ".mov", ".wmv", ".flv" };
+            var fileExtensionVideo = Path.GetExtension(file.FileName).ToLower();
+            if (allowedExtensionsVideo.Contains(fileExtensionVideo))
+            {
+                type = "Videos";
+                flag = true;
+            }
+            var allowedExtensionsImage = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+            var fileExtensionImage = Path.GetExtension(file.FileName).ToLower();
+            if (allowedExtensionsImage.Contains(fileExtensionImage))
+            {
+                type = "Images";
+                flag = true;
+            }
+            var allowedExtensionsSong = new[] { ".mp3", ".wav" };
+            var fileExtensionSong = Path.GetExtension(file.FileName).ToLower();
+            if (allowedExtensionsSong.Contains(fileExtensionSong))
+            {
+                type = "Songs";
+                flag = true;
+            }
+            if (!flag)
+            {
+                throw new ArgumentException("Can not upload this file");
+            }
+
+            if (file == null || file.Length == 0)
+            {
+                throw new ArgumentException("No file was uploaded");
+            }
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine("Uploads/" + type, fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            return type + "/" + fileName;
+        }
+
     }
+
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
 namespace MediaWebApi.Models
 {
 
@@ -23,5 +25,7 @@ namespace MediaWebApi.Models
         [Column("total_amount")]
         public decimal? total_amount { get; set; }
         public ICollection<Order_Detail>? Order_Detail { get; set; }
+
+        public User User { get; set; }
     }
 }

@@ -91,6 +91,31 @@ namespace MediaWebApi.Controllers
                 });
             }
         }
+        [HttpGet("GetByOrderId/{id}")]
+        public async Task<IActionResult> GetOrder_DetailByOrderId(int id)
+        {
+            try
+            {
+                List<Order_Detail?>? order = await _order_detailService.GetOrder_DetailByOrderId(id);
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var json = JsonConvert.SerializeObject(order, settings);
+                return Ok(new
+                {
+                    json,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    status = false,
+                });
+            }
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder_DetailById(int id)
         {

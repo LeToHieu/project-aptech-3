@@ -1,12 +1,17 @@
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-function EditBills({ isOpen, closeModal }) {
+function EditBills({ isOpen, closeModal, orderProducts }) {
+  console.log(orderProducts);
+  if (!orderProducts) {
+    return <p>Không có dữ liệu hoặc đang tải...</p>;
+  }
+
   return (
     <div
-      className={`fixed inset-0 z-10 flex items-center justify-center ${
-        isOpen ? "" : "hidden"
-      }`}
+      className={`fixed inset-0 z-10 flex items-center justify-center ${isOpen ? "" : "hidden"
+        }`}
       style={{
         backgroundColor: "rgba(0, 0, 0, 0.5)",
       }}
@@ -20,57 +25,49 @@ function EditBills({ isOpen, closeModal }) {
           onClick={closeModal}
         />
 
-        <form>
-          <div className="md:flex mb-6">
-          <div class="md:w-1/3">
-              <label
-                class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4"
-                for="my-textfield"
-              >
-                Text Field
-              </label>
-            </div>
-            <div class="md:w-2/3">
-              <input
-                class="form-input block w-full focus:bg-white"
-                id="my-textfield"
-                type="text"
-                value=""
-              />
-            </div>
-          </div>
+        <h2 className="text-xl font-semibold mb-4">Danh sách sản phẩm</h2>
+        <div className="max-h-96 overflow-y-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="p-2 border">ID</th>
+                <th className="p-2 border">Price</th>
+                <th className="p-2 border">Type</th>
+                <th className="p-2 border"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderProducts.map((product) => (
+                <tr key={product.Id} className="mb-4">
+                  <td className="p-2 border">{product.AlbumId || product.MediaId}</td>
+                  <td className="p-2 border">${product.price}</td>
+                  <td className="p-2 border">{product.Id === product.AlbumId ? "Album" : "Media"}</td>
+                  <td className="p-2 border">
+                    <button className="focus:outline-none">
+                      <DeleteIcon />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-          <div className="md:flex mb-6">
-          <div class="md:w-1/3">
-              <label
-                class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4"
-                for="my-textarea"
-              >
-                Text Area
-              </label>
-            </div>
-            <div class="md:w-2/3">
-              <textarea
-                class="form-textarea block w-full focus:bg-white"
-                id="my-textarea"
-                value=""
-                rows="8"
-              ></textarea>
-            </div>
-          </div>
-
-          <div className="md:flex md:items-center">
-            <div className="md:w-1/3"></div>
-            <div className="md:w-2/3">
-              <button
-                className="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                type="button"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </form>
+        <div className="mt-4 flex justify-end">
+          <button
+            className="mr-2 shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            type="button"
+          >
+            Update
+          </button>
+          <button
+            className="shadow bg-red-700 hover:bg-red-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            type="button"
+            onClick={closeModal}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );

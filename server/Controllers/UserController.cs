@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using MediaWebApi.Extensions;
 using MediaWebApi.Services.Interface;
 using MediaWebApi.Services;
+using Newtonsoft.Json;
 
 namespace MediaWebApi.Controllers
 {
@@ -157,9 +158,14 @@ namespace MediaWebApi.Controllers
             try
             {
                 User? user = await _userService.GetUserById(id);
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var json = JsonConvert.SerializeObject(user, settings);
                 return Ok(new
                 {
-                    user,
+                    json,
                 });
             }
             catch (ArgumentException ex)
@@ -169,8 +175,6 @@ namespace MediaWebApi.Controllers
                     message = ex.Message,
                     status = false,
                 });
-
-
             }
         }
     }

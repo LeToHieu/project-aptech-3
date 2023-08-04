@@ -18,14 +18,12 @@ import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import { grey } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { showMusic, showMute, playOrPause } from "../redux/reducer/config";
-import Cart from "../components/userPage/cart";
 
 const Index = () => {
   const location = useLocation().pathname.split("/")[1];
   const { music, isMusic, isPlaying, isMute } = useSelector(
     (state) => state.config
   );
-  const [isOpenCart, setIsOpenCart] = useState(false);
   const dispatch = useDispatch();
   const width = useRef(null);
   const formatTime = (time) => {
@@ -86,8 +84,7 @@ const Index = () => {
   };
   return (
     <>
-      <Header setIsOpenCart={setIsOpenCart} />
-      <Cart isOpen={isOpenCart} closeModal={() => setIsOpenCart(false)}></Cart>
+      <Header />
       <input type="checkbox" id="toggle" />
       <input
         type="checkbox"

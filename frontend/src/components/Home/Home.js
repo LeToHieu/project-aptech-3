@@ -4,11 +4,16 @@ import Card from "../Card/Card";
 import axios from "../../api/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getList } from "../../redux/reducer/video";
-
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+} from "@material-tailwind/react";
 const Home = () => {
-  // const [videos, setVideos] = useState([])
+  const [videos, setVideos] = useState([])
   const dispatch = useDispatch()
-  const {listVideos} = useSelector(state => state.video)
+  const { listVideos } = useSelector(state => state.video)
   useEffect(() => {
     async function loadVideos() {
       let { data } = await axios.get('/media', {
@@ -18,38 +23,60 @@ const Home = () => {
       });
       data.medias = data.medias.filter(video => video.media.mediaUrl.includes("Videos"))
       dispatch(getList(data.medias))
-      // setVideos(data.medias);
+      setVideos(data.medias);
     }
     loadVideos();
   }, []);
-  // console.log(videos);
+  const data = [
+    {
+      label: "Âm nhạc",
+      value: "1",
+      desc: []
+    },
+    {
+      label: "Video",
+      value: "2",
+      desc: []
+    }, {
+      label: "Trò chơi",
+      value: "3",
+      desc: []
+    }
+  ]
+  console.log(listVideos)
   return (
     <>
-      <div className="top flex items-center gap-5 h-[8%] max-lg:overflow-x-auto w-full overflow-hidden">
-        <Tag title="Tất cả" />
-        <Tag title="Âm nhạc" />
-        <Tag title="Trò chơi" />
-        <Tag title="Hoạt họa" />
-        <Tag title="Đã xem" />
-        <Tag title="Đã xem" />
-        <Tag title="Đề xuất mới" />
-        <Tag title="Đề xuất mới" />
-        <Tag title="Đề xuất mới" />
-      </div>
-      <div className="bottom mt-[2%] h-[100%]">
-        <div
-          className={`
+      <Tabs id="custom-animation" value="1">
+        <TabsHeader className="z-0">
+          {data.map(({ label, value }) => (
+            <Tab key={value} value={value}>
+              {label}
+            </Tab>
+          ))}
+        </TabsHeader>
+        <TabsBody
+          animate={{
+            initial: { y: 250 },
+            mount: { y: 0 },
+            unmount: { y: 250 },
+          }}
+        >
+        <div className="bottom mt-[2%] h-[100%]">
+          <div
+            className={`
                     list pt-2 grid gap-2 lg:grid-cols-4 sm:grid-cols-3 h-[100%] overflow-auto
 
                     `}
-        >
-          {listVideos.map((video, index) => {
-            return (
-              <Card video = {video} />
-            )
-          })}
+          >
+            {listVideos.map((video, index) => {
+              return (
+                <Card video={video} />
+              )
+            })}
+          </div>
         </div>
-      </div>
+        </TabsBody>
+      </Tabs>
     </>
   );
 };

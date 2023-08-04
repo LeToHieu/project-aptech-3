@@ -4,18 +4,20 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useDispatch } from 'react-redux'
 import { userLogOut } from '../../redux/reducer/users'
 import React, { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom"
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example({setIsOpenCart}) {
+export default function Example() {
+    const navigate = useNavigate();
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(userLogOut())
     } 
     const handleCart = () => {
-      setIsOpenCart(true)
+      navigate('/cart')
     }
   return (
     <Menu as="div" className="relative inline-block text-left">

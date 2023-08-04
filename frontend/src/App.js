@@ -64,15 +64,16 @@ function App() {
           <Route index path="" element={<Home />} />
           <Route path="video/:id" element={<Video />} />
           <Route path="music" element={<Music />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
         {/* <Route path='/music' element={<Music />}></Route> */}
         <Route path="/login" element={<LoginIndex />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
 
         {/* protected route user */}
-        <Route element={<RequireAuth allowedRole={[0, 1]} />}>
-          <Route path="/cart" element={<Cart />} />
-        </Route>
+        {/* <Route element={<RequireAuth allowedRole={[0, 1]} />}>
+          
+        </Route> */}
 
         {/* protected route admin */}
         <Route

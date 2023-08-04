@@ -6,7 +6,8 @@ namespace MediaWebApi.Services.Interface
     {
         Task<List<Orders?>?> GetAllOrder();
         Task<Orders?> GetOrderById(int id);
-        Task<Orders?> AddOrder(OrderViewModel order);
+        Task<List<Orders?>>? GetOrderByUserId(int id);
+        Task<Orders?> AddOrder(OrderViewModelWithoutId order);
         Task<bool?> UpdateOrder(OrderViewModel order);
         Task<bool?> DeleteOrder(int id);
     }

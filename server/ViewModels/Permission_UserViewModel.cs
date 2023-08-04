@@ -6,9 +6,9 @@ namespace MediaWebApi.ViewModels
     {
 
         [Required]
-        public int userId { get; set; }
+        public int permissionId { get; set; }
 
         [Required]
-        public int permissionId { get; set; }
+        public int userId { get; set; }
     }
 }

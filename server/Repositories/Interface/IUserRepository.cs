@@ -10,8 +10,10 @@ namespace MediaWebApi.Repositories.Interface
         Task<User?> GetByEmail(string email);
         Task<User?> GetById(int userId);
         Task<List<User?>?> GetAllUsers();
-        Task<bool?> UpdateUser(User user);
+        Task<User?> UpdateUser(UserViewModel user);
         Task<bool?> DeleteUser(int id);
         Task<string?> Login(LoginViewModel loginUser);
+
+        Task<string?> UpLoadFile(IFormFile file);
     }
 }

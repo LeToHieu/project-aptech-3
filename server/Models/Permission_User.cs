@@ -5,8 +5,9 @@ namespace MediaWebApi.Models
 {
     [Table("Permission_User")]
     public class Permission_User
-    {
+    { 
         [Key]
+    
         [Required]
         [ForeignKey("Users")]
         [Column("user_id")]
@@ -16,6 +17,12 @@ namespace MediaWebApi.Models
         [ForeignKey("Permissions")]
         [Column("permission_id")]
         public int permissionId { get; set; }
+
+        [ForeignKey("userId")]
+        public virtual User? User { get; set; }
+        [ForeignKey("permissionId")]
+        public virtual Permissions? Permissions { get; set; }
+
     }
 
 }

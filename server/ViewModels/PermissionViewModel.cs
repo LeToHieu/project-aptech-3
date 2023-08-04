@@ -7,6 +7,6 @@ namespace MediaWebApi.ViewModels
     {
         public int Id { get; set; }
         [Required]
-        public int permission { get; set; } = 0;
+        public string permission { get; set; } = "";
     }
 }

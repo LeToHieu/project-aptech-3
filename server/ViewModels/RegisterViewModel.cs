@@ -7,6 +7,7 @@ namespace MediaWebApi.ViewModels
     {
         [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; } = "";
+
         public string Userimage { get; set; } = "";
 
         [Required(ErrorMessage = "Phone is required")]
@@ -20,5 +21,6 @@ namespace MediaWebApi.ViewModels
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = "";
+        public IFormFile? fileImage { get; set; }
     }
 }

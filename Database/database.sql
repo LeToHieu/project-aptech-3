@@ -563,7 +563,6 @@ BEGIN
         * FROM Orders
     WHERE 
         user_id = @user_id
-        AND status_order = 0
 END
 
 CREATE PROCEDURE InsertOrderDetail

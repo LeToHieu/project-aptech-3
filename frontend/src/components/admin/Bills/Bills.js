@@ -6,12 +6,13 @@ import Single_Table from "../Table/Single_Table";
 import parseJson from "../../../Parse"
 import { toast } from 'react-toastify'
 const GET_Order = 'Order';
-const DELETE_Order = 'Order/delete'
-
+const DELETE_Order = 'Order/delete/'
+const GET_Order_Detail = 'Order_Detail/GetByOrderId/'
 function Bills() {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [data, setData] = useState();
+  const [orderProducts, setOrderProducts] = useState([]);
   const title = "Danh sách hoá đơn";
   const fetchData = async () => {
     const config = {
@@ -22,7 +23,6 @@ function Bills() {
     try {
       const result = await axios.get(GET_Order, config);
       setData(parseJson(result.data.json))
-      console.log(data)
     } catch (error) {
       console.log(error.message);
     }
@@ -100,7 +100,7 @@ function Bills() {
         },
       };
       try {
-        await axios.post(DELETE_Order + "/" + id, config);
+        await axios.post(DELETE_Order + id, config);
         toast.success("Xoá thành công");
         fetchData();
       } catch (error) {
@@ -114,17 +114,28 @@ function Bills() {
         "Content-Type": "application/json",
       },
     };
-
-  }
+    try {
+      // debugger
+      const result = await axios.get(GET_Order_Detail + `${id}`, config);
+      let data = parseJson(result.data.json)
+      const orderProducts = data; 
+      setIsOpenEdit(true);
+      setOrderProducts(orderProducts);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24 z-0">
       <AddBills
         isOpen={isOpenAdd}
         closeModal={() => setIsOpenAdd(false)}
+        fetchData={fetchData}
       ></AddBills>
       <EditBills
         isOpen={isOpenEdit}
         closeModal={() => setIsOpenEdit(false)}
+        orderProducts={orderProducts}
       ></EditBills>
       <Single_Table
         columns={columns}
@@ -133,6 +144,7 @@ function Bills() {
         title={title}
         propData={result}
         handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
       ></Single_Table>
     </div>
   );

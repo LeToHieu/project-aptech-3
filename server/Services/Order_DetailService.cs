@@ -22,6 +22,10 @@ namespace MediaWebApi.Services
         {
             return await _order_detailRepository.GetOrder_DetailById(id); 
         }
+        public async Task<List<Order_Detail?>?> GetOrder_DetailByOrderId(int id)
+        {
+            return await _order_detailRepository.GetOrder_DetailByOrderId(id);
+        }
         public async Task<Order_Detail?> AddOrder_Detail(Order_DetailViewModel order_detail)
         {
             return await _order_detailRepository.AddOrder_Detail(order_detail);

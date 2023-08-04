@@ -126,6 +126,7 @@ CREATE TABLE Orders(
   user_id INT NOT NULL,
   order_date DATETIME DEFAULT GETDATE(),
   total_amount DECIMAL(10, 2) NOT NULL,
+  status_order INT NOT NULL DEFAULT 0;
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
@@ -550,8 +551,20 @@ CREATE PROCEDURE InsertOrder
 AS
 BEGIN
   INSERT INTO Orders (user_id, order_date, total_amount)
-  VALUES (@user_id, @order_date, @total_amount)
+  VALUES (@user_id, @order_date, @total_amount);
+  SELECT * FROM Orders WHERE Id = @@IDENTITY
 END;
+
+CREATE PROCEDURE GetOrderByUserId
+    @user_id INT
+AS
+BEGIN
+    SELECT 
+        * FROM Orders
+    WHERE 
+        user_id = @user_id
+        AND status_order = 0
+END
 
 CREATE PROCEDURE InsertOrderDetail
     @order_id INT,
@@ -579,4 +592,20 @@ BEGIN
         media_id = @media_id,
         price = @price
     WHERE Id = @Id;
+END
+
+CREATE PROCEDURE GetOrderDetailsByOrderId
+    @order_id INT
+AS
+BEGIN
+    SELECT 
+        Id,
+        order_id,
+        album_id,
+        media_id,
+        price
+    FROM 
+        Order_Detail
+    WHERE 
+        order_id = @order_id
 END

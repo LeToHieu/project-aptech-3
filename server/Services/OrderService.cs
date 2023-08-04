@@ -23,7 +23,11 @@ namespace MediaWebApi.Services
         {
             return await _orderRepository.GetOrderById(id); 
         }
-        public async Task<Orders?> AddOrder(OrderViewModel order)
+        public async Task<List<Orders?>>? GetOrderByUserId(int id)
+        {
+            return await _orderRepository.GetOrderByUserId(id);
+        }
+        public async Task<Orders?> AddOrder(OrderViewModelWithoutId order)
         {
             return await _orderRepository.AddOrder(order);  
         }

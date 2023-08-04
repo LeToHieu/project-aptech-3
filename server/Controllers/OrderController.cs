@@ -18,7 +18,7 @@ namespace MediaWebApi.Controllers
             _orderService = orderService;
         }
         [HttpPost("add")]
-        public async Task<IActionResult> CreateOrder(OrderViewModel order)
+        public async Task<IActionResult> CreateOrder(OrderViewModelWithoutId order)
         {
             try
             {
@@ -94,7 +94,31 @@ namespace MediaWebApi.Controllers
                 });
             }
         }
-
+        [HttpGet("GetByUserId/{id}")]
+        public async Task<IActionResult> GetOrderByUserId(int id)
+        {
+            try
+            {
+                List<Orders> order = await _orderService.GetOrderByUserId(id);
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var json = JsonConvert.SerializeObject(order, settings);
+                return Ok(new
+                {
+                    json,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    status = false,
+                });
+            }
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrderById(int id)
         {

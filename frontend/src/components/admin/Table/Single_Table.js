@@ -1,8 +1,7 @@
 import React from "react";
 
-function Single_Table({ handleDelete, setIsOpenAdd, setIsOpenEdit, columns, propData, title }) {
+function Single_Table({ handleDelete, setIsOpenAdd, setIsOpenEdit, columns, propData, title, handleUpdate }) {
   const data = React.useMemo(() => propData, [propData]);
-  console.log(data)
   if (!data) {
     return <p>Không có dữ liệu hoặc đang tải...</p>;
   }
@@ -50,14 +49,14 @@ function Single_Table({ handleDelete, setIsOpenAdd, setIsOpenEdit, columns, prop
                     key={colIndex}
                     className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs p-2 break-all"
                   >
-                    {/* 'break-all' will make the text wrap within the cell */}
+
                     {row[column.access]}
                   </td>
                 ))}
                 <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                    onClick={() => setIsOpenEdit(true)}
+                    onClick={() => handleUpdate(row["order_id"])}
                   >
                     Edit
                   </button>

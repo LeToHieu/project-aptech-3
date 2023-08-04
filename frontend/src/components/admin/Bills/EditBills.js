@@ -3,6 +3,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function EditBills({ isOpen, closeModal, orderProducts }) {
+  console.log(orderProducts);
+  if (!orderProducts) {
+    return <p>Không có dữ liệu hoặc đang tải...</p>;
+  }
+
   return (
     <div
       className={`fixed inset-0 z-10 flex items-center justify-center ${isOpen ? "" : "hidden"
@@ -21,47 +26,32 @@ function EditBills({ isOpen, closeModal, orderProducts }) {
         />
 
         <h2 className="text-xl font-semibold mb-4">Danh sách sản phẩm</h2>
-
-        <ul>
-          {/* {orderProducts.map((product) => (
-            <li key={product.id} className="mb-4 flex items-center">
-              <div>
-                <img
-                  src={product.imageUrl}
-                  alt={product.productName}
-                  className="w-16 h-16 rounded-full"
-                />
-              </div>
-              <div className="ml-4 flex-grow">
-                <p className="font-semibold">{product.productName}</p>
-                <p className="text-gray-600">${product.price}</p>
-              </div>
-              <div>
-                <button className="focus:outline-none">
-                  <DeleteIcon />
-                </button>
-              </div>
-            </li>
-          ))} */}
-          <li className="mb-4 flex items-center">
-            <div>
-              <img
-                src=""
-                alt=""
-                className="w-16 h-16 rounded-full"
-              />
-            </div>
-            <div className="ml-4 flex-grow">
-              <p className="font-semibold">Media</p>
-              <p className="text-gray-600">$100</p>
-            </div>
-            <div>
-              <button className="focus:outline-none">
-                <DeleteIcon />
-              </button>
-            </div>
-          </li>
-        </ul>
+        <div className="max-h-96 overflow-y-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="p-2 border">ID</th>
+                <th className="p-2 border">Price</th>
+                <th className="p-2 border">Type</th>
+                <th className="p-2 border"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderProducts.map((product) => (
+                <tr key={product.Id} className="mb-4">
+                  <td className="p-2 border">{product.AlbumId || product.MediaId}</td>
+                  <td className="p-2 border">${product.price}</td>
+                  <td className="p-2 border">{product.Id === product.AlbumId ? "Album" : "Media"}</td>
+                  <td className="p-2 border">
+                    <button className="focus:outline-none">
+                      <DeleteIcon />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         <div className="mt-4 flex justify-end">
           <button

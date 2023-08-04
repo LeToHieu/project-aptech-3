@@ -44,12 +44,20 @@ namespace MediaWebApi.Repositories
             }
             return order;
         }
+        public async Task<List<Order_Detail?>?> GetOrder_DetailByOrderId(int id)
+        {
+            string sql = "EXEC GetOrderDetailsByOrderId @order_id";
+            List<Order_Detail?>? result = await _context.Order_Detail.FromSqlRaw(sql,
+                new SqlParameter("@order_id", id)
+                ).ToListAsync();
+            return result;
+        }
         public async Task<Order_Detail?> AddOrder_Detail(Order_DetailViewModel order_detail)
         {
             string sql = "EXECUTE InsertOrderDetail @order_id, @album_id, @media_id, @price";
             IEnumerable<Order_Detail> result = await _context.Order_Detail.FromSqlRaw(sql,
                     new SqlParameter("@order_id", order_detail.OrderId),
-                    new SqlParameter("@album_id", order_detail.AlbumId),
+                    new SqlParameter("@album_id", order_detail.AlbumId == 0 ? DBNull.Value : order_detail.AlbumId),
                     new SqlParameter("@media_id", order_detail.MediaId == 0 ? DBNull.Value : order_detail.MediaId),
                     new SqlParameter("@price", order_detail.Price)
 

@@ -53,6 +53,12 @@ namespace MediaWebApi
             builder.Services.AddScoped<IOrder_DetailRepository, Order_DetailRepository>();
             builder.Services.AddScoped<IOrder_DetailService, Order_DetailService>();
 
+            builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+
+            builder.Services.AddScoped<IMediaFeedbackRepository, MediaFeedbackRepository>();
+            builder.Services.AddScoped<IMediaFeedbackService, MediaFeedbackService>();
+
             builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             builder.Services.AddScoped<IPermissionService, PermissionService>();
 

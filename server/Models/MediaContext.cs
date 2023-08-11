@@ -18,6 +18,8 @@ namespace MediaWebApi.Models
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<Permission_User> Permission_User { get; set; }
         public DbSet<Order_Detail> Order_Detail { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Media_Feedback> Media_Feedback { get; set; }
         public DbSet<ArtistAlbum> ArtistAlbums { get; set; }
         public DbSet<ArtistMedia> ArtistMedias { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
@@ -27,6 +29,7 @@ namespace MediaWebApi.Models
             modelBuilder.Entity<ArtistAlbum>().HasKey(aa => new { aa.ArtistId, aa.AlbumId });
             modelBuilder.Entity<ArtistMedia>().HasKey(aa => new { aa.ArtistId, aa.MediaId });
             modelBuilder.Entity<Orders>().HasKey(aa => new { aa.Id });
+            modelBuilder.Entity<Feedback>().HasKey(aa => new { aa.Id });
         }
     }
 }

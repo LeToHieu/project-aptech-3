@@ -63,23 +63,23 @@ function AddBills({ isOpen, closeModal, fetchData }) {
       );
       return;
     }
-  
+
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-  
+
     const orderData = {
       userId: userData.id,
       orderDate: new Date().toISOString(),
       total_amount: parseFloat(getTotalBill()),
     };
-  
+
     try {
       const orderResponse = await axios.post("Order/add", orderData, config);
       const newOrder = orderResponse.data.newOrder;
-  
+
       if (newOrder) {
         for (const product of productData) {
           const orderDetailData = {
@@ -88,7 +88,7 @@ function AddBills({ isOpen, closeModal, fetchData }) {
             mediaId: product.type === "media" ? product.id : 0,
             price: parseFloat(product.price),
           };
-          
+
           const orderDetailResponse = await axios.post(
             "Order_Detail/add",
             orderDetailData,
@@ -101,15 +101,26 @@ function AddBills({ isOpen, closeModal, fetchData }) {
             );
           }
         }
-  
+
         toast.success("Thêm đơn hàng thành công!");
         fetchData();
-        closeModal();
+        handleCancle();
       } else {
         toast.error("Có lỗi xảy ra khi thêm đơn hàng.");
       }
     } catch (error) {
       toast.error("Có lỗi xảy ra. Thêm đơn hàng không thành công");
+    }
+  };
+  const handleAddProduct = (data) => {
+    const productExists = productData.some(
+      (product) => product.id === data.id && product.type === data.type
+    );
+    console.log(data)
+    if (productExists) {
+      toast.error("Sản phẩm đã tồn tại trong danh sách.");
+    } else {
+      addProductData(data);
     }
   };
   
@@ -134,7 +145,7 @@ function AddBills({ isOpen, closeModal, fetchData }) {
       <MediaModal
         isOpen={isOpenForm}
         closeModal={() => setIsOpenForm(false)}
-        addProductData={addProductData}
+        addProductData={handleAddProduct}
       ></MediaModal>
       <div
         id="section2"
@@ -147,7 +158,7 @@ function AddBills({ isOpen, closeModal, fetchData }) {
           />
         )}
 
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="md:flex mb-6 items-center">
             <div className="md:w-1/3">
               <label

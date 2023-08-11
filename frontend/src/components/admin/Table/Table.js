@@ -18,12 +18,12 @@ function Table({ setIsOpenAdd, setIsOpenEdit, columns, propData, title }) {
               type="button"
               onClick={() => setIsOpenAdd(true)}
             >
-              Thêm hoá đơn
+              Thêm bình luận
             </button>
           </div>
         </div>
       </div>
-      <div class="block w-full overflow-x-auto">
+      <div class="block w-full overflow-x-auto"> 
         <table class="items-center bg-transparent w-full border-collapse ">
           <thead>
             <tr>
@@ -44,17 +44,6 @@ function Table({ setIsOpenAdd, setIsOpenEdit, columns, propData, title }) {
               <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
                 
               </th>
-              <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                  onClick={() => setIsOpenEdit(true)}
-                >
-                  Edit
-                </button>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded">
-                  Delete
-                </button>
-              </td>
             </tr>
           </tbody>
         </table>

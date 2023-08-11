@@ -28,5 +28,6 @@ namespace MediaWebApi.ViewModels
         public IFormFile? fileImage { get; set; }
         public IFormFile? fileVideo { get; set; }
 
+        public int ArtistId { get; set; }
     }
 }

@@ -126,7 +126,7 @@ CREATE TABLE Orders(
   user_id INT NOT NULL,
   order_date DATETIME DEFAULT GETDATE(),
   total_amount DECIMAL(10, 2) NOT NULL,
-  status_order INT NOT NULL DEFAULT 0;
+  status_order INT NOT NULL DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
@@ -329,18 +329,18 @@ VALUES (1, 29.99),
        (9, 19.95),
        (10, 8.50);
 
-INSERT INTO Order_Detail (order_id, album_id, media_id, status_order, price)
+INSERT INTO Order_Detail (order_id, album_id, media_id, price)
 VALUES
-  (1, 1, NULL, 1, 50.00),
-  (2, NULL, 1, 0, 20.00),
-  (3, 2, NULL, 1, 35.00),
-  (4, NULL, 2, 0, 15.00),
-  (5, 3, NULL, 1, 45.00),
-  (1, NULL, 3, 1, 25.00),
-  (2, 4, NULL, 1, 40.00),
-  (3, NULL, 5, 0, 30.00),
-  (4, 5, NULL, 1, 55.00),
-  (5, NULL, 4, 1, 28.00);
+  (1, 1, NULL, 50.00),
+  (2, NULL, 1, 20.00),
+  (3, 2, NULL, 35.00),
+  (4, NULL, 2, 15.00),
+  (5, 3, NULL, 45.00),
+  (1, NULL, 3, 25.00),
+  (2, 4, NULL, 40.00),
+  (3, NULL, 5, 30.00),
+  (4, 5, NULL, 55.00),
+  (5, NULL, 4, 28.00);
 
 INSERT INTO Orders (user_id, total_amount)
 VALUES (1, 29.99),
@@ -467,12 +467,17 @@ CREATE PROCEDURE InsertMedia
 	@media_url VARCHAR(255),
 	@duration DECIMAL(10, 2),
 	@price DECIMAL(10,2),
-	@category_id INT
+	@category_id INT,
+    @artist_id INT
 AS
 BEGIN
 	INSERT INTO Medias (media_name, media_image, media_url, duration, price, category_id)
 	VALUES (@media_name, @media_image, @media_url, @duration, @price, @category_id);
-	SELECT * FROM Medias WHERE ID = @@IDENTITY
+    DECLARE @InsertedID INT
+    SET @InsertedID = SCOPE_IDENTITY();
+    INSERT INTO Artist_Media (artist_id, media_id)
+    VALUES (@artist_id, @InsertedID);
+    SELECT * FROM Medias WHERE ID = @InsertedID;
 END;
 CREATE PROCEDURE UpdateMedia
 	@media_id INT,
@@ -532,15 +537,11 @@ END
 
 CREATE PROCEDURE UpdateOrder
   @order_id INT,
-  @user_id INT,
-  @order_date DATETIME,
   @total_amount DECIMAL(10, 2)
 AS
 BEGIN
   UPDATE Orders
-  SET user_id = @user_id,
-      order_date = @order_date,
-      total_amount = @total_amount
+  SET total_amount = @total_amount
   WHERE Id = @order_id
 END;
 

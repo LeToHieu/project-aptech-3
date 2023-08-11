@@ -6,12 +6,8 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import EditFeedback from "./EditFeedback";
-import AddFeedback from "./AddFeedback";
 import Table from "../Table/Table";
 function Feedback() {
-  const [isOpenAdd, setIsOpenAdd] = useState(false);
-  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const title = "Danh sách phản hồi";
   const data1 = [
     {
@@ -64,14 +60,6 @@ function Feedback() {
   );
   return (
     <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
-      <AddFeedback
-        isOpen={isOpenAdd}
-        closeModal={() => setIsOpenAdd(false)}
-      ></AddFeedback>
-      <EditFeedback
-        isOpen={isOpenEdit}
-        closeModal={() => setIsOpenEdit(false)}
-      ></EditFeedback>
       <Tabs id="custom-animation" value="1">
         <TabsHeader className="z-0">
           {data.map(({ label, value }) => (
@@ -90,8 +78,6 @@ function Feedback() {
           {data.map(({ value, desc }) => (
             <TabPanel key={value} value={value}>
               <Table
-                setIsOpenAdd={setIsOpenAdd}
-                setIsOpenEdit={setIsOpenEdit}
                 title = {title}
                 columns={columns}
               ></Table>

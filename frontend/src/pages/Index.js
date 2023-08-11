@@ -92,7 +92,7 @@ const Index = () => {
         onClick={() => dispatch(showMusic())}
       />
       <div className="home flex h-[100vh] overflow-hidden">
-        <Menu />
+        {/* <Menu /> */}
         <div
           className={`home-container flex-[5] ${
             location === "music" ? "h-full" : " pl-2 py-5 overflow-auto"
@@ -162,10 +162,6 @@ const Index = () => {
                       <span className="block text-gray-400 min-w-10 text-1">
                         {music.media.mediaName}
                       </span>
-                      {/* <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
-                    <span className="block text-gray-400 min-w-10 text-1">
-                      Son Tung MTP{" "}
-                    </span> */}
                     </p>
                   </div>
                   <div className="items-center gap-5 flex-1 justify-between px-5 flex ">

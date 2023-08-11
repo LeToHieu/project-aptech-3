@@ -18,19 +18,13 @@ const Header = () => {
   const {user} = useSelector(state => state.user)
   return (
     <>
-    <div className={`header shadow-lg shadow-blue-500/50 z-20  pb-2 fixed w-full ${location === 'music' ? 'bg-black text-white' : 'bg-white'}`}>
+    <div className={`header shadow-lg shadow-blue-500/50 z-20  pb-2 fixed w-full ${location === 'music' ? 'bg-white' : 'bg-black text-white'}`}>
       <div className="wrapper h-[11vh] px-10 flex gap-2 justify-between items-center max-[640px]:px-1">
         <div className='start flex items-center gap-5 max-[640px]:gap-0'>
-          <label htmlFor="toggle" className='max-[640px]:hidden'>
-            <MenuIcon fontSize="large" />
-          </label>
-          <label htmlFor="toggle" className='sm:hidden'>
-            <MenuIcon fontSize="small" />
-          </label>
           <img src={logo} alt="" className='w-[100px] h-[40px] max-[640px]:w-[50px]' />
         </div>
         <div className="center flex-1 max-[640px]:hidden">
-          <div className={`search flex items-center justify-center gap-5 px-5 py-2 border border-gray-400 rounded-lg mx-auto w-fit ${location === 'music' ? 'bg-white' : ''}`}>
+          <div className={`search flex items-center justify-center gap-5 px-5 py-2 border border-gray-400 rounded-lg mx-auto w-fit ${location !== 'music' ? 'bg-white' : ''}`}>
             <input type="text" placeholder='Search' className={`border-none outline-none w-[100%] text-black bg-inherit`}/>
               <SearchIcon fontSize="medium" color="primary" /> 
           </div>

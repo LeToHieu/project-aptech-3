@@ -19,6 +19,9 @@ export default function Example() {
     const handleCart = () => {
       navigate('/cart')
     }
+    const handleBill = () => {
+      navigate('/bill')
+    }
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -52,7 +55,20 @@ export default function Example() {
                 </button>
               )}
             </Menu.Item>
-    
+            <Menu.Item>
+              {({ active }) => (
+                  <button
+                  type="submit"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block w-full px-4 py-2 text-left text-sm'
+                  )}
+                  onClick={handleBill}
+                >
+                  Bills
+                </button>
+              )}
+            </Menu.Item>
             <form method="POST" action="#" onSubmit={handleSubmit}>
               <Menu.Item>
                 {({ active }) => (

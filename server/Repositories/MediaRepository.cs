@@ -9,7 +9,7 @@ using System.Text;
 using TagLib;
 namespace MediaWebApi.Repositories
 {
-    public class MediaRepository:IMediaRepository
+    public class MediaRepository : IMediaRepository
     {
         private readonly MediaContext _context;
         public MediaRepository(MediaContext context)
@@ -19,14 +19,15 @@ namespace MediaWebApi.Repositories
 
         public async Task<Media?> AddMedia(MediaViewModel media)
         {
-            string sql = "EXECUTE InsertMedia @media_name, @media_image, @media_url, @duration, @price, @category_id";
+            string sql = "EXECUTE InsertMedia @media_name, @media_image, @media_url, @duration, @price, @category_id, @artist_id";
             IEnumerable<Media> result = await _context.Medias.FromSqlRaw(sql,
                                     new SqlParameter("@media_name", media.MediaName),
                                     new SqlParameter("@media_image", media.MediaImage),
                                     new SqlParameter("@media_url", media.MediaUrl),
                                     new SqlParameter("@duration", media.Duration),
                                     new SqlParameter("@price", media.Price),
-                                    new SqlParameter("@category_id", media.CategoryId)
+                                    new SqlParameter("@category_id", media.CategoryId),
+                                    new SqlParameter("@artist_id", media.ArtistId)
                                 ).ToListAsync();
 
             Media? newMedia = result.FirstOrDefault();
@@ -153,7 +154,7 @@ namespace MediaWebApi.Repositories
             return true;
         }
 
-        public async Task<string?> UpLoadFile( IFormFile file)
+        public async Task<string?> UpLoadFile(IFormFile file)
         {
             string type = "";
             bool flag = false;
@@ -169,7 +170,7 @@ namespace MediaWebApi.Repositories
             if (allowedExtensionsImage.Contains(fileExtensionImage))
             {
                 type = "Images";
-                flag= true;
+                flag = true;
             }
             var allowedExtensionsSong = new[] { ".mp3", ".wav" };
             var fileExtensionSong = Path.GetExtension(file.FileName).ToLower();
@@ -205,7 +206,7 @@ namespace MediaWebApi.Repositories
             //        }
             //    }
             //}
-            return type + "/" +fileName;
+            return type + "/" + fileName;
         }
 
         public async Task<decimal> GetDuration(string path)

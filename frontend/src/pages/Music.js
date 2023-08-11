@@ -14,7 +14,7 @@ import au3 from "../assets/audio3.mp3";
 import axios from "../api/axios";
 const Music = () => {
   const [musics, setMusics] = useState([])
-  const {music, isMusic } = useSelector((state) => state.config);
+  const { music, isMusic } = useSelector((state) => state.config);
   const dispatch = useDispatch();
   let audioList = [
     {
@@ -37,7 +37,7 @@ const Music = () => {
     let seconds = Math.floor(time % 60)
     let minutes = Math.floor(time / 60) % 60
     let hours = Math.floor(time / 3600)
-    
+
     seconds = seconds < 10 ? `0${seconds}` : seconds
     minutes = minutes < 10 ? `0${minutes}` : minutes
     hours = hours < 10 ? `0${hours}` : hours
@@ -76,8 +76,8 @@ const Music = () => {
   //   });
   // }, []);
   // const getDuration = useCallback(async (mediaUrl) => {
-  //   // TODO: Tối ưu phương thức getDuration.
-  //   // Ví dụ: sử dụng bộ đệm để lưu trữ thông tin của các file audio đã được tải trước đó.
+  // TODO: Tối ưu phương thức getDuration.
+  // Ví dụ: sử dụng bộ đệm để lưu trữ thông tin của các file audio đã được tải trước đó.
   //   const audio = new Audio(mediaUrl);
   //   await audio.load();
   //   return audio.duration;
@@ -113,14 +113,7 @@ const Music = () => {
   return (
     <>
       <div className="music h-[100%] overflow-y-auto">
-        <div className="py-8 px-20 bg-black box-border text-white shrink-0 min-h-[100%] pb-40">
-          <div className="flex gap-2">
-            <Tag title="Thư giãn"></Tag>
-            <Tag title="Thư giãn"></Tag>
-            <Tag title="Thư giãn"></Tag>
-            <Tag title="Thư giãn"></Tag>
-            <Tag title="Thư giãn"></Tag>
-          </div>
+        <div className="py-8 px-20 bg-white box-border text-black shrink-0 min-h-[100%] pb-40">
           <div className="mt-10 w-full">
             <h2 className="sm:text-3xl font-bold">Nhạc yêu thích của bạn</h2>
             <div className="flex gap-2 mt-4 overflow-auto hidden-scrollbar">
@@ -213,12 +206,8 @@ const Music = () => {
                       <p className="font-bold text-1">{music?.media.mediaName}</p>
                       <p className="flex gap-2 items-center">
                         <span className="block text-gray-400 min-w-10 text-1">
-                        {music.artist.artistName}
+                          {music.artist.artistName}
                         </span>
-                        {/* <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
-                        <span className="block text-gray-400 min-w-10 text-1">
-                          Son Tung MTP{" "}
-                        </span> */}
                       </p>
                     </div>
                     <div className="items-center gap-5 flex-1 justify-between px-5 hidden group-hover:flex ">
@@ -241,9 +230,8 @@ const Music = () => {
       </div>
       {music && (
         <div
-          className={`absolute bottom-40 right-0 w-1/4 cursor-pointer group animate__animated ${
-            isMusic ? "hidden" : "animate animate__fadeInTopLeft"
-          }`}
+          className={`absolute bottom-40 right-0 w-1/4 cursor-pointer group animate__animated ${isMusic ? "hidden" : "animate animate__fadeInTopLeft"
+            }`}
         >
           <div
             className="video-controller flex gap-1 absolute w-full h-full top-0 left-0 z-10"
@@ -272,9 +260,8 @@ const Music = () => {
         </div>
       )}
       <div
-        className={`animate__animated ${
-          isMusic ? "animate fadeInUpBig" : "animate fadeOutDownBig"
-        } music-absolute h-[100%] overflow-y-auto absolute w-full bg-black top-0`}
+        className={`animate__animated ${isMusic ? "animate fadeInUpBig" : "animate fadeOutDownBig"
+          } music-absolute h-[100%] overflow-y-auto absolute w-full bg-black top-0`}
       >
         <div className="mx-5 my-10 flex h-[80%]">
           <div className="flex-[1.5] p-5">
@@ -298,9 +285,8 @@ const Music = () => {
                 <img
                   src={"https://localhost:7023/resources/" + music?.media.mediaImage}
                   alt=""
-                  className={`h-[90%] animate__animated ${
-                    isMusic ? "animate animate__fadeInBottomRight" : ""
-                  }`}
+                  className={`h-[90%] animate__animated ${isMusic ? "animate animate__fadeInBottomRight" : ""
+                    }`}
                 />
               </div>
             </div>
@@ -337,10 +323,6 @@ const Music = () => {
                         <span className="block text-gray-400 min-w-10 text-1">
                           {music.artist.artistName}
                         </span>
-                        {/* <span className="block text-gray-400 w-1 h-1 rounded-full bg-gray-400"></span>
-                        <span className="block text-gray-400 min-w-10 text-1">
-                          Son Tung MTP{" "}
-                        </span> */}
                       </p>
                     </div>
                     <div className="items-center gap-5 flex-1 justify-between px-5 flex group-hover:hidden ">

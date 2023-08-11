@@ -5,6 +5,8 @@ import axios from "../../../api/axios";
 import Single_Table from "../Table/Single_Table";
 import parseJson from "../../../Parse"
 import { toast } from 'react-toastify'
+import Pagination from "../Pagination/Pagination";
+
 const GET_Order = 'Order';
 const DELETE_Order = 'Order/delete/'
 const GET_Order_Detail = 'Order_Detail/GetByOrderId/'
@@ -14,6 +16,12 @@ function Bills() {
   const [data, setData] = useState();
   const [orderProducts, setOrderProducts] = useState([]);
   const title = "Danh sách hoá đơn";
+  let result_data = [];
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(5);
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
   const fetchData = async () => {
     const config = {
       headers: {
@@ -21,8 +29,10 @@ function Bills() {
       }
     }
     try {
-      const result = await axios.get(GET_Order, config);
-      setData(parseJson(result.data.json))
+      const du_lieu = await axios.get(GET_Order, config);
+      setData(parseJson(du_lieu.data.json))
+      console.log(result_data)
+      console.log(parseJson(du_lieu.data.json));
     } catch (error) {
       console.log(error.message);
     }
@@ -30,9 +40,8 @@ function Bills() {
   useEffect(() => {
     fetchData()
   }, [])
-  const result = [];
-  if (data) {
 
+  if (data) {
     for (let i = 0; i < data.length; i++) {
       let order_id = data[i].Id;
       let username = data[i].User.Username;
@@ -51,10 +60,11 @@ function Bills() {
         total_amount += data[i].Order_Detail[j].price;
       }
 
-      // Remove trailing comma and space from the product_name
+      total_amount = Math.round(total_amount * 100) / 100;
+
       product_name = product_name.slice(0, -2);
 
-      result.push({
+      result_data.push({
         order_id: order_id,
         username: username,
         product_name: product_name,
@@ -63,8 +73,8 @@ function Bills() {
       });
     }
 
-
   }
+  const currentPost = result_data.slice(indexOfFirstPost, indexOfLastPost);
   const columns = React.useMemo(
     () => [
       {
@@ -115,16 +125,16 @@ function Bills() {
       },
     };
     try {
-      // debugger
       const result = await axios.get(GET_Order_Detail + `${id}`, config);
       let data = parseJson(result.data.json)
-      const orderProducts = data; 
+      const orderProducts = data;
       setIsOpenEdit(true);
       setOrderProducts(orderProducts);
     } catch (error) {
       toast.error(error.message);
     }
   };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
   return (
     <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24 z-0">
       <AddBills
@@ -136,16 +146,19 @@ function Bills() {
         isOpen={isOpenEdit}
         closeModal={() => setIsOpenEdit(false)}
         orderProducts={orderProducts}
+        setOrderProducts={setOrderProducts}
+        fetchData={fetchData}
       ></EditBills>
       <Single_Table
         columns={columns}
         setIsOpenAdd={setIsOpenAdd}
         setIsOpenEdit={setIsOpenEdit}
         title={title}
-        propData={result}
+        propData={currentPost}
         handleDelete={handleDelete}
         handleUpdate={handleUpdate}
       ></Single_Table>
+      <Pagination postPerPage={postPerPage} totalPost={result_data.length} paginate={paginate} />
     </div>
   );
 }

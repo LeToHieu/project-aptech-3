@@ -9,7 +9,9 @@ import {
   TabsHeader,
   TabsBody,
   Tab,
+  TabPanel,
 } from "@material-tailwind/react";
+import Music from "../../pages/Music";
 const Home = () => {
   const [videos, setVideos] = useState([])
   const dispatch = useDispatch()
@@ -21,29 +23,34 @@ const Home = () => {
           "Content-Type": "application/json",
         }
       });
-      data.medias = data.medias.filter(video => video.media.mediaUrl.includes("Videos"))
+      console.log(data)
+      // data.medias = data.medias.filter(video => video.media.mediaUrl.includes("Videos"))
       dispatch(getList(data.medias))
       setVideos(data.medias);
     }
     loadVideos();
   }, []);
+  const data1 = listVideos.map((video, index) => (
+    <Card key={index} video={video} />
+  ));
+  const data2 = <Music/>
   const data = [
     {
-      label: "Âm nhạc",
+      label: "Video",
       value: "1",
-      desc: []
+      desc: <div className="list pt-2 grid gap-2 lg:grid-cols-2 sm:grid-cols-2 h-[100%] p-0 overflow-y-auto">{data1}</div>,
     },
     {
-      label: "Video",
+      label: "Music",
       value: "2",
-      desc: []
+      desc: data2
     }, {
       label: "Trò chơi",
       value: "3",
-      desc: []
+      desc: data2
     }
   ]
-  console.log(listVideos)
+  console.log(data)
   return (
     <>
       <Tabs id="custom-animation" value="1">
@@ -61,20 +68,15 @@ const Home = () => {
             unmount: { y: 250 },
           }}
         >
-        <div className="bottom mt-[2%] h-[100%]">
-          <div
-            className={`
-                    list pt-2 grid gap-2 lg:grid-cols-4 sm:grid-cols-3 h-[100%] overflow-auto
-
-                    `}
-          >
-            {listVideos.map((video, index) => {
-              return (
-                <Card video={video} />
-              )
-            })}
+          <div className="bottom mt-[2%] h-[100%]">
+            {data.map(({ value, desc }) => (
+              <TabPanel key={value} value={value}>
+                {/* <div className="list pt-2 grid gap-2 lg:grid-cols-2 sm:grid-cols-2 h-[100%] p-0"> */}
+                  {desc}
+                {/* </div> */}
+              </TabPanel>
+            ))}
           </div>
-        </div>
         </TabsBody>
       </Tabs>
     </>

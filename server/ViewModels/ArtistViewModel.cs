@@ -13,7 +13,7 @@ namespace MediaWebApi.ViewModels
 
         [MaxLength(255)]
         [Column("artist_image")]
-        public string ArtistImage { get; set; }
+        public string? ArtistImage { get; set; }
 
         [MaxLength(255)]
         [Column("description")]

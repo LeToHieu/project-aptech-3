@@ -15,7 +15,7 @@ function MediaModal({ isOpen, closeModal, addProductData }) {
         setAlbumId("")
         setMediaId("")
         setAlbumData(null)
-        setMediaData(null)
+        setMediaData(null) 
         closeModal()
     }
     const handleSearch = async (e) => {
@@ -61,6 +61,7 @@ function MediaModal({ isOpen, closeModal, addProductData }) {
             toast.error(error.message);
         }
     };
+    
     const handleAdd = async (e) => {
         if (!mediaData && !albumData) {
             toast.error("Bạn cần kiểm tra xem sản phẩm có tồn tại hay không trước.")

@@ -64,7 +64,7 @@ function App() {
           <Route index path="" element={<Home />} />
           <Route path="video/:id" element={<Video />} />
           <Route path="music" element={<Music />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
         {/* <Route path='/music' element={<Music />}></Route> */}
         <Route path="/login" element={<LoginIndex />} />

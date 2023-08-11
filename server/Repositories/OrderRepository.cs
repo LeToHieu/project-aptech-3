@@ -68,11 +68,9 @@ namespace MediaWebApi.Repositories
         }
         public async Task<bool?> UpdateOrder(OrderViewModel order)
         {
-            string sql = "EXECUTE UpdateOrder @order_id, @user_id, @order_date, @total_amount";
+            string sql = "EXECUTE UpdateOrder @order_id, @total_amount";
             int affectedRows = await _context.Database.ExecuteSqlRawAsync(sql,
                 new SqlParameter("@order_id", order.Id),
-                new SqlParameter("@user_id", order.userId),
-                new SqlParameter("@order_date", order.orderDate),
                 new SqlParameter("@total_amount", order.total_amount)
             );
 

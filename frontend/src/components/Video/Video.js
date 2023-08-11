@@ -51,7 +51,7 @@ const Video = () => {
       videoEle.classList.add("w-full", "h-[550px]")
       span.appendChild(videoEle)
       // videoEle.play()
-      span?.addEventListener("click",() => videoEle.play())
+      window?.addEventListener("mousemove",() => videoEle.play())
       videoEle?.addEventListener("timeupdate", handleTimeUpdate);
     }
     // if (video) {
@@ -63,7 +63,7 @@ const Video = () => {
     //   videoElement?.addEventListener("timeupdate", handleTimeUpdate(videoElement));
       return () => {
         videoEle?.removeEventListener("timeupdate", handleTimeUpdate);
-        videoEle?.removeEventListener("click",() => videoEle.play());
+        window?.removeEventListener("mousemove",() => videoEle.play());
       };
     // }
     // const videoPlay = new Video()

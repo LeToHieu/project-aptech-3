@@ -133,7 +133,7 @@ const SideBar = () => {
                 } flex items-center gap-[10px]`}
               >
                 <ReportIcon style={{ color: "white" }} />
-                <p className="text-[14px] leading-[20px] text-white">Reports</p>
+                <p className="text-[14px] leading-[20px] text-white">Comment</p>
               </Link>
             </div>
           </div>

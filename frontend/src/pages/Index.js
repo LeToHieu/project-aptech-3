@@ -92,7 +92,7 @@ const Index = () => {
         onClick={() => dispatch(showMusic())}
       />
       <div className="home flex h-[100vh] overflow-hidden">
-        {/* <Menu /> */}
+        <Menu />
         <div
           className={`home-container flex-[5] ${
             location === "music" ? "h-full" : " pl-2 py-5 overflow-auto"

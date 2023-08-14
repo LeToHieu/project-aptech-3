@@ -308,3 +308,12 @@ BEGIN
     SELECT * FROM Media_Feedback WHERE ID = @@IDENTITY;
 END;
 
+CREATE PROCEDURE InsertAlbumFeedback
+    @album_id INT,
+    @feedback_id INT
+AS
+BEGIN
+    INSERT INTO Album_Feedback (album_id, feedback_id)
+    VALUES (@album_id, @feedback_id);
+    SELECT * FROM Album_Feedback WHERE Id = @@IDENTITY;
+END;

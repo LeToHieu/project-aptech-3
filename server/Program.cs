@@ -59,6 +59,9 @@ namespace MediaWebApi
             builder.Services.AddScoped<IMediaFeedbackRepository, MediaFeedbackRepository>();
             builder.Services.AddScoped<IMediaFeedbackService, MediaFeedbackService>();
 
+            builder.Services.AddScoped<IAlbumFeedbackRepository,AlbumFeedbackRepository>();
+            builder.Services.AddScoped<IAlbumFeedbackService, AlbumFeedbackService>();
+
             builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             builder.Services.AddScoped<IPermissionService, PermissionService>();
 

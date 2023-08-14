@@ -2,8 +2,6 @@ import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 function Single_Table({ handleDelete, setIsOpenAdd, setIsOpenEdit, columns, propData, title, handleUpdate }) {
   const data = React.useMemo(() => propData, [propData]);
-  const [page, setPage] = React.useState(2);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   if (!data) {
     return <p>Không có dữ liệu hoặc đang tải...</p>;
   }

@@ -1,8 +1,11 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { Card, Typography } from '@material-tailwind/react';
 
-function Table({ setIsOpenAdd, setIsOpenEdit, columns, propData, title }) {
-  const data = React.useMemo(() => propData);
+function Table({ setIsOpenAdd, value, columns, propData, title, handleDelete }) {
+  const data = React.useMemo(() => propData, [propData]);
+  if (!data) {
+    return <p>Không có dữ liệu hoặc đang tải...</p>;
+  }
   return (
     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded z-100">
       <div class="rounded-t mb-0 px-4 py-3 border-0">
@@ -23,7 +26,7 @@ function Table({ setIsOpenAdd, setIsOpenEdit, columns, propData, title }) {
           </div>
         </div>
       </div>
-      <div class="block w-full overflow-x-auto"> 
+      <div class="block w-full overflow-x-auto">
         <table class="items-center bg-transparent w-full border-collapse ">
           <thead>
             <tr>
@@ -40,11 +43,27 @@ function Table({ setIsOpenAdd, setIsOpenEdit, columns, propData, title }) {
           </thead>
 
           <tbody>
-            <tr>
-              <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                
-              </th>
-            </tr>
+            {data.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {columns.map((column, colIndex) => (
+                  <td
+                    key={colIndex}
+                    className={`border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs p-2 break-all ${column.access === "Id" ? "w-40" : ""
+                      }`}
+                  >
+                    {row[column.access]}
+                  </td>
+                ))}
+                <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+                    onClick={() => handleDelete(row["id"], value)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

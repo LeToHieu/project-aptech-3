@@ -20,6 +20,9 @@ const Card = ({ video }) => {
     if (hours == 0) return `${minutes}:${seconds}`
     return `${hours}:${minutes}:${seconds}`
   }
+  const handleOrder = (id) => {
+    console.log(id)
+  }
   return (
     <div className="relative">
       <NavLink to={'video/' + (video?.media?.id || '')} onClick={() => dispatch(chooseVideo(video))}>
@@ -32,13 +35,14 @@ const Card = ({ video }) => {
               <p class="type">{format(video?.media?.createdAt)}</p>
             </div>
           </div>
+          
           <div class="blur_back" style={{ backgroundImage: `url(${url + video?.media?.mediaImage})` }}></div>
         </div>
       </NavLink>
-      <button className="absolute left-10 mb-2 mr-2 bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
+      <button className="absolute bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center" onClick={() => handleOrder(video?.media?.id)}>
         {/* <i className="material-icons mr-2"></i> */}
         Đặt hàng
-      </button>
+      </button>            
     </div>
   )
 }

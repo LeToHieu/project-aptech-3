@@ -20,6 +20,7 @@ namespace MediaWebApi.Models
         public DbSet<Order_Detail> Order_Detail { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Media_Feedback> Media_Feedback { get; set; }
+        public DbSet<Album_Feedback> Album_Feedback { get; set; }
         public DbSet<ArtistAlbum> ArtistAlbums { get; set; }
         public DbSet<ArtistMedia> ArtistMedias { get; set; }
         public DbSet<Promotion> Promotions { get; set; }

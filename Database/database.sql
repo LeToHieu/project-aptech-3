@@ -9,6 +9,7 @@ CREATE TABLE Users(
 	email VARCHAR(255) NOT NULL,
 	phone VARCHAR(20) NOT NULL,
 	role INT NOT NULL DEFAULT 0,
+	
 );
 
 CREATE TABLE Permissions(

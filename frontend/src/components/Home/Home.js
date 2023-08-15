@@ -36,9 +36,9 @@ const Home = () => {
   const data2 = <Music/>
   const data = [
     {
-      label: "Video",
+      label: "Tất cả",
       value: "1",
-      desc: <div className="list pt-2 grid gap-2 lg:grid-cols-2 sm:grid-cols-2 h-[100%] p-0 overflow-y-auto">{data1}</div>,
+      desc: <div className="list pt-2 grid gap-2 lg:grid-cols-3 sm:grid-cols-3 h-[100%] p-0 overflow-y-auto">{data1}</div>,
     },
     {
       label: "Music",

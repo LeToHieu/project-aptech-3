@@ -113,10 +113,10 @@ const Music = () => {
   return (
     <>
       <div className="music h-[100%] overflow-y-auto">
-        <div className="py-8 px-20 bg-white box-border text-black shrink-0 min-h-[100%] pb-40">
+        <div className="py-8 px-20 bg-black box-border text-white shrink-0 min-h-[100%] pb-40">
           <div className="mt-10 w-full">
             <h2 className="sm:text-3xl font-bold">Nhạc yêu thích của bạn</h2>
-            <div className="flex gap-2 mt-4 overflow-auto hidden-scrollbar">
+            <div className="flex gap-2 mt-4 overflow-auto ">
               <div className="text-center shrink-0">
                 <img
                   src="https://lh3.googleusercontent.com/J7Micaz8jRk7k2swwdhFL3I2jr4L1E1N_ePxnj-W15ZXWFkipqeizN5Rba2A39Tlm4uAdX9SomJZXA=w544-h544-p-l90-rj"
@@ -133,6 +133,15 @@ const Music = () => {
                 />
                 <p className="font-bold">Đen</p>
               </div>
+              <div className="text-center shrink-0">
+                <img
+                  src="https://lh3.googleusercontent.com/J7Micaz8jRk7k2swwdhFL3I2jr4L1E1N_ePxnj-W15ZXWFkipqeizN5Rba2A39Tlm4uAdX9SomJZXA=w544-h544-p-l90-rj"
+                  alt=""
+                  className="my-3 rounded-full w-[180px] h-[180px] object-cover"
+                />
+                <p className="font-bold">Đen</p>
+              </div>
+
               <div className="text-center shrink-0">
                 <img
                   src="https://lh3.googleusercontent.com/J7Micaz8jRk7k2swwdhFL3I2jr4L1E1N_ePxnj-W15ZXWFkipqeizN5Rba2A39Tlm4uAdX9SomJZXA=w544-h544-p-l90-rj"

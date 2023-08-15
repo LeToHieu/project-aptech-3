@@ -17,6 +17,15 @@ namespace MediaWebApi.Services
         {
             return await _feedbackRepository.GetAllFeedback();  
         }
+        public async Task<int[]> GetStatFeedback()
+        {
+            return await _feedbackRepository.GetStatFeedback();
+        }
+        public async Task<Feedback?> GetFeedbackById(int id)
+        {
+            return await _feedbackRepository.GetFeedbackById(id);
+        }
+
         public async Task<Feedback?> AddFeedback(FeedbackViewModel feedback)
         {
             return await _feedbackRepository.AddFeedback(feedback);

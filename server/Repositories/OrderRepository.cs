@@ -36,7 +36,7 @@ namespace MediaWebApi.Repositories
         }
 
         public async Task<List<Orders?>?> GetAllOrder()
-        {
+        { 
             return await _context.Orders
                 .Include(o => o.User)
                 .Include(o => o.Order_Detail)

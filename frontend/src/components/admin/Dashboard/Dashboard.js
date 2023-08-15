@@ -11,11 +11,31 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import axios from "../../../api/axios";
 function Dashboard() {
+  const [positive, setPos] = useState(0);
+  const [negative, setNeg] = useState(0);
+  const fetchData = async () => { 
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+    try {
+      const data = await axios.get('Feedback/stats', config);
+      setPos(data.data.feedback[0] / (data.data.feedback[1] + data.data.feedback[0]) * 100)
+      setNeg(data.data.feedback[1] / (data.data.feedback[1] + data.data.feedback[0]) * 100)
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  useEffect( ()=> {
+    fetchData();
+  }, [])
   const data = [
     {
-      "Tích cực": 10,
-      "Tiêu cực": 50,
+      "Tích cực": positive,
+      "Tiêu cực": negative,
     },
   ];
   return (

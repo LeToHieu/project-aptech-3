@@ -20,6 +20,9 @@ const Card = ({ video }) => {
     if (hours == 0) return `${minutes}:${seconds}`
     return `${hours}:${minutes}:${seconds}`
   }
+  const handleOrder = (id) => {
+    console.log(id)
+  }
   return (
     <div className="relative">
       <NavLink to={'video/' + (video?.media?.id || '')} onClick={() => dispatch(chooseVideo(video))}>
@@ -27,18 +30,19 @@ const Card = ({ video }) => {
           <div class="info_section">
             <div class="movie_header">
               <h1 className='text text-sm font-semibold'>{video?.media?.mediaName}</h1>
-              <h4 className='text-xs mt-1'>{video?.artist?.artistName}</h4>
-              <span class="minutes">{formatTime(video?.media?.duration)}</span>
-              <p class="type">{format(video?.media?.createdAt)}</p>
+              <h4 className='text-xs mt-1'>Thời lượng: {formatTime(video?.media?.duration)}</h4>
+              <span class="minutes">Tác giả: {video?.artist?.artistName}</span>
+              <h5 class="type">{format(video?.media?.createdAt)}</h5>
             </div>
           </div>
+          
           <div class="blur_back" style={{ backgroundImage: `url(${url + video?.media?.mediaImage})` }}></div>
         </div>
       </NavLink>
-      <button className="absolute left-10 mb-2 mr-2 bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
-        {/* <i className="material-icons mr-2"></i> */}
+      {/* <button className="absolute bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center" onClick={() => handleOrder(video?.media?.id)}>
+        <i className="material-icons mr-2"></i>
         Đặt hàng
-      </button>
+      </button>             */}
     </div>
   )
 }

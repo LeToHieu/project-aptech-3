@@ -39,20 +39,22 @@ const Menu = () => {
                           `}>Âm nhạc</span>
             </li>
           </NavLink>
-          <li className='item hover:bg-gray-300 flex gap-5 sm:px-4 sm:py-3 text-lg rounded-lg'>
-            <AppRegistrationSharpIcon sx={{ color: blue[500] }} />
-            <span className={`text-[14px] text-hidden
+          <NavLink to='/album'>
+            <li className='item hover:bg-gray-300 flex gap-5 sm:px-4 sm:py-3 text-lg rounded-lg'>
+              <VideoLibraryOutlinedIcon sx={{ color: blue[500] }} />
+              <span className={`text-[14px] text-hidden
                             text-white
-                          `}>Kênh đăng ký</span>
-          </li>
+                          `}>Album</span>
+            </li>
+          </NavLink>
         </ul>
         <hr className='my-2 border-gray-500 min-w-fit' />
         <ul className='sm:px-4 mt-2 min-[320px]:px-3'>
           <li className='item hover:bg-gray-300 flex gap-5 sm:px-4 sm:py-3 text-lg rounded-lg'>
-            <VideoLibraryOutlinedIcon sx={{ color: blue[500] }} />
+            <ArticleOutlinedIcon sx={{ color: blue[500] }} />
             <span className={`text-[14px] text-hidden
                             text-white
-                          `}>Thư viện</span>
+                          `}>Tin tức</span>
           </li>
           <li className='item hover:bg-gray-300 flex gap-5 sm:px-4 sm:py-3 text-lg rounded-lg'>
             <TimerOutlinedIcon sx={{ color: blue[500] }} />
@@ -87,12 +89,6 @@ const Menu = () => {
             <span className={`text-[14px] text-hidden
                             text-white
                           `}>Trò chơi</span>
-          </li>
-          <li className='item hover:bg-gray-300 flex gap-5 sm:px-4 sm:py-3 text-lg rounded-lg'>
-            <ArticleOutlinedIcon sx={{ color: blue[500] }} />
-            <span className={`text-[14px] text-hidden
-                            text-white
-                          `}>Tin tức</span>
           </li>
           <li className='item hover:bg-gray-300 flex gap-5 sm:px-4 sm:py-3 text-lg rounded-lg'>
             <EmojiEventsOutlinedIcon sx={{ color: blue[500] }} />

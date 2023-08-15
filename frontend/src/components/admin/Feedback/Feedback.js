@@ -11,6 +11,7 @@ import Table from "../Table/Table";
 import parseJson from "../../../Parse"
 import Pagination from "../Pagination/Pagination";
 import { toast } from 'react-toastify'
+import AddFeedback from "./AddFeedback";
 function Feedback() {
   const title = "Danh sách phản hồi";
   const [data_media, setMedia] = useState([]);
@@ -36,7 +37,6 @@ function Feedback() {
       setMedia(du_lieu_media.data.feedback);
       const du_lieu_album = await axios.get('AlbumFeedback', config);
       setAlbum(du_lieu_album.data.feedback)
-      console.log(du_lieu_album.data.feedback)
     } catch (error) {
       console.log(error.message);
     }
@@ -164,6 +164,11 @@ function Feedback() {
   }
   return (
     <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
+      <AddFeedback
+        isOpen={isOpenAdd}
+        closeModal={() => setIsOpenAdd(false)}
+        fetchData={fetchData}
+      ></AddFeedback>
       <Tabs id="custom-animation" value="1">
         <TabsHeader className="z-0">
           {data.map(({ label, value }) => (
@@ -201,6 +206,7 @@ function Feedback() {
                       propData={currentDesc}
                       value={value}
                       handleDelete={handleDelete}
+                      setIsOpenAdd={setIsOpenAdd}
                     />
                     <Pagination
                       postPerPage={postPerPage}

@@ -19,6 +19,7 @@ import Video from "./components/Video/Video";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Music from "./pages/Music";
+import Album from "./components/Album/Album";
 import "animate.css";
 
 import Dashboard from "./components/admin/Dashboard/Dashboard";
@@ -32,6 +33,7 @@ import { usersError, usersStart, usersSuccess } from "./redux/reducer/users";
 import axios from "./api/axios";
 import Bills from "./components/admin/Bills/Bills";
 import Feedback from "./components/admin/Feedback/Feedback";
+import News from "./components/News/News";
 function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
@@ -64,7 +66,9 @@ function App() {
           <Route index path="" element={<Home />} />
           <Route path="video/:id" element={<Video />} />
           <Route path="music" element={<Music />} />
+          <Route path="album" element={<Album />}></Route>
           <Route path="cart" element={<Cart />} />
+          <Route path="news" element={<News/>}></Route>
         </Route>
         {/* <Route path='/music' element={<Music />}></Route> */}
         <Route path="/login" element={<LoginIndex />} />

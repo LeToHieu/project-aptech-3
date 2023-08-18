@@ -22,6 +22,14 @@ function Cart() {
     }
   }, [user, order])
   console.log(order)
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    const response = await axios.post("Order_Detail/delete/" + id, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+  }
   return (
     <>
       <div className="bg-neutral-50 py-12">
@@ -38,31 +46,38 @@ function Cart() {
 
                     {order.Order_Detail.map((order, index) => (
                       <li class="flex py-6" key={index}>
-                        <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
-                          <img src={"https://localhost:7023/resources/" + order?.Media?.MediaImage} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
-                        </div>
+                        {order?.Media ? (
+                          <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
+                            <img src={"https://localhost:7023/resources/" + order?.Media?.MediaImage} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
 
-                          <div class="ml-4 flex flex-1 flex-col">
-                      <div>
-                        <div class="flex justify-between text-sm text-gray-900">
-                          <h3 class="text-base font-bold"> {order?.Media?.MediaName}</h3>
-                          <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900">
-                            <p class="text-xs font-normal">Delete</p>
-                            <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="mt-auto flex flex-1 items-end justify-between text-sm">
-                        <div>
-                        </div>
 
-                        <div class="flex">
-                          <div class="text-right">
-                            <p class="text-sm font-bold text-orange-600">${order?.price}</p>
+                        <div class="ml-4 flex flex-1 flex-col">
+                          <div>
+                            <div class="flex justify-between text-sm text-gray-900">
+                              <h3 class="text-base font-bold"> {order?.Media ? order?.Media?.MediaName : order.Album.AlbumName}</h3>
+                              <form action="" onSubmit={(e) => handleDelete(e, order?.Id)}>
+                                <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900">
+                                  <p class="text-xs font-normal">Delete</p>
+                                  <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                          <div class="mt-auto flex flex-1 items-end justify-between text-sm">
+                            <div>
+                            </div>
+
+                            <div class="flex">
+                              <div class="text-right">
+                                <p class="text-sm font-bold text-orange-600">${order?.price}</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
                       </li>
                     ))}
                   </div>
@@ -76,7 +91,7 @@ function Cart() {
               <div class="flex flex-col gap-2">
                 <div class="flex justify-between text-base text-gray-900">
                   <p>Total price</p>
-                  <p>262.00</p>
+                  <p>{order[0]?.total_amount}</p>
                 </div>
 
                 <div class="mt-auto flex flex-col gap-2 pt-4">

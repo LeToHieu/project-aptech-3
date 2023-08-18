@@ -21,6 +21,7 @@ const Video = () => {
   const id = useParams().id
   const [comment, setComment] = useState([]);
   const [content, setContent] = useState("");
+  const [order, setOrder] = useState(null)
   const { listVideos, isPlaying, video, isMute } = useSelector(state => state.video)
   const dispatch = useDispatch()
 
@@ -125,13 +126,54 @@ const Video = () => {
   const handleCart = async (e) => {
     e.preventDefault();
     try {
+      const response = await axios.get("Order/GetByUserId/" + user.id, {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      console.log(parseJson(response.data.json))
+      const ordersWithStatus1 = parseJson(response.data.json).filter(order => order.status_order === 0);
+      setOrder(ordersWithStatus1);
+      if(ordersWithStatus1) {
+        const orderId = ordersWithStatus1[0].Id;
+        const mediaId = id;
+        const price = video?.media.price;
+        const order_detail_data = {
+          orderId: orderId,
+          mediaId: mediaId,
+          albumId: 0,
+          price: price
+        } 
+        let response_exist = await axios.get("Order_Detail/GetByOrderId/" + orderId, {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+        let array = parseJson(response_exist.data.json)
+        for(let i = 0; i< array.length; i++) {
+          if(array[i].MediaId == id ) {
+            toast.error("Sản phẩm đã tồn tại trong giỏ hàng")
+            return ;
+          }
+        }
+        let response_add = await axios.post("Order_Detail/add", order_detail_data, {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
 
+        if (response_add.data.status) {
+          toast.success("Thêm giỏ hành thành công")
+        } else {
+          toast.error("Thêm giỏ hàng thất bại")
+        }
+      }
     } catch (error) {
-      toast.error("Error submitting comment:", error);
-      console.error("Error submitting comment:", error);
+      toast.error("Error submitting product:", error);
+      console.error("Error submitting product:", error);
     }
   }
-  console.log(video)
+  
   return (
     <div className='flex gap-2 h-full pl-5'>
       <div className="left flex-[3]">

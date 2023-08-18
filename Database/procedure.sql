@@ -12,8 +12,6 @@ BEGIN
 	SELECT * FROM Users WHERE Id = @@IDENTITY;
 END
 
-EXEC RegisterUser 'cuong', 'image', 'cuong123', '01234567', 'cuong@gmail.com';
-
 CREATE PROCEDURE InsertUser
     @Username NVARCHAR(255),
     @UserImage NVARCHAR(255),
@@ -30,9 +28,6 @@ BEGIN
     -- Optionally, you can return the inserted user(s) if needed
     SELECT * FROM Users WHERE Username = @Username
 END
-
-SELECT * FROM Users;
-
 
 CREATE PROCEDURE loginUser
     @Username VARCHAR(255),

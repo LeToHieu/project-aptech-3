@@ -30,6 +30,7 @@ const Card = ({ video }) => {
         <div class="movie_card" id="tomb" onClick={() => {
           dispatch(chooseVideo(video));
           navigate('/video/' + (video?.media?.id || ''));
+          window.location.reload();
         }}
         >
           <div class="info_section">

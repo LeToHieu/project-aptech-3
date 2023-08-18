@@ -12,10 +12,6 @@ BEGIN
 	SELECT * FROM Users WHERE Id = @@IDENTITY;
 END
 
-EXEC RegisterUser 'cuong', 'image', 'cuong123', '01234567', 'cuong@gmail.com';
-SELECT * FROM Users;
-
-
 CREATE PROCEDURE loginUser
     @Username VARCHAR(255),
     @Password VARCHAR(255)

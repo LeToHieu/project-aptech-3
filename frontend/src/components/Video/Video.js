@@ -23,6 +23,7 @@ const Video = () => {
   const [content, setContent] = useState("");
   const { listVideos, isPlaying, video, isMute } = useSelector(state => state.video)
   const dispatch = useDispatch()
+
   useEffect(() => {
     async function loadVideos() {
       let { data } = await axios.get('/media', {
@@ -84,7 +85,6 @@ const Video = () => {
     getComment();
   }, [video])
   let { user } = useSelector(state => state.user)
-  console.log(user)
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
@@ -124,19 +124,28 @@ const Video = () => {
   }
   const handleCart = async (e) => {
     e.preventDefault();
+    try {
+
+    } catch (error) {
+      toast.error("Error submitting comment:", error);
+      console.error("Error submitting comment:", error);
+    }
   }
+  console.log(video)
   return (
     <div className='flex gap-2 h-full pl-5'>
       <div className="left flex-[3]">
+
         <video src={url + video?.media.mediaUrl} controls width="1000" height="600"></video>
-        <h3 className='my-5 text-[16px] font-semibold'>{video?.media.mediaName}</h3>
+
+        <h3 className='my-5 text-[16px] font-semibold'>{video?.media?.mediaName}</h3>
         <div className='flex gap-5 items-center'>
           <img src={url + video?.media.mediaImage}
             className='w-12 h-12 rounded-full'
           />
           <div>
-            <p className='text-sm font-semibold mb-1'>{video?.artist.artistName} </p>
-            <p className='flex items-center gap-1 text-xs'>{video?.artist.description}</p>
+            <p className='text-sm font-semibold mb-1'>{video?.artist?.artistName} </p>
+            <p className='flex items-center gap-1 text-xs'>{video?.artist?.description}</p>
           </div>
           <form action="" onClick={(e) => handleCart(e)}>
             <button className='ml-5 py-2 px-4 rounded-2xl font-semibold text-sm text-black bg-white border-[1px] border-gray-400'>Mua ngay</button>
@@ -155,8 +164,8 @@ const Video = () => {
         </div>
         <form action="" className='py-5' onSubmit={(e) => handleAdd(e)}>
           <div className='flex items-center gap-5 my-2 mb-5'>
-            <img src={url + user.userimage} className='w-12 h-12 rounded-full' />
-            <p>{user.username}</p>
+            <img src={url + user?.userimage} className='w-12 h-12 rounded-full' />
+            <p>{user?.username}</p>
           </div>
           <input type="text" placeholder='Add a comment' class='w-full border-b border-gray-300 outline-none p-2 text-gray-700' onChange={(e) => setContent(e.target.value)} />
           <div className='my-3 text-right'>
@@ -166,11 +175,11 @@ const Video = () => {
         <div className="comments">
           <p className='text-sm'>Commenting as</p>
           {comment.map(commentData => (
-            <div key={commentData.id} className='flex items-center gap-5 my-2 mb-5'>
-              <img src={url + commentData.userimage} className='w-12 h-12 rounded-full mb-auto' />
+            <div key={commentData?.id} className='flex items-center gap-5 my-2 mb-5'>
+              <img src={url + commentData?.userimage} className='w-12 h-12 rounded-full mb-auto' />
               <div>
-                <p className='text-sm font-semibold flex items-center gap-2'>{commentData.username} <span className='font-thin text-[12px]'>{commentData.createdAt}</span></p>
-                <p className='text-sm'>{commentData.content}</p>
+                <p className='text-sm font-semibold flex items-center gap-2'>{commentData?.username} <span className='font-thin text-[12px]'>{commentData?.createdAt}</span></p>
+                <p className='text-sm'>{commentData?.content}</p>
               </div>
             </div>
           ))}

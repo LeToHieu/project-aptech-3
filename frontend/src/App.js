@@ -36,6 +36,8 @@ import Bills from "./components/admin/Bills/Bills";
 import Feedback from "./components/admin/Feedback/Feedback";
 import News from "./components/News/News";
 import { Navigate } from "react-router-dom";
+import Search_Data from "./components/Search/Search";
+
 function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
@@ -82,6 +84,7 @@ function App() {
           <Route path="album" element={<Album />}></Route>
           <Route path="cart" element={<Cart />} />
           <Route path="bill" element={<Bill />} />
+          <Route path="search" element={<Search_Data />} />
           <Route path="news" element={<News/>}></Route>
         </Route>
         {/* <Route path='/music' element={<Music />}></Route> */}

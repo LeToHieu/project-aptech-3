@@ -1,41 +1,16 @@
 
 INSERT INTO Users (username, userimage, password, email, phone, role)
 VALUES
-('user1', NULL, 'password1', 'user1@example.com', '1234567890', 0),
-('user2', NULL, 'password2', 'user2@example.com', '9876543210', 0),
-('user3', NULL, 'password3', 'user3@example.com', '1234567890', 0),
-('user4', NULL, 'password4', 'user4@example.com', '9876543210', 0),
-('user5', NULL, 'password5', 'user5@example.com', '1234567890', 0),
-('user6', NULL, 'password6', 'user6@example.com', '9876543210', 0),
-('user7', NULL, 'password7', 'user7@example.com', '1234567890', 0),
-('user8', NULL, 'password8', 'user8@example.com', '9876543210', 0),
-('user9', NULL, 'password9', 'user9@example.com', '1234567890', 0),
-('user10', NULL, 'password10', 'user10@example.com', '9876543210', 0);
-
-INSERT INTO Permissions (permission)
-VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(7),
-(8),
-(9),
-(10);
-
-INSERT INTO Permission_User (user_id, permission_id)
-VALUES (1, 1),
-       (1, 2),
-       (2, 2),
-       (3, 2),
-       (4, 3),
-       (5, 3),
-       (6, 3),
-       (7, 2),
-       (8, 2),
-       (9, 2);
+('user1', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password1', 'user1@example.com', '1234567890', 0),
+('user2', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password2', 'user2@example.com', '9876543210', 0),
+('user3', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password3', 'user3@example.com', '1234567890', 0),
+('user4', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password4', 'user4@example.com', '9876543210', 0),
+('user5', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password5', 'user5@example.com', '1234567890', 0),
+('user6', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password6', 'user6@example.com', '9876543210', 0),
+('user7', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password7', 'user7@example.com', '1234567890', 0),
+('user8', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password8', 'user8@example.com', '9876543210', 0),
+('user9', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password9', 'user9@example.com', '1234567890', 0),
+('user10', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password10', 'user10@example.com', '9876543210', 0);
 
 INSERT INTO Categories (category_name, description)
 VALUES ('Pop', 'Popular music'),

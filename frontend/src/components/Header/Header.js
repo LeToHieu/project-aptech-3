@@ -10,10 +10,15 @@ import Dropdown from '../dropdown/Dropdown'
 const Header = () => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false)
+  const [search, setSearch] = useState("");
   const location = useLocation().pathname.split('/')[1]
   console.log(location);
   const handleLogin = () => {
     navigate("/login");
+  }
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    navigate("/search?" + search)
   }
   const {user} = useSelector(state => state.user)
   return (
@@ -29,12 +34,14 @@ const Header = () => {
           </label>
           <img src={logo} alt="" className='w-[100px] h-[40px] max-[640px]:w-[50px]' />
         </div>
+        <form action='' onSubmit={(e) => handleSearch(e)}>
         <div className="center flex-1 max-[640px]:hidden">
           <div className={`search flex items-center justify-center gap-5 px-5 py-2 border border-gray-400 rounded-lg mx-auto w-fit ${location !== 'music' ? 'bg-white' : ''}`}>
-            <input type="text" placeholder='Search' className={`border-none outline-none w-[100%] text-black bg-inherit`}/>
+            <input type="text" placeholder='Search' className={`border-none outline-none w-[100%] text-black bg-inherit`} onChange={(e) => setSearch(e.target.value)}/>
               <SearchIcon fontSize="medium" color="primary" /> 
           </div>
         </div>
+        </form>
         <div className="end flex items-center gap-2">
           <div className='sm:hidden'>
             <label htmlFor="search" onClick={() => setToggle(!toggle)}>

@@ -112,7 +112,7 @@ const GetMedias = () => {
     try {
       const response = await axios.post(GET_MEDIA + "/delete/" + id, config);
       if (response) {
-        toast.success("Deleted media successfully!");
+        toast.success("Deleted media successfuly!");
       } else {
         toast.error("Cannot media user!");
       }

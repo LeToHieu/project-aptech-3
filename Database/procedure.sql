@@ -288,6 +288,7 @@ BEGIN
     FROM Permission_User
     WHERE user_id = @user_id AND permission_id = @permission_id;
 END
+
 CREATE PROCEDURE GetOrderDetailsByOrderId
     @order_id INT
 AS
@@ -324,3 +325,12 @@ BEGIN
     SELECT * FROM Media_Feedback WHERE ID = @@IDENTITY;
 END;
 
+CREATE PROCEDURE InsertAlbumFeedback
+    @album_id INT,
+    @feedback_id INT
+AS
+BEGIN
+    INSERT INTO Album_Feedback (album_id, feedback_id)
+    VALUES (@album_id, @feedback_id);
+    SELECT * FROM Album_Feedback WHERE Id = @@IDENTITY;
+END;

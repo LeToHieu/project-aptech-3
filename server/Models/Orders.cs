@@ -24,6 +24,9 @@ namespace MediaWebApi.Models
         [Required]
         [Column("total_amount")]
         public decimal? total_amount { get; set; }
+
+        [Column("status_order")]
+        public int? status_order { get; set; }
         public ICollection<Order_Detail>? Order_Detail { get; set; }
 
         public User User { get; set; }

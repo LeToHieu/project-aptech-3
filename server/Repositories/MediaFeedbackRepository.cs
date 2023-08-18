@@ -16,7 +16,32 @@ namespace MediaWebApi.Repositories
         }
         public async Task<List<Media_Feedback?>?> GetAllMedia_Feedback()
         {
-            return await _context.Media_Feedback.ToListAsync();
+            List<Media_Feedback?>? feedback = await _context.Media_Feedback
+                .Select(o => new Media_Feedback()
+                {
+                    Id = o.Id,
+                    mediaId = o.mediaId,
+                    feedbackId = o.feedbackId,
+                    Feedback = o.Feedback,
+                    Media = o.Media,
+                })
+                .ToListAsync();
+            return feedback;
+        }
+        public async Task<List<Media_Feedback?>?> GetMedia_FeedbackByMediaId(int id)
+        {
+            List<Media_Feedback?>? feedback = await _context.Media_Feedback
+        .Where(o => o.mediaId == id)
+        .Select(o => new Media_Feedback()
+        {
+            Id = o.Id,
+            mediaId = o.mediaId,
+            feedbackId = o.feedbackId,
+            Feedback = o.Feedback,
+            Media = o.Media,
+        })
+        .ToListAsync();
+            return feedback;
         }
         public async Task<Media_Feedback?> AddMedia_Feedback(MediaFeedbackViewModel mediaFeedback)
         {

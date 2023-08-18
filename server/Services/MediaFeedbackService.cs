@@ -25,5 +25,9 @@ namespace MediaWebApi.Services
         {
             return await _mediaFeedbackRepository.DeleteMedia_Feedback(id); 
         }
+        public async Task<List<Media_Feedback?>?> GetMedia_FeedbackByMediaId(int id)
+        {
+            return await _mediaFeedbackRepository.GetMedia_FeedbackByMediaId(id);
+        }
     }
 }

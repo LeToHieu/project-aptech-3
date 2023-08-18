@@ -77,7 +77,7 @@ namespace MediaWebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            
+
             builder.Services.AddAuthorization();
 
             builder.Services.AddAuthentication(options =>
@@ -101,7 +101,7 @@ namespace MediaWebApi
             }
             app.UseCors(builder =>
             {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); 
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
             app.UseHttpsRedirection();
 

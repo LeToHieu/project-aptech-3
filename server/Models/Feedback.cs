@@ -20,6 +20,7 @@ namespace MediaWebApi.Models
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
-        public ICollection<Media_Feedback>? Media_Feedback { get; set; }
+        public Media_Feedback? Media_Feedback { get; set; }
+        public User User { get; set; }
     }
 }

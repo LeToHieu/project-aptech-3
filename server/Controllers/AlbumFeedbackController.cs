@@ -8,39 +8,19 @@ namespace MediaWebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MediaFeedbackController : ControllerBase
+    public class AlbumFeedbackController : ControllerBase
     {
-        private readonly IMediaFeedbackService _mediaFeedbackService;
-        public MediaFeedbackController(IMediaFeedbackService mediaFeedbackService)
+        private readonly IAlbumFeedbackService _albumFeedbackService;
+        public AlbumFeedbackController(IAlbumFeedbackService albumFeedbackService)
         {
-            _mediaFeedbackService = mediaFeedbackService;
+            _albumFeedbackService = albumFeedbackService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllMedia_Feedback()
+        public async Task<IActionResult> GetAllAlbum_Feedback()
         {
             try
             {
-                List<Media_Feedback> feedback = await _mediaFeedbackService.GetAllMedia_Feedback();
-                return Ok(new
-                {
-                    feedback,
-                });
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new
-                {
-                    message = ex.Message,
-                    status = false,
-                });
-            }
-        }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetMedia_FeedbackByMediaId (int id)
-        {
-            try
-            {
-                List<Media_Feedback> feedback = await _mediaFeedbackService.GetMedia_FeedbackByMediaId(id);
+                List<Album_Feedback> feedback = await _albumFeedbackService.GetAllAlbum_Feedback();
                 return Ok(new
                 {
                     feedback,
@@ -60,7 +40,7 @@ namespace MediaWebApi.Controllers
         {
             try
             {
-                var status = await _mediaFeedbackService.DeleteMedia_Feedback(id);
+                var status = await _albumFeedbackService.DeleteAlbum_Feedback(id);
                 return Ok(status);
             }
             catch (ArgumentException ex)
@@ -73,11 +53,11 @@ namespace MediaWebApi.Controllers
             }
         }
         [HttpPost("add")]
-        public async Task<IActionResult> CreateMediaFeedback(MediaFeedbackViewModel feedback)
+        public async Task<IActionResult> CreateMediaFeedback(AlbumFeedbackViewModel feedback)
         {
             try
             {
-                var newFeedback = await _mediaFeedbackService.AddMedia_Feedback(feedback);
+                var newFeedback = await _albumFeedbackService.AddAlbum_Feedback(feedback);
                 return Ok(new
                 {
                     status = true,

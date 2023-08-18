@@ -98,7 +98,8 @@ function App() {
           path="admin"
           element={
             <>
-              <RequireAuth allowedRole={[1, 2]} /> <AdminIndex />
+              {/* <RequireAuth allowedRole={[1, 2]} /> */}
+              <AdminIndex />
             </>
           }
         >

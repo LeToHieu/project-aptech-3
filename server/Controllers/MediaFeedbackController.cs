@@ -35,6 +35,26 @@ namespace MediaWebApi.Controllers
                 });
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMedia_FeedbackByMediaId (int id)
+        {
+            try
+            {
+                List<Media_Feedback> feedback = await _mediaFeedbackService.GetMedia_FeedbackByMediaId(id);
+                return Ok(new
+                {
+                    feedback,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    status = false,
+                });
+            }
+        }
         [HttpPost("delete/{id}")]
         public async Task<IActionResult> DeleteFeedback(int id)
         {

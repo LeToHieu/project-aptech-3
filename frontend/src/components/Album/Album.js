@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Card_Album from './Card_Album'
 import axios from '../../api/axios'
 import parseJson from '../../Parse'
+import { Animate } from '../animate/animate'
 function Album() {
     const [album, setAlbum] = useState([])
     const fetchData = async () => {
@@ -35,6 +36,7 @@ function Album() {
     }, [])
     console.log(album)
     return (
+        <Animate type="zoomInDown">
         <div className="list pt-2 grid gap-2 lg:grid-cols-3 sm:grid-cols-3 h-[100%] p-0 overflow-y-auto">
             {album.map(item => (
                 <Card_Album
@@ -47,6 +49,7 @@ function Album() {
                 ></Card_Album>
             ))}
         </div>
+        </Animate>
     )
 }
 

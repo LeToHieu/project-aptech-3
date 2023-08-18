@@ -2,13 +2,14 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import { ToastContainer } from "react-toastify";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, redirect, useNavigate } from "react-router-dom";
 
 // User
 import LoginIndex from "./components/login/index";
 import ResetPassword from "./components/login/ResetPassword";
 import RequireAuth from "./components/authorization/RequireAuth";
 import { Cart } from "./components/userPage/index";
+import Bill from "./components/Bills/Bills";
 
 // User with retrics
 
@@ -17,7 +18,7 @@ import Index from "./pages/Index";
 import Home from "./components/Home/Home";
 import Video from "./components/Video/Video";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Music from "./pages/Music";
 import Album from "./components/Album/Album";
 import "animate.css";
@@ -34,9 +35,13 @@ import axios from "./api/axios";
 import Bills from "./components/admin/Bills/Bills";
 import Feedback from "./components/admin/Feedback/Feedback";
 import News from "./components/News/News";
+import { Navigate } from "react-router-dom";
 function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {user} = useSelector(state => state.user)
+  console.log(user)
   useEffect(() => {
     const loginUserWithJwt = async () => {
       dispatch(usersStart());
@@ -58,6 +63,14 @@ function App() {
       loginUserWithJwt();
     }
   }, [jwt]);
+  const ProtectedRoute = (props) => {
+    console.log(props)
+    if (parseInt(props.role) === 0) {
+      navigate('/')
+    } else {
+      return props.children;
+    }
+  }
   return (
     <>
       <Routes>
@@ -68,6 +81,7 @@ function App() {
           <Route path="music" element={<Music />} />
           <Route path="album" element={<Album />}></Route>
           <Route path="cart" element={<Cart />} />
+          <Route path="bill" element={<Bill />} />
           <Route path="news" element={<News/>}></Route>
         </Route>
         {/* <Route path='/music' element={<Music />}></Route> */}
@@ -83,9 +97,11 @@ function App() {
         <Route
           path="admin"
           element={
-            <>
-              {/*<RequireAuth allowedRole={[1]}/>*/} <AdminIndex />
-            </>
+            <ProtectedRoute 
+              role={user?.role}
+            >
+              <AdminIndex></AdminIndex>
+            </ProtectedRoute>
           }
         >
           <Route path="" element={<Dashboard />} />

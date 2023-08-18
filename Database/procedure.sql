@@ -128,9 +128,6 @@ BEGIN
 	SELECT * FROM Medias WHERE ID = @media_id;
 END;
 
-EXEC InsertMedia 'Tên media', 'Đường dẫn ảnh', 'Đường dẫn media', 10.99, 1;
-EXEC UpdateMedia 1, 'Tên media mới', 'Đường dẫn ảnh mới', 'Đường dẫn media mới', 15.99, 2;
-
 CREATE PROCEDURE InsertPromotion
     @promotion_name VARCHAR(255),
     @discount DECIMAL(10,2),
@@ -272,6 +269,7 @@ BEGIN
     FROM Permission_User
     WHERE user_id = @user_id AND permission_id = @permission_id;
 END
+
 CREATE PROCEDURE GetOrderDetailsByOrderId
     @order_id INT
 AS

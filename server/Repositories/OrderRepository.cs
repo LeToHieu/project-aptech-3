@@ -60,11 +60,14 @@ namespace MediaWebApi.Repositories
         }
         public async Task<List<Orders?>>? GetOrderByUserId(int id)
         {
-            string sql = "EXEC GetOrderByUserId @user_id";
-            List<Orders?>? result = await _context.Orders.FromSqlRaw(sql,
-                new SqlParameter("@user_id", id)
-                ).ToListAsync();
-            return result;
+            return await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Order_Detail)
+                .ThenInclude(od => od.Album)
+                .Include(o => o.Order_Detail)
+                .ThenInclude(od => od.Media)
+                .Where(o => o.User.Id == id)
+                .ToListAsync();
         }
         public async Task<bool?> UpdateOrder(OrderViewModel order)
         {

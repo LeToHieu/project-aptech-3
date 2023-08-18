@@ -31,8 +31,6 @@ function Bills() {
     try {
       const du_lieu = await axios.get(GET_Order, config);
       setData(parseJson(du_lieu.data.json))
-      console.log(result_data)
-      console.log(parseJson(du_lieu.data.json));
     } catch (error) {
       console.log(error.message);
     }

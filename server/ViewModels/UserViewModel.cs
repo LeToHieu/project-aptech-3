@@ -21,6 +21,7 @@ namespace MediaWebApi.ViewModels
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = "";
 
+        [Required(ErrorMessage = "Role is required")]
         public int Role { get; set; } = 0;
 
         public IFormFile? fileImage { get; set; }

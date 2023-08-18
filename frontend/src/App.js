@@ -2,7 +2,7 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import { ToastContainer } from "react-toastify";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 // User
 import LoginIndex from "./components/login/index";
@@ -16,8 +16,8 @@ import { Cart } from "./components/userPage/index";
 import Index from "./pages/Index";
 import Home from "./components/Home/Home";
 import Video from "./components/Video/Video";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Music from "./pages/Music";
 import "animate.css";
 
@@ -27,12 +27,20 @@ import GetUsers from "./components/admin/User/GetUsers";
 import GetCate from "./components/admin/Categories/GetCate";
 import GetArtists from "./components/admin/Artists/GetArtists";
 import GetAlbums from "./components/admin/Albums/GetAlbums";
-import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
+import {
+  GetMedias,
+  AddMedia,
+  EditMedia,
+} from "./components/admin/Medias/IndexMedias";
 import { usersError, usersStart, usersSuccess } from "./redux/reducer/users";
 import axios from "./api/axios";
 import Bills from "./components/admin/Bills/Bills";
 import Feedback from "./components/admin/Feedback/Feedback";
+import AuthContext from "./context/AuthProvider";
+
 function App() {
+  const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,6 +54,14 @@ function App() {
       try {
         const { data } = await axios.post("user/loginWithJwt", "", config);
         console.log(data);
+        setAuth({
+          name: data.username,
+          email: data.email,
+          password: data.password,
+          role: data.role,
+          accessToken: jwt,
+        });
+
         dispatch(usersSuccess(data.user));
       } catch (e) {
         console.log(e.message);
@@ -56,6 +72,8 @@ function App() {
       loginUserWithJwt();
     }
   }, [jwt]);
+  const { user, role } = useSelector((state) => state.user);
+  console.log("this is user" + user + " " + role);
   return (
     <>
       <Routes>
@@ -80,7 +98,7 @@ function App() {
           path="admin"
           element={
             <>
-              {/*<RequireAuth allowedRole={[1]}/>*/} <AdminIndex />
+              <RequireAuth allowedRole={[1, 2]} /> <AdminIndex />
             </>
           }
         >
@@ -93,6 +111,7 @@ function App() {
           <Route path="medias">
             <Route path="" element={<GetMedias />} />
             <Route path="addMedia" element={<AddMedia />} />
+            <Route path="editMedia/:Id" element={<EditMedia />} />
           </Route>
           <Route path="bill" element={<Bills />}></Route>
           <Route path="report" element={<Feedback />}></Route>

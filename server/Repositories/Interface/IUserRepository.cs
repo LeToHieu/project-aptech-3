@@ -5,6 +5,7 @@ namespace MediaWebApi.Repositories.Interface
 {
     public interface IUserRepository
     {
+        Task<User?> InsertUser(UserViewModel user);
         Task<User?> AddUser(RegisterViewModel user);
         Task<User?> GetByUserName(string username);
         Task<User?> GetByEmail(string email);

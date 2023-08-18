@@ -1,7 +1,9 @@
 ﻿using MediaWebApi.Models;
+using MediaWebApi.Services;
 using MediaWebApi.Services.Interface;
 using MediaWebApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace MediaWebApi.Controllers
 {
@@ -79,10 +81,22 @@ namespace MediaWebApi.Controllers
         {
             try
             {
+                /*
                 List<Album> albums = await _albumService.GetAllAlbums();
                 return Ok(new
                 {
                     albums,
+                });
+                */
+                List<Album> albums = await _albumService.GetAllAlbums();
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var json = JsonConvert.SerializeObject(albums, settings);
+                return Ok(new
+                {
+                    json,
                 });
             }
             catch (ArgumentException ex)

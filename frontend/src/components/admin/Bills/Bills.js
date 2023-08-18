@@ -3,13 +3,13 @@ import AddBills from "./AddBills";
 import EditBills from "./EditBills";
 import axios from "../../../api/axios";
 import Single_Table from "../Table/Single_Table";
-import parseJson from "../../../Parse"
-import { toast } from 'react-toastify'
+import parseJson from "../../../Parse";
+import { toast } from "react-toastify";
 import Pagination from "../Pagination/Pagination";
 
-const GET_Order = 'Order';
-const DELETE_Order = 'Order/delete/'
-const GET_Order_Detail = 'Order_Detail/GetByOrderId/'
+const GET_Order = "Order";
+const DELETE_Order = "Order/delete/";
+const GET_Order_Detail = "Order_Detail/GetByOrderId/";
 function Bills() {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -26,20 +26,20 @@ function Bills() {
     const config = {
       headers: {
         "Content-Type": "application/json",
-      }
-    }
+      },
+    };
     try {
       const du_lieu = await axios.get(GET_Order, config);
-      setData(parseJson(du_lieu.data.json))
-      console.log(result_data)
+      setData(parseJson(du_lieu.data.json));
+      console.log(result_data);
       console.log(parseJson(du_lieu.data.json));
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   if (data) {
     for (let i = 0; i < data.length; i++) {
@@ -55,7 +55,11 @@ function Bills() {
         } else if (!data[i].Order_Detail[j].AlbumId) {
           product_name += data[i].Order_Detail[j].Media.MediaName + ", ";
         } else {
-          product_name += data[i].Order_Detail[j].Media.MediaName + ", " + data[i].Order_Detail[j].Album.AlbumName + ", ";
+          product_name +=
+            data[i].Order_Detail[j].Media.MediaName +
+            ", " +
+            data[i].Order_Detail[j].Album.AlbumName +
+            ", ";
         }
         total_amount += data[i].Order_Detail[j].price;
       }
@@ -72,7 +76,6 @@ function Bills() {
         order_date: order_date,
       });
     }
-
   }
   const currentPost = result_data.slice(indexOfFirstPost, indexOfLastPost);
   const columns = React.useMemo(
@@ -102,7 +105,9 @@ function Bills() {
   );
 
   const handleDelete = async (id) => {
-    const shouldDelete = window.confirm("Are you sure you want to delete this order?");
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this order?"
+    );
     if (shouldDelete) {
       const config = {
         headers: {
@@ -126,7 +131,7 @@ function Bills() {
     };
     try {
       const result = await axios.get(GET_Order_Detail + `${id}`, config);
-      let data = parseJson(result.data.json)
+      let data = parseJson(result.data.json);
       const orderProducts = data;
       setIsOpenEdit(true);
       setOrderProducts(orderProducts);
@@ -134,7 +139,7 @@ function Bills() {
       toast.error(error.message);
     }
   };
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24 z-0">
       <AddBills
@@ -158,7 +163,11 @@ function Bills() {
         handleDelete={handleDelete}
         handleUpdate={handleUpdate}
       ></Single_Table>
-      <Pagination postPerPage={postPerPage} totalPost={result_data.length} paginate={paginate} />
+      <Pagination
+        postPerPage={postPerPage}
+        totalPost={result_data.length}
+        paginate={paginate}
+      />
     </div>
   );
 }

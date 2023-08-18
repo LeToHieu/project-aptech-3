@@ -59,11 +59,12 @@ namespace MediaWebApi
             builder.Services.AddScoped<IMediaFeedbackRepository, MediaFeedbackRepository>();
             builder.Services.AddScoped<IMediaFeedbackService, MediaFeedbackService>();
 
+            /*
             builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             builder.Services.AddScoped<IPermissionService, PermissionService>();
 
             builder.Services.AddScoped<IPermission_UserRepository, Permission_UserRepository>();
-            builder.Services.AddScoped<IPermission_UserService, Permission_UserService>();
+            builder.Services.AddScoped<IPermission_UserService, Permission_UserService>();*/
 
             builder.Services.AddScoped<IArtistAlbumRepository, ArtistAlbumRepository>();
             //builder.Services.AddScoped<IArtistAlbumService, ArtistAlbumService>();

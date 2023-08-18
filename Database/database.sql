@@ -11,9 +11,11 @@ CREATE TABLE Users(
 	role INT NOT NULL DEFAULT 0,
 );
 
+/*
 CREATE TABLE Permissions(
 	Id INT NOT NULL IDENTITY PRIMARY KEY,
 	permission INT NOT NULL DEFAULT 0, 
+	/* 0 = Admin, 1 = AdminPhu */
 );
 
 CREATE TABLE Permission_User(
@@ -23,6 +25,7 @@ CREATE TABLE Permission_User(
 	FOREIGN KEY (user_id) REFERENCES Users(id),
 	FOREIGN KEY (permission_id) REFERENCES Permissions(id),
 );
+*/
 
 CREATE TABLE Categories(
 	Id INT NOT NULL IDENTITY PRIMARY KEY,

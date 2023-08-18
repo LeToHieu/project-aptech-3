@@ -13,6 +13,24 @@ BEGIN
 END
 
 EXEC RegisterUser 'cuong', 'image', 'cuong123', '01234567', 'cuong@gmail.com';
+
+CREATE PROCEDURE InsertUser
+    @Username NVARCHAR(255),
+    @UserImage NVARCHAR(255),
+    @Password NVARCHAR(255),
+    @Phone NVARCHAR(255),
+    @Email NVARCHAR(255),
+    @Role NVARCHAR(255)
+AS
+BEGIN
+    -- Insert the user into the Users table
+    INSERT INTO Users (Username, UserImage, Password, Phone, Email, Role)
+    VALUES (@Username, @UserImage, @Password, @Phone, @Email, @Role)
+
+    -- Optionally, you can return the inserted user(s) if needed
+    SELECT * FROM Users WHERE Username = @Username
+END
+
 SELECT * FROM Users;
 
 
@@ -59,10 +77,11 @@ END
 CREATE PROCEDURE UpdateArtist
     @id INT,
     @artist_name VARCHAR(255),
+    @artist_image VARCHAR(255),
     @description VARCHAR(255)
 AS
 BEGIN
-    UPDATE Artists SET artist_name = @artist_name, description = @description WHERE Id = @id;
+    UPDATE Artists SET artist_name = @artist_name,artist_image = @artist_image , description = @description WHERE Id = @id;
 	SELECT * FROM Artists WHERE ID = @id
 END
 
@@ -127,9 +146,6 @@ BEGIN
 	WHERE ID = @media_id;
 	SELECT * FROM Medias WHERE ID = @media_id;
 END;
-
-EXEC InsertMedia 'Tên media', 'Đường dẫn ảnh', 'Đường dẫn media', 10.99, 1;
-EXEC UpdateMedia 1, 'Tên media mới', 'Đường dẫn ảnh mới', 'Đường dẫn media mới', 15.99, 2;
 
 CREATE PROCEDURE InsertPromotion
     @promotion_name VARCHAR(255),

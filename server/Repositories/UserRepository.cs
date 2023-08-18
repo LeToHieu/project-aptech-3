@@ -21,6 +21,29 @@ namespace MediaWebApi.Repositories
             _config = config;
         }
 
+        public async Task<User?> InsertUser(UserViewModel user)
+        {
+            string sql = "EXECUTE InsertUser @Username, @UserImage, @Password, @Phone, @Email, @Role";
+            IEnumerable<User> result = await _context.Users.FromSqlRaw(sql,
+                                    new SqlParameter("@username", user.Username),
+                                    new SqlParameter("@userimage", user.Userimage),
+                                    new SqlParameter("@password", user.Password),
+                                    new SqlParameter("@phone", user.Phone),
+                                    new SqlParameter("@email", user.Email),
+                                    new SqlParameter("@role", user.Role)
+                                ).ToListAsync();
+
+            User? newUser = result.FirstOrDefault();
+
+            if (newUser == null)
+            {
+                throw new ArgumentException("Can not create user");
+            }
+
+            return newUser;
+
+        }
+
         public async Task<User?> AddUser(RegisterViewModel user)
         {
             string sql = "EXECUTE RegisterUser @Username, @UserImage, @Password, @Phone, @Email";
@@ -36,7 +59,7 @@ namespace MediaWebApi.Repositories
 
             if (newUser == null)
             {
-                throw new ArgumentException("Can not create media");
+                throw new ArgumentException("Can not create user");
             }
 
             return newUser;

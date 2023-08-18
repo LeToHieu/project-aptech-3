@@ -25,7 +25,10 @@ const GetUsers = () => {
     };
     try {
       const response = await axios.get(GET_USER_URL, config);
-      SetUsers(response.data.users);
+      const sortedUsers = response.data.users
+        .filter((user) => user.role !== 3)
+        .sort((a, b) => b.role - a.role);
+      SetUsers(sortedUsers);
     } catch (error) {
       if (!error?.response) {
         toast.error("No server response");
@@ -97,6 +100,7 @@ const GetUsers = () => {
               <th>Email</th>
               <th>Phone Number</th>
               <th>Image</th>
+              <th>Role</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -129,6 +133,7 @@ const GetUsers = () => {
                       alt="..."
                     ></img>
                   </td>
+                  <td>{user.role === 0 ? "User" : "Admin"}</td>
                   <td>
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
@@ -149,7 +154,7 @@ const GetUsers = () => {
               ))
             ) : (
               <tr className="even:bg-gray-200 odd:bg-gray-100">
-                <td colSpan="6" className="py-3 text-center">
+                <td colSpan="7" className="py-3 text-center">
                   Loading...
                 </td>
               </tr>

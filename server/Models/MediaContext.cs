@@ -15,8 +15,7 @@ namespace MediaWebApi.Models
         public DbSet<Album> Albums { get; set; }
         public DbSet<Media> Medias { get; set; }
         public DbSet<Orders> Orders { get; set; }
-        public DbSet<Permissions> Permissions { get; set; }
-        public DbSet<Permission_User> Permission_User { get; set; }
+      
         public DbSet<Order_Detail> Order_Detail { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Media_Feedback> Media_Feedback { get; set; }

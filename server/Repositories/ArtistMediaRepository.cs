@@ -1,5 +1,6 @@
 ﻿using MediaWebApi.Models;
 using MediaWebApi.Repositories.Interface;
+using MediaWebApi.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaWebApi.Repositories
@@ -11,7 +12,7 @@ namespace MediaWebApi.Repositories
         {
             _context = context;
         }
-        public async Task<ArtistMedia> CreateAsync(ArtistMedia artistMedia)
+        public async Task<ArtistMedia> CreateAsync(ArtistMediaViewModel artistMedia)
         {
             var artist = await _context.ArtistMedias.FindAsync(artistMedia.ArtistId, artistMedia.MediaId);
 
@@ -32,7 +33,7 @@ namespace MediaWebApi.Repositories
             return artist;
         }
 
-        public async Task<bool> DeleteAsync(ArtistMedia artistMedia)
+        public async Task<bool> DeleteAsync(ArtistMediaViewModel artistMedia)
         {
             ArtistMedia? artist = await _context.ArtistMedias.FindAsync(artistMedia.ArtistId, artistMedia.MediaId);
             if (artist != null)

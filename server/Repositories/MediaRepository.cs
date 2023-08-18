@@ -46,6 +46,7 @@ namespace MediaWebApi.Repositories
             {
                 return null;
             }
+            
 
             _context.Medias.Remove(media);
             await _context.SaveChangesAsync();
@@ -136,12 +137,13 @@ namespace MediaWebApi.Repositories
 
         public async Task<bool?> UpdateMedia(MediaViewModel media)
         {
-            string sql = "EXECUTE UpdateMedia @media_id, @media_name, @media_image, @media_url, @price, @category_id";
+            string sql = "EXECUTE UpdateMedia @media_id, @media_name, @media_image, @media_url, @duration, @price, @category_id";
             IEnumerable<Media> result = await _context.Medias.FromSqlRaw(sql,
                                     new SqlParameter("@media_id", media.Id),
                                     new SqlParameter("@media_name", media.MediaName),
                                     new SqlParameter("@media_image", media.MediaImage),
                                     new SqlParameter("@media_url", media.MediaUrl),
+                                    new SqlParameter("@duration", media.Duration),
                                     new SqlParameter("@price", media.Price),
                                     new SqlParameter("@category_id", media.CategoryId)
                                 ).ToListAsync();

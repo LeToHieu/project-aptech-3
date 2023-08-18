@@ -99,7 +99,9 @@ const EditArtist = ({ isOpen, closeModal, GetArtists, Artist }) => {
             <div className="flex justify-end">Edit Artist</div>
             <CloseIcon
               className="justify-end float-right hover:opacity-50 cursor-pointer"
-              onClick={closeModal}
+              onClick={() => {
+                closeModal() || setArtist(initialArtist);
+              }}
             />
           </div>
 
@@ -140,7 +142,6 @@ const EditArtist = ({ isOpen, closeModal, GetArtists, Artist }) => {
                 <input
                   accept="image/*"
                   type="file"
-                  value={artist.ArtistImage}
                   className="text-sm w-[13rem] h-[2rem] m-3"
                   placeholder="Input image"
                   onChange={(event) => chooseFile(event)}

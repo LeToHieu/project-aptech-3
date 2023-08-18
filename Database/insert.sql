@@ -1,41 +1,16 @@
-
 INSERT INTO Users (username, userimage, password, email, phone, role)
 VALUES
-('user1', NULL, 'password1', 'user1@example.com', '1234567890', 0),
-('user2', NULL, 'password2', 'user2@example.com', '9876543210', 0),
-('user3', NULL, 'password3', 'user3@example.com', '1234567890', 0),
-('user4', NULL, 'password4', 'user4@example.com', '9876543210', 0),
-('user5', NULL, 'password5', 'user5@example.com', '1234567890', 0),
-('user6', NULL, 'password6', 'user6@example.com', '9876543210', 0),
-('user7', NULL, 'password7', 'user7@example.com', '1234567890', 0),
-('user8', NULL, 'password8', 'user8@example.com', '9876543210', 0),
-('user9', NULL, 'password9', 'user9@example.com', '1234567890', 0),
-('user10', NULL, 'password10', 'user10@example.com', '9876543210', 0);
+('user1', '.', 'password1', 'user1@example.com', '1234567890', 0),
+('user2', '.', 'password2', 'user2@example.com', '9876543210', 0),
+('user3', '.', 'password3', 'user3@example.com', '1234567890', 0),
+('user4', '.', 'password4', 'user4@example.com', '9876543210', 0),
+('user5', '.', 'password5', 'user5@example.com', '1234567890', 0),
+('user6', '.', 'password6', 'user6@example.com', '9876543210', 0),
+('user7', '.', 'password7', 'user7@example.com', '1234567890', 0),
+('user8', '.', 'password8', 'user8@example.com', '9876543210', 0),
+('user9', '.', 'password9', 'user9@example.com', '1234567890', 0),
+('user10', '.', 'password10', 'user10@example.com', '9876543210', 0);
 
-INSERT INTO Permissions (permission)
-VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(7),
-(8),
-(9),
-(10);
-
-INSERT INTO Permission_User (user_id, permission_id)
-VALUES (1, 1),
-       (1, 2),
-       (2, 2),
-       (3, 2),
-       (4, 3),
-       (5, 3),
-       (6, 3),
-       (7, 2),
-       (8, 2),
-       (9, 2);
 
 INSERT INTO Categories (category_name, description)
 VALUES ('Pop', 'Popular music'),

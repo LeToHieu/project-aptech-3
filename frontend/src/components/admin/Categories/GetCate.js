@@ -130,7 +130,7 @@ const GetCate = () => {
               ))
             ) : (
               <tr className="even:bg-gray-200 odd:bg-gray-100">
-                <td colSpan="6" className="py-3 text-center">
+                <td colSpan="4" className="py-3 text-center">
                   Loading...
                 </td>
               </tr>

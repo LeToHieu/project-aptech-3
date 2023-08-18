@@ -69,6 +69,7 @@ const GetArtists = () => {
       }
     }
   };
+
   return (
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">

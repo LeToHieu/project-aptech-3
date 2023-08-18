@@ -14,9 +14,31 @@ namespace MediaWebApi.Services
             _userRepository = userRepository;
         }
 
-        public Task<User?> CreateUser(UserViewModel user)
+        public async Task<User?> InsertUser(UserViewModel user)
         {
-            throw new NotImplementedException();
+            var existUserByUserName = await _userRepository.GetByUserName(user.Username ?? "");
+            if (existUserByUserName != null)
+            {
+                throw new ArgumentException("Username already exists");
+            }
+
+            var existUserByEmail = await _userRepository.GetByEmail(user.Email ?? "");
+            if (existUserByEmail != null)
+            {
+                throw new ArgumentException("Email already exists");
+            }
+
+            var urlImage = ".";
+
+            if (user.fileImage != null)
+            {
+                urlImage = await _userRepository.UpLoadFile(user.fileImage);
+            }
+
+            user.Userimage = urlImage;
+
+            User? newUser = await _userRepository.InsertUser(user);
+            return newUser;
         }
 
         public async Task<bool?> DeleteUser(int id)

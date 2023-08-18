@@ -13,6 +13,7 @@ const Edit = ({ isOpen, closeModal, getUsers, User }) => {
     Phone: "",
     Password: "",
     Email: "",
+    Role: "",
     fileImage: "",
   };
   const [user, setUser] = useState(initialUser);
@@ -24,6 +25,7 @@ const Edit = ({ isOpen, closeModal, getUsers, User }) => {
       Phone: User.phone ?? "",
       Password: User.password ?? "",
       Email: User.email ?? "",
+      Role: User.role ?? "",
       fileImage: "",
     });
   }, [User]);
@@ -103,7 +105,10 @@ const Edit = ({ isOpen, closeModal, getUsers, User }) => {
             <div className="flex justify-end">Edit User</div>
             <CloseIcon
               className="justify-end float-right hover:opacity-50 cursor-pointer "
-              onClick={closeModal}
+              //onClick={closeModal}
+              onClick={() => {
+                closeModal() || setUser(initialUser);
+              }}
             />
           </div>
           <form action="#" onSubmit={handleSubmit}>
@@ -164,6 +169,24 @@ const Edit = ({ isOpen, closeModal, getUsers, User }) => {
                     setUser({ ...user, Password: e.target.value })
                   }
                 ></input>
+              </div>
+
+              <div className="flex">
+                <label className="w-[4rem] flex items-center justify-center">
+                  Role:{" "}
+                </label>
+                <select
+                  required
+                  className="w-[13rem] rounded-md h-[2rem] border-2 border-black-600 hover:border-blue-300 m-3"
+                  onChange={(e) => setUser({ ...user, Role: e.target.value })}
+                  value={user.Role}
+                >
+                  <option value="" disabled selected hidden>
+                    Select Role
+                  </option>
+                  <option value="0">User</option>
+                  <option value="1">Admin</option>
+                </select>
               </div>
 
               <div className="flex h-[3rem]">

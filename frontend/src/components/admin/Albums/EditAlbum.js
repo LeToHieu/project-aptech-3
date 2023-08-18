@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 const GET_ARTIST_BY_ID = "Artist/";
 const ARTIST_URL = "Album";
 const ARTIST_ALBUM_URL = "ArtistAlbum";
+const url = "https://localhost:7023/resources/";
 const INITIAL_STATE = {
   albumName: "",
   price: "",
@@ -328,7 +329,11 @@ const EditAlbum = ({
                           {artist.ArtistName}
                         </td>
                         <td className="py-2 px-4 border">
-                          {artist.ArtistImage}
+                          <img
+                            className="h-10 w-10 rounded-lg flex items-center justify-center"
+                            src={url + artist.ArtistImage}
+                            alt="..."
+                          />
                         </td>
                         <td className="py-2 px-4 border">
                           <button

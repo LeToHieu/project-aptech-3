@@ -6,7 +6,13 @@ import { Category } from "@mui/icons-material";
 
 const EDIT_ARTIST_URL = "Artist/edit/";
 const url = "https://localhost:7023/resources/";
-const EditArtist = ({ isOpen, closeModal, GetArtists, Artist }) => {
+const EditArtist = ({
+  isOpen,
+  closeModal,
+  GetArtists,
+  Artist,
+  SetMyArtistToNull,
+}) => {
   const initialArtist = {
     Id: "",
     ArtistName: "",
@@ -100,7 +106,7 @@ const EditArtist = ({ isOpen, closeModal, GetArtists, Artist }) => {
             <CloseIcon
               className="justify-end float-right hover:opacity-50 cursor-pointer"
               onClick={() => {
-                closeModal() || setArtist(initialArtist);
+                closeModal() || setArtist(initialArtist) || SetMyArtistToNull();
               }}
             />
           </div>

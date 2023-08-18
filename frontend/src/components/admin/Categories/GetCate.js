@@ -3,7 +3,7 @@ import EditCate from "./EditCate";
 import { toast } from "react-toastify";
 import axios from "../../../api/axios";
 import { useState, useEffect } from "react";
-
+import DataTable from "react-data-table-component";
 const GET_CATEGORY_URL = "Category";
 const GetCate = () => {
   const [Category, SetCategory] = useState();
@@ -23,7 +23,7 @@ const GetCate = () => {
     };
     try {
       const response = await axios.get(GET_CATEGORY_URL, config);
-      SetCategories(response.data.categories);
+      SetCategories(response.data.categories.sort((a, b) => b.id - a.id));
     } catch (error) {
       if (!error?.response) {
         toast.error("No server response");
@@ -64,6 +64,42 @@ const GetCate = () => {
     }
   };
 
+  const columns = [
+    {
+      name: "Id",
+      selector: (row) => row.id,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.categoryName,
+    },
+    {
+      name: "Description",
+      selector: (row) => row.description,
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+            onClick={() => {
+              setIsOpenEdit(true) || SetCategory(row);
+            }}
+          >
+            Edit
+          </button>
+          <button
+            onClick={(event) => deleteCategory(event, row.id)}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+          >
+            Delete
+          </button>
+        </>
+      ),
+    },
+  ];
+
   return (
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">
@@ -89,54 +125,13 @@ const GetCate = () => {
             Add Categories
           </button>
         </div>
-        <table className=" table-fixed rounded-lg lg:table-auto w-full border-solid border-2 border-collapse border border-slate-400">
-          <thead>
-            <tr className="text-left bg-gray-300">
-              <th className="mx-3 px-3 w-[2rem]">Id</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Categories !== undefined &&
-            Categories !== "" &&
-            Categories !== null ? (
-              Categories.map((category, index) => (
-                <tr
-                  className="even:bg-gray-200 odd:bg-gray-100"
-                  key={category.id}
-                >
-                  <td className="mx-3 px-3">{index + 1}</td>
-                  <td>{category.categoryName}</td>
-                  <td>{category.description}</td>
-                  <td>
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                      onClick={() => {
-                        setIsOpenEdit(true) || SetCategory(category);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={(event) => deleteCategory(event, category.id)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr className="even:bg-gray-200 odd:bg-gray-100">
-                <td colSpan="4" className="py-3 text-center">
-                  Loading...
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <DataTable
+          columns={columns}
+          data={Categories}
+          pagination
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+        />
       </div>
     </>
   );

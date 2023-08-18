@@ -7,6 +7,7 @@ import { useState } from "react";
 const GET_ARTIST_BY_ID = "Artist/";
 const ADD_ARTIST_URL = "/Album/add";
 const ADD_ARTIST_ALBUM_URL = "/ArtistAlbum/add";
+const url = "https://localhost:7023/resources/";
 const INITIAL_STATE = {
   albumName: "",
   price: "",
@@ -190,10 +191,7 @@ const AddAlbum = ({ isOpen, closeModal, GetAlbums }) => {
       >
         <div className="rounded-lg bg-white lg:w-[40rem] h-[25rem] min-h-[35rem] mt-5 pb-5 overflow-y-auto">
           <div className="flex rounded-t-lg bg-slate-300 h-[2.25rem] items-center justify-between px-3">
-            <div className="text-xl float-left my-2 hover:bg-blue-700 font-bold">
-              Artists Table
-            </div>
-            <div className="flex justify-end">Add Album</div>
+            <div className="flex float-left">Add Album</div>
             <CloseIcon
               className="justify-end float-right hover:opacity-50 cursor-pointer"
               onClick={() => {
@@ -284,7 +282,11 @@ const AddAlbum = ({ isOpen, closeModal, GetAlbums }) => {
                           {artist.artistName}
                         </td>
                         <td className="py-2 px-4 border">
-                          {artist.artistImage}
+                          <img
+                            className="h-10 w-10 rounded-lg flex items-center justify-center"
+                            src={url + artist.artistImage}
+                            alt="..."
+                          />
                         </td>
                         <td className="py-2 px-4 border">
                           <button

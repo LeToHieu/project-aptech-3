@@ -3,7 +3,7 @@ import EditUsers from "./EditUsers";
 import { toast } from "react-toastify";
 import axios from "../../../api/axios";
 import { useState, useEffect } from "react";
-
+import DataTable from "react-data-table-component";
 const GET_USER_URL = "User";
 const url = "https://localhost:7023/resources/";
 
@@ -17,6 +17,8 @@ const GetUsers = () => {
     getUsers();
   }, []);
 
+  console.log(Users);
+
   const getUsers = async () => {
     const config = {
       headers: {
@@ -27,6 +29,7 @@ const GetUsers = () => {
       const response = await axios.get(GET_USER_URL, config);
       const sortedUsers = response.data.users
         .filter((user) => user.role !== 2)
+        .sort((a, b) => b.id - a.id)
         .sort((a, b) => b.role - a.role);
       SetUsers(sortedUsers);
     } catch (error) {
@@ -66,6 +69,57 @@ const GetUsers = () => {
     }
   };
 
+  const columns = [
+    {
+      name: "Id",
+      selector: (row) => row.id,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.username,
+    },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+    },
+    {
+      name: "Phone Number",
+      selector: (row) => row.phone,
+    },
+    {
+      name: "Image",
+      selector: (row) => (
+        <img className="h-10 w-10" src={url + row.userimage} alt="..."></img>
+      ),
+    },
+
+    {
+      name: "Role",
+      selector: (row) => (row.role === 0 ? "User" : "Admin"),
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+            onClick={() => {
+              setIsOpenEdit(true) || SetUser(row);
+            }}
+          >
+            Edit
+          </button>
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+            onClick={(event) => deleteUsers(event, row.id)}
+          >
+            Delete
+          </button>
+        </>
+      ),
+    },
+  ];
+
   return (
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">
@@ -78,6 +132,7 @@ const GetUsers = () => {
           isOpen={isOpenEdit}
           closeModal={() => setIsOpenEdit(false)}
           getUsers={() => getUsers()}
+          SetUserToNull={() => SetUser({})}
           User={User}
         />
         <div className=" my-2">
@@ -92,75 +147,14 @@ const GetUsers = () => {
             AddUser
           </button>
         </div>
-        <table className=" table-fixed rounded-lg lg:table-auto w-full border-solid border-2 border-collapse border border-slate-400">
-          <thead>
-            <tr className="text-left bg-gray-300">
-              <th className="mx-3 px-3 w-[2rem]">Id</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone Number</th>
-              <th>Image</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Users !== undefined && Users !== "" && Users !== null ? (
-              Users.map((user, index) => (
-                <tr className="even:bg-gray-200 odd:bg-gray-100" key={user.id}>
-                  <td className="mx-3 px-3">{index + 1}</td>
-                  <td>{user.username}</td>
-                  <td
-                    style={{
-                      wordWrap: "break-word",
-                      overflowWrap: "break-word",
-                    }}
-                  >
-                    {user.email}
-                  </td>
-                  <td
-                    style={{
-                      wordWrap: "break-word",
-                      overflowWrap: "break-word",
-                    }}
-                  >
-                    {user.phone}
-                  </td>
-                  <td>
-                    <img
-                      className="h-10 w-10"
-                      src={url + user.userimage}
-                      alt="..."
-                    ></img>
-                  </td>
-                  <td>{user.role === 0 ? "User" : "Admin"}</td>
-                  <td>
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                      onClick={() => {
-                        setIsOpenEdit(true) || SetUser(user);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                      onClick={(event) => deleteUsers(event, user.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr className="even:bg-gray-200 odd:bg-gray-100">
-                <td colSpan="7" className="py-3 text-center">
-                  Loading...
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+
+        <DataTable
+          columns={columns}
+          data={Users}
+          pagination
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+        />
       </div>
     </>
   );

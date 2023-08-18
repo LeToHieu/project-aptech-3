@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../api/axios";
 
+import DataTable from "react-data-table-component";
+
 const GET_MEDIA = "Media";
 const GET_ARTIST_MEDIA = "ArtistMedia";
 const GET_CATEGORY = "Category/";
@@ -126,6 +128,73 @@ const GetMedias = () => {
       }
     }
   };
+
+  const columns = [
+    {
+      name: "Id",
+      selector: (row) => row.media.id,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.media.mediaName,
+    },
+    {
+      name: "Artist",
+      selector: (row) => (
+        <>
+          <img
+            className="h-10 w-10 rounded-lg flex items-center justify-center"
+            src={url + row.artist.artistImage}
+            alt="..."
+          />
+          <div className="whitespace-normal break-all">
+            {row.artist.artistName}
+          </div>
+        </>
+      ),
+    },
+    {
+      name: "Create At",
+      selector: (row) => row.media.createdAt,
+    },
+    {
+      name: "Category",
+      selector: (row) =>
+        Categories !== undefined &&
+        Categories !== "" &&
+        Categories.filter(
+          (category) => category.id === row.media.categoryId
+        ).map((category, index) => category.categoryName),
+    },
+
+    {
+      name: "Price",
+      selector: (row) => row.media.price + " $",
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <>
+          <button
+            onClick={() => {
+              navigate("/admin/medias/editMedia/" + row.media.id);
+            }}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+          >
+            Edit
+          </button>
+          <button
+            onClick={(event) =>
+              handleDeleteMedia(event, row.media.id, row.media.categoryId)
+            }
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+          >
+            Delete
+          </button>
+        </>
+      ),
+    },
+  ];
   return (
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">
@@ -139,93 +208,13 @@ const GetMedias = () => {
             </button>
           </Link>
         </div>
-        <table className=" table-fixed rounded-lg lg:table-auto w-full border-solid border-2 border-collapse border border-slate-400">
-          <thead>
-            <tr className="text-left bg-gray-300">
-              <th className="mx-3 px-3 w-[2rem]">Id</th>
-              <th>Name</th>
-              <th>Artist</th>
-
-              <th>Create At</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Medias !== undefined &&
-            Medias !== "" &&
-            Medias !== null &&
-            Medias.length !== 0 ? (
-              Medias.map((media, index) => (
-                <tr
-                  key={media.media.id}
-                  className="even:bg-gray-200 odd:bg-gray-100"
-                >
-                  <td className="mx-3 px-3">{media.media.id}</td>
-                  <td>
-                    <img
-                      className="h-10 w-10 rounded-lg flex items-center justify-center"
-                      src={url + media.media.mediaImage}
-                      alt="..."
-                    />
-                    {media.media.mediaName}
-                  </td>
-                  <td>
-                    <img
-                      className="h-10 w-10 rounded-lg flex items-center justify-center"
-                      src={url + media.artist.artistImage}
-                      alt="..."
-                    />
-                    <div className="whitespace-normal break-all">
-                      {media.artist.artistName}
-                    </div>
-                  </td>
-
-                  <td className="w-30 whitespace-normal break-all">
-                    {media.media.createdAt}
-                  </td>
-                  <td>
-                    {Categories !== undefined &&
-                      Categories !== "" &&
-                      Categories.filter(
-                        (category) => category.id === media.media.categoryId
-                      ).map((category, index) => category.categoryName)}
-                  </td>
-                  <td>{media.media.price}$</td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        navigate("/admin/medias/editMedia/" + media.media.id);
-                      }}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={(event) =>
-                        handleDeleteMedia(
-                          event,
-                          media.media.id,
-                          media.media.categoryId
-                        )
-                      }
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr className="even:bg-gray-200 odd:bg-gray-100">
-                <td colSpan="7" className="py-3 text-center">
-                  Loading...
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <DataTable
+          columns={columns}
+          data={Medias}
+          pagination
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+        />
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import AddArtist from "./AddArtist";
 import EditArtist from "./EditArtist";
 import { toast } from "react-toastify";
 import axios from "../../../api/axios";
-
+import DataTable from "react-data-table-component";
 const ARTIST_URL = "Artist";
 const url = "https://localhost:7023/resources/";
 const GetArtists = () => {
@@ -32,7 +32,7 @@ const GetArtists = () => {
     try {
       console.log("ahahaa");
       const response = await axios.get(ARTIST_URL, config);
-      SetArtists(response.data.artists);
+      SetArtists(response.data.artists.sort((a, b) => b.id - a.id));
     } catch (error) {
       if (!error?.response) {
         toast.error("No server response");
@@ -70,6 +70,48 @@ const GetArtists = () => {
     }
   };
 
+  const columns = [
+    {
+      name: "Id",
+      selector: (row) => row.id,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.artistName,
+    },
+    {
+      name: "Image",
+      selector: (row) => (
+        <img className="h-10 w-10" src={url + row.artistImage} alt="..."></img>
+      ),
+    },
+    {
+      name: "Description",
+      selector: (row) => row.description,
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+            onClick={() => {
+              setIsOpenEdit(true) || SetArtist(row);
+            }}
+          >
+            Edit
+          </button>
+          <button
+            onClick={(event) => DeleteArtit(event, row.id)}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
+          >
+            Delete
+          </button>
+        </>
+      ),
+    },
+  ];
+
   return (
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">
@@ -82,6 +124,7 @@ const GetArtists = () => {
           isOpen={isOpenEdit}
           closeModal={() => setIsOpenEdit(false)}
           GetArtists={() => GetArtists()}
+          SetMyArtistToNull={() => SetArtist({})}
           Artist={Artist}
         />
         <div className="my-2">
@@ -96,61 +139,13 @@ const GetArtists = () => {
             Add Artists
           </button>
         </div>
-        <table className=" table-fixed rounded-lg lg:table-auto w-full border-solid border-2 border-collapse border border-slate-400">
-          <thead>
-            <tr className="text-left bg-gray-300">
-              <th className="mx-3 px-3 w-[2rem]">Id</th>
-              <th>Name</th>
-              <th>Image</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Artists !== undefined && Artists !== "" && Artists !== null ? (
-              Artists.map((artitst, index) => (
-                <tr
-                  className="even:bg-gray-200 odd:bg-gray-100"
-                  key={artitst.id}
-                >
-                  <td className="mx-3 px-3">{artitst.id}</td>
-                  <td>{artitst.artistName}</td>
-
-                  <td>
-                    <img
-                      className="h-10 w-10"
-                      src={url + artitst.artistImage}
-                      alt="..."
-                    ></img>
-                  </td>
-                  <td>{artitst.description}</td>
-                  <td>
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                      onClick={() => {
-                        setIsOpenEdit(true) || SetArtist(artitst);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={(event) => DeleteArtit(event, artitst.id)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 me-2 my-1 px-2 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr className="even:bg-gray-200 odd:bg-gray-100">
-                <td colSpan="5" className="py-3 text-center">
-                  Loading...
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <DataTable
+          columns={columns}
+          data={Artists}
+          pagination
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+        />
       </div>
     </>
   );

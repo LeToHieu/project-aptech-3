@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 const EDIT_USER_URL = "User/edit/";
 const url = "https://localhost:7023/resources/";
-const Edit = ({ isOpen, closeModal, getUsers, User }) => {
+const Edit = ({ isOpen, closeModal, getUsers, User, SetUserToNull }) => {
   const initialUser = {
     Id: "",
     Username: "",
@@ -107,7 +107,7 @@ const Edit = ({ isOpen, closeModal, getUsers, User }) => {
               className="justify-end float-right hover:opacity-50 cursor-pointer "
               //onClick={closeModal}
               onClick={() => {
-                closeModal() || setUser(initialUser);
+                closeModal() || setUser(initialUser) || SetUserToNull();
               }}
             />
           </div>

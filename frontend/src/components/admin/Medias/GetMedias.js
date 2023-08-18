@@ -129,10 +129,13 @@ const GetMedias = () => {
   return (
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">
-        <div className="float-right my-2">
+        <div className="my-2">
+          <div className="text-xl float-left my-2 hover:bg-blue-700 font-bold">
+            Medias Table
+          </div>
           <Link to="addMedia">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Add Categories
+            <button className="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Add Medias
             </button>
           </Link>
         </div>

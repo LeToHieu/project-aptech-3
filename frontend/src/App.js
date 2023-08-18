@@ -17,7 +17,7 @@ import Bill from "./components/Bills/Bills";
 import Index from "./pages/Index";
 import Home from "./components/Home/Home";
 import Video from "./components/Video/Video";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Music from "./pages/Music";
 import Album from "./components/Album/Album";
@@ -41,11 +41,10 @@ import Feedback from "./components/admin/Feedback/Feedback";
 import News from "./components/News/News";
 import { Navigate } from "react-router-dom";
 function App() {
-  const { setAuth } = useContext(AuthContext);
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.user);
+  const { user, role } = useSelector((state) => state.user);
   console.log(user);
   useEffect(() => {
     const loginUserWithJwt = async () => {
@@ -58,14 +57,6 @@ function App() {
       try {
         const { data } = await axios.post("user/loginWithJwt", "", config);
         console.log(data);
-        setAuth({
-          name: data.username,
-          email: data.email,
-          password: data.password,
-          role: data.role,
-          accessToken: jwt,
-        });
-
         dispatch(usersSuccess(data.user));
       } catch (e) {
         console.log(e.message);
@@ -76,14 +67,65 @@ function App() {
       loginUserWithJwt();
     }
   }, [jwt]);
+
+  /*
   const ProtectedRoute = (props) => {
-    console.log(props);
-    if (parseInt(props.role) === 0) {
-      navigate("/");
-    } else {
+    console.log(props.role);
+
+    var myRole;
+    setTimeout(() => {
+      myRole = props.role;
+    }, 3000);
+    useEffect(() => {
+      if (parseInt(myRole) === 0) {
+        navigate(-1);
+      } else if (parseInt(myRole) === 1 || parseInt(myRole) === 2) {
+        return props.children;
+      } else {
+        return navigate(-1);
+      }
+    }, [props.role]);
+  };
+  */
+
+  const ProtectedRoute = (props) => {
+    const prevRole = useRef(null);
+
+    useEffect(() => {
+      const delay = 1000; // 3000 milliseconds = 3 seconds
+
+      const timerId = setTimeout(() => {
+        if (
+          prevRole.current === null &&
+          (parseInt(props.role) === 1 || parseInt(props.role) === 2)
+        ) {
+          prevRole.current = props.role;
+          return;
+        }
+
+        if (parseInt(props.role) === 0) {
+          navigate(-1);
+        } else if (parseInt(props.role) === 1 || parseInt(props.role) === 2) {
+          prevRole.current = props.role;
+          return props.children;
+        } else {
+          navigate("/");
+          window.location.reload();
+        }
+      }, delay);
+
+      return () => {
+        clearTimeout(timerId);
+      };
+    }, [props.role]);
+
+    if (parseInt(props.role) === 1 || parseInt(props.role) === 2) {
       return props.children;
     }
+
+    return null;
   };
+
   return (
     <>
       <Routes>

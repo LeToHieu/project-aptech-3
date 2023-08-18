@@ -4,7 +4,7 @@ const initialState = {
   user: null,
   loading: false,
   error: "",
-  role: -1,
+  role: "",
 };
 
 export const userSlice = createSlice({

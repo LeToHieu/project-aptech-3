@@ -26,7 +26,7 @@ const GetUsers = () => {
     try {
       const response = await axios.get(GET_USER_URL, config);
       const sortedUsers = response.data.users
-        .filter((user) => user.role !== 3)
+        .filter((user) => user.role !== 2)
         .sort((a, b) => b.role - a.role);
       SetUsers(sortedUsers);
     } catch (error) {

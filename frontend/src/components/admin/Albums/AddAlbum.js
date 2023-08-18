@@ -190,6 +190,9 @@ const AddAlbum = ({ isOpen, closeModal, GetAlbums }) => {
       >
         <div className="rounded-lg bg-white lg:w-[40rem] h-[25rem] min-h-[35rem] mt-5 pb-5 overflow-y-auto">
           <div className="flex rounded-t-lg bg-slate-300 h-[2.25rem] items-center justify-between px-3">
+            <div className="text-xl float-left my-2 hover:bg-blue-700 font-bold">
+              Artists Table
+            </div>
             <div className="flex justify-end">Add Album</div>
             <CloseIcon
               className="justify-end float-right hover:opacity-50 cursor-pointer"

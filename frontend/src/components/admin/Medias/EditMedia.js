@@ -319,7 +319,7 @@ const GetMedia = () => {
     <>
       <div className="mx-5 p-5 rounded-lg border-solid border-2 border-indigo-600 my-5 min-h-screen">
         <div className="my-2 pb-5">
-          <div className="float-left ">Add Media</div>
+          <div className="float-left ">Edit Media</div>
           <button
             onClick={() => navigate(-1)}
             className="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

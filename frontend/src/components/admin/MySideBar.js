@@ -6,13 +6,15 @@ import CategoryIcon from "@mui/icons-material/Category";
 import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
 import LibraryAddOutlinedIcon from "@mui/icons-material/LibraryAddOutlined";
 import NotStartedOutlinedIcon from "@mui/icons-material/NotStartedOutlined";
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
-import ReorderIcon from '@mui/icons-material/Reorder';
-import ReportIcon from '@mui/icons-material/Report';
-import FeedIcon from '@mui/icons-material/Feed';
-import GradeIcon from '@mui/icons-material/Grade';
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
+import ReorderIcon from "@mui/icons-material/Reorder";
+import ReportIcon from "@mui/icons-material/Report";
+import FeedIcon from "@mui/icons-material/Feed";
+import GradeIcon from "@mui/icons-material/Grade";
+import { useSelector } from "react-redux";
 const SideBar = () => {
+  const { user } = useSelector((state) => state.user);
   const location = useLocation().pathname.split("/")[2];
   console.log(location);
   return (
@@ -33,24 +35,25 @@ const SideBar = () => {
             <DashboardIcon style={{ color: "white" }} />
             <p className="text-[14px] leading-[20px] text-white">Dashboard</p>
           </Link>
-
-          <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
-            <div
-              className={`flex items-center justify-between gap-[10px] py-[15px] cursor-pointer`}
-            >
-              <Link
-                to="users"
-                className={`${
-                  location === "users" ? "font-bold" : "hover:font-bold"
-                } flex items-center gap-[10px]`}
+          {user?.role === 2 && (
+            <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
+              <div
+                className={`flex items-center justify-between gap-[10px] py-[15px] cursor-pointer`}
               >
-                <PeopleAltIcon style={{ color: "white" }} />
-                <p className={`text-[14px]  leading-[20px] text-white`}>
-                  Users
-                </p>
-              </Link>
+                <Link
+                  to="users"
+                  className={`${
+                    location === "users" ? "font-bold" : "hover:font-bold"
+                  } flex items-center gap-[10px]`}
+                >
+                  <PeopleAltIcon style={{ color: "white" }} />
+                  <p className={`text-[14px]  leading-[20px] text-white`}>
+                    Users
+                  </p>
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
             <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
@@ -123,7 +126,7 @@ const SideBar = () => {
               </Link>
             </div>
           </div>
-        
+
           <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
             <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
               <Link

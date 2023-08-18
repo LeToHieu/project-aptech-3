@@ -20,7 +20,7 @@ namespace MediaWebApi.Controllers
             _repository = repository;
         }
         [HttpPost("add")]
-        public async Task<IActionResult> CreateArtistAlbum(ArtistAlbum artistAlbum)
+        public async Task<IActionResult> CreateArtistAlbum(ArtistAlbumViewModel artistAlbum)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace MediaWebApi.Controllers
         }
 
         [HttpPost("delete")]
-        public async Task<IActionResult> DeleteAA(ArtistAlbum artistAlbum)
+        public async Task<IActionResult> DeleteAA(ArtistAlbumViewModel artistAlbum)
         {
             try
             {

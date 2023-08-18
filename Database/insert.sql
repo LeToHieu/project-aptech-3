@@ -1,4 +1,3 @@
-
 INSERT INTO Users (username, userimage, password, email, phone, role)
 VALUES
 ('user1', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password1', 'user1@example.com', '1234567890', 0),
@@ -11,6 +10,7 @@ VALUES
 ('user8', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password8', 'user8@example.com', '9876543210', 0),
 ('user9', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password9', 'user9@example.com', '1234567890', 0),
 ('user10', 'Images/2d72e1ad-b6bf-4088-a3a8-d4c835a0d9f5.jpeg', 'password10', 'user10@example.com', '9876543210', 0);
+
 
 INSERT INTO Categories (category_name, description)
 VALUES ('Pop', 'Popular music'),

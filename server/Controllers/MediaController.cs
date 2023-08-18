@@ -33,7 +33,7 @@ namespace MediaWebApi.Controllers
         }
 
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> UpdateMedia(MediaViewModel media, int id)
+        public async Task<IActionResult> UpdateMedia([FromForm]MediaViewModel media, int id)
         {
             media.Id = id;
             try

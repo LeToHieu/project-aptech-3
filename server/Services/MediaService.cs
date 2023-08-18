@@ -3,6 +3,7 @@ using MediaWebApi.Repositories.Interface;
 using MediaWebApi.Services.Interface;
 using MediaWebApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace MediaWebApi.Services
 {
@@ -33,6 +34,8 @@ namespace MediaWebApi.Services
             {
                 throw new ArgumentException("Id not found");
             }
+            File.Delete("Uploads/" + existingMedia.Media.MediaImage);
+            File.Delete("Uploads/" + existingMedia.Media.MediaUrl);
             return await _mediaRepository.DeleteMedia(id);
         }
 
@@ -48,20 +51,34 @@ namespace MediaWebApi.Services
 
         public async Task<bool?> UpdateMedia(MediaViewModel media)
         {
-            var existingMedia = _mediaRepository.GetMediaById(media.Id);
+            var existingMedia = await _mediaRepository.GetMediaById(media.Id);
             if (existingMedia == null)
             {
                 throw new ArgumentException("Id not found");
             }
-            if (media.fileVideo != null)
+            if (media.fileVideo != null && media.MediaUrl != ".")
             {
+                File.Delete("Uploads/" + existingMedia.Media.MediaUrl);
                 string url = await _mediaRepository.UpLoadFile(media.fileVideo);
                 media.MediaUrl = url;
+                var duration = await _mediaRepository.GetDuration("uploads/" + url);
+                media.Duration = duration;
             }
-            if (media.fileImage != null)
+            else
             {
+                var duration = await _mediaRepository.GetDuration("uploads/" + existingMedia.Media.MediaUrl);
+                media.MediaUrl = existingMedia.Media.MediaUrl;
+                media.Duration = duration;
+            }
+            if (media.fileImage != null && media.MediaImage != ".")
+            {
+                File.Delete("Uploads/" + existingMedia.Media.MediaImage);
                 string url = await _mediaRepository.UpLoadFile(media.fileImage);
                 media.MediaImage = url;
+            }
+            else
+            {
+                media.MediaImage = existingMedia.Media.MediaImage;
             }
 
             return await _mediaRepository.UpdateMedia(media);

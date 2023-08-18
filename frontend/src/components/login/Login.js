@@ -1,23 +1,22 @@
 import "./Login.css";
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthProvider";
-import axios from '../../api/axios';
-import {toast} from 'react-toastify'
+import axios from "../../api/axios";
+import { toast } from "react-toastify";
 import { useLocation, Navigate, Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const LOGIN_URL = 'user/login';
-
+const LOGIN_URL = "user/login";
 
 const Login = (props) => {
   const navigate = useNavigate();
   const loaction = useLocation();
   const from = loaction.state?.from?.pathname ?? "/";
-  const {user } = useSelector(state => state.user)
+  const { user } = useSelector((state) => state.user);
   const { setAuth } = useContext(AuthContext);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // const handleSubmit = async (e) =>{
   //   e.preventDefault();
@@ -37,7 +36,7 @@ const Login = (props) => {
   //     setAuth({name, email, password, role, accessToken });
   //     setEmail('');
   //     setPassword('');
-      
+
   //     navigate(from, {replace: true});
   //   }catch(error){
   //     if(!error?.response){
@@ -49,48 +48,57 @@ const Login = (props) => {
   //     }
   //   }
   // }
-  useEffect(()=> {
+  useEffect(() => {
     if (user) {
-      navigate('/')
+      navigate("/");
     }
-  }, [user])
+  }, [user]);
+  console.log(user);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = {
       headers: {
         "Content-Type": "application/json",
-      }
-    }
-    let user = JSON.stringify({ username: email, password })
+      },
+    };
+    let user = JSON.stringify({ username: email, password });
     try {
-      const response =  await axios.post(LOGIN_URL, user ,config)
-      localStorage.setItem('jwt', response.data.jwt)
-      navigate('/')
-      window.location.reload()
+      const response = await axios.post(LOGIN_URL, user, config);
+      localStorage.setItem("jwt", response.data.jwt);
+      //console.log(response.data);
+      //setAuth({ name, email, password, role, accessToken });
+      navigate("/");
+      window.location.reload();
     } catch (error) {
       toast.error("Tài khoản không hợp lệ");
       console.log(error.message);
     }
-
-  }
+  };
   return (
     <>
-      <form action="#" className="loginInsideForm" ref={props.loginForm} onSubmit={handleSubmit}>
+      <form
+        action="#"
+        className="loginInsideForm"
+        ref={props.loginForm}
+        onSubmit={handleSubmit}
+      >
         <div className="field">
-          <input 
-            type="text" 
-            placeholder="User name" 
-            required  
+          <input
+            type="text"
+            placeholder="User name"
+            required
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}  
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="field">
-          <input type="password"
-                 placeholder="Password"
-                required 
-                onChange={(e)=>setPassword(e.target.value)}
-                value={password}
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
         </div>
         <div className="pass-link">
@@ -103,8 +111,7 @@ const Login = (props) => {
         <div className="signup-link">
           Not a member? <span>Signup now</span>
         </div>
-        
-    </form>
+      </form>
     </>
   );
 };

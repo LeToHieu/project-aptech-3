@@ -59,14 +59,12 @@ namespace MediaWebApi
             builder.Services.AddScoped<IMediaFeedbackRepository, MediaFeedbackRepository>();
             builder.Services.AddScoped<IMediaFeedbackService, MediaFeedbackService>();
 
-            builder.Services.AddScoped<IAlbumFeedbackRepository,AlbumFeedbackRepository>();
-            builder.Services.AddScoped<IAlbumFeedbackService, AlbumFeedbackService>();
-
+            /*
             builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             builder.Services.AddScoped<IPermissionService, PermissionService>();
 
             builder.Services.AddScoped<IPermission_UserRepository, Permission_UserRepository>();
-            builder.Services.AddScoped<IPermission_UserService, Permission_UserService>();
+            builder.Services.AddScoped<IPermission_UserService, Permission_UserService>();*/
 
             builder.Services.AddScoped<IArtistAlbumRepository, ArtistAlbumRepository>();
             //builder.Services.AddScoped<IArtistAlbumService, ArtistAlbumService>();
@@ -79,7 +77,7 @@ namespace MediaWebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            
+
             builder.Services.AddAuthorization();
 
             builder.Services.AddAuthentication(options =>
@@ -103,7 +101,7 @@ namespace MediaWebApi
             }
             app.UseCors(builder =>
             {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); 
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
             app.UseHttpsRedirection();
 

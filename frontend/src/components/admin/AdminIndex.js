@@ -1,8 +1,19 @@
 import Header from "./Header";
 import Sidebar from "./MySideBar";
-import { Outlet } from "react-router-dom";
-
+import { Outlet, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const AdminIndex = () => {
+  const navigate = useNavigate();
+  const location = useLocation().pathname.split("/")[2];
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user.role !== 2 && location === "users") {
+      navigate(-1);
+    }
+  }, [user?.role]);
   return (
     <div className="">
       <div className="flex">

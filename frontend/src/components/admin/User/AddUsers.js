@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import axios from "../../../api/axios";
 import { useState } from "react";
 
-const ADD_USER_URL = "User/register";
+const ADD_USER_URL = "User/insertUser";
 const AddUser = ({ isOpen, closeModal, getUsers }) => {
   const initialUser = {
     Username: "",
@@ -12,12 +12,16 @@ const AddUser = ({ isOpen, closeModal, getUsers }) => {
     Password: "",
     Email: "",
     fileImage: "",
+    Role: "",
   };
 
   const [user, setUser] = useState(initialUser);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateFields()) {
+      return;
+    }
     const formData = new FormData();
     await Object.keys(user).forEach((key) => {
       if (key === "Userimage" && user[key] === "") {
@@ -57,7 +61,6 @@ const AddUser = ({ isOpen, closeModal, getUsers }) => {
     event.preventDefault();
     const fileImage = event.target.files[0];
     const allowedMimeTypes = ["image/jpg", "image/jpeg", "image/png"];
-
     if (fileImage != null) {
       if (!allowedMimeTypes.includes(fileImage.type)) {
         toast.error("file not allowed, file must be image type");
@@ -68,6 +71,41 @@ const AddUser = ({ isOpen, closeModal, getUsers }) => {
     } else {
       setUser({ ...user, fileImage: "", Userimage: "" });
     }
+  };
+
+  const validateFields = () => {
+    const usernameRegex = /^.{2,25}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+    const passwordRegex = /^.{2,25}$/;
+
+    if (!usernameRegex.test(user.Username)) {
+      toast.error(
+        "Invalid username. The username must have a length between 2 and 25 characters."
+      );
+      return false;
+    }
+
+    if (!emailRegex.test(user.Email)) {
+      toast.error("Invalid email address.");
+      return false;
+    }
+
+    if (!phoneRegex.test(user.Phone)) {
+      toast.error(
+        "Invalid phone number. The phone number must be a 10-digit number."
+      );
+      return false;
+    }
+
+    if (!passwordRegex.test(user.Password)) {
+      toast.error(
+        "Invalid password. The password must have a length between 2 and 25 characters."
+      );
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -153,6 +191,24 @@ const AddUser = ({ isOpen, closeModal, getUsers }) => {
                 ></input>
               </div>
 
+              <div className="flex">
+                <label className="w-[4rem] flex items-center justify-center">
+                  Role:{" "}
+                </label>
+                <select
+                  required
+                  className="w-[13rem] rounded-md h-[2rem] border-2 border-black-600 hover:border-blue-300 m-3"
+                  onChange={(e) => setUser({ ...user, Role: e.target.value })}
+                  value={user.Role}
+                >
+                  <option value="" disabled selected hidden>
+                    Select Role
+                  </option>
+                  <option value="0">User</option>
+                  <option value="1">Admin</option>
+                </select>
+              </div>
+
               <div className="flex h-[3rem]">
                 <label className="w-[4rem] flex items-center justify-center">
                   Image:{" "}
@@ -160,11 +216,13 @@ const AddUser = ({ isOpen, closeModal, getUsers }) => {
                 <input
                   accept="image/*"
                   type="file"
+                  defaultValue={""}
                   className="text-sm w-[13rem] h-[2rem] m-3"
                   placeholder="Input image"
                   onChange={(event) => chooseFile(event)}
                 ></input>
               </div>
+
               {user.Userimage && (
                 <div className="flex pb-5">
                   <label className="w-[4rem] flex items-center justify-center">
@@ -177,16 +235,6 @@ const AddUser = ({ isOpen, closeModal, getUsers }) => {
                   />
                 </div>
               )}
-              {/* <div className="flex">
-                <label className="w-[4rem] flex items-center justify-center">
-                  Role:{" "}
-                </label>
-                <select className="w-[13rem] rounded-md h-[2rem] border-2 border-black-600 hover:border-blue-300 m-3">
-                  <option>Select Role</option>
-                  <option>User</option>
-                  <option>Admin</option>
-                </select>
-              </div> */}
             </div>
 
             <button

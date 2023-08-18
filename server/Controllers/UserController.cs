@@ -19,6 +19,28 @@ namespace MediaWebApi.Controllers
         {
             _userService = userService;
         }
+
+        [HttpPost("insertUser")]
+        public async Task<IActionResult> InsertUser([FromForm] UserViewModel user)
+        {
+            try
+            {
+                var newUser = await _userService.InsertUser(user);
+                return Ok(new
+                {
+                    user = newUser,
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                });
+
+            }
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromForm] RegisterViewModel user)
         {

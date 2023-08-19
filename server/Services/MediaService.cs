@@ -32,7 +32,7 @@ namespace MediaWebApi.Services
             var existingMedia = await _mediaRepository.GetMediaById(id);
             if (existingMedia == null)
             {
-                throw new ArgumentException("Id not found");
+                throw new ArgumentException("Id not found1");
             }
             File.Delete("Uploads/" + existingMedia.Media.MediaImage);
             File.Delete("Uploads/" + existingMedia.Media.MediaUrl);

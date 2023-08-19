@@ -7,17 +7,17 @@ namespace MediaWebApi.Models
     public class ArtistAlbum
     {
         [Key]
-        [ForeignKey("Artists")]
-        [Column("artist_id")]
-        public int ArtistId { get; set; }
-
-        public Artist? Artist { get; set; }
-
-        [Key]
         [ForeignKey("Albums")]
         [Column("album_id")]
         public int AlbumId { get; set; }
 
         public Album? Album { get; set; }
+
+        [Key]
+        [ForeignKey("Artists")]
+        [Column("artist_id")]
+        public int ArtistId { get; set; }
+
+        public Artist? Artist { get; set; }
     }
 }

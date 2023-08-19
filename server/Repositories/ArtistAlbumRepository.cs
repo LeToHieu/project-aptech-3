@@ -1,5 +1,6 @@
 ﻿using MediaWebApi.Models;
 using MediaWebApi.Repositories.Interface;
+using MediaWebApi.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaWebApi.Repositories
@@ -11,7 +12,7 @@ namespace MediaWebApi.Repositories
         {
             _context = context;
         }
-        public async Task<ArtistAlbum> CreateAsync(ArtistAlbum artistAlbum)
+        public async Task<ArtistAlbum> CreateAsync(ArtistAlbumViewModel artistAlbum)
         {
             var artist = await _context.ArtistAlbums.FindAsync(artistAlbum.ArtistId, artistAlbum.AlbumId);
 
@@ -31,7 +32,7 @@ namespace MediaWebApi.Repositories
             return artist;
         }
 
-        public async Task<bool> DeleteAsync(ArtistAlbum artistAlbum)
+        public async Task<bool> DeleteAsync(ArtistAlbumViewModel artistAlbum)
         {
             ArtistAlbum? artist = await _context.ArtistAlbums.FindAsync(artistAlbum.ArtistId, artistAlbum.AlbumId);
             if (artist != null)
@@ -51,10 +52,26 @@ namespace MediaWebApi.Repositories
 
         public async Task<List<ArtistAlbum>> GetAllWithArtistsAndAlbumsAsync()
         {
+            /*
+
+            List<ArtistAlbum> artist_Album = await _context.ArtistAlbums
+                .Select(o => new ArtistAlbum()
+                {
+                    AlbumId = o.AlbumId,
+                    Album = o.Album,
+                    ArtistId = o.ArtistId,
+                    Artist = o.Artist,
+                })
+                .ToListAsync();
+
+            return artist_Album;
+            */
+            
             return await _context.Set<ArtistAlbum>()
-                                    .Include(aa => aa.Artist)
                                     .Include(aa => aa.Album)
+                                    .ThenInclude(aa => aa.Artists)
                                     .ToListAsync();
+            
         }
     }
 }

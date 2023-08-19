@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C2109L\\project-aptech-3\\project-aptech-3\\server\\MediaWebApi.csproj": {}
+    "D:\\C2109L\\project-aptech-3\\Doc\\server\\MediaWebApi.csproj": {}
   },
   "projects": {
-    "D:\\C2109L\\project-aptech-3\\project-aptech-3\\server\\MediaWebApi.csproj": {
+    "D:\\C2109L\\project-aptech-3\\Doc\\server\\MediaWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C2109L\\project-aptech-3\\project-aptech-3\\server\\MediaWebApi.csproj",
+        "projectUniqueName": "D:\\C2109L\\project-aptech-3\\Doc\\server\\MediaWebApi.csproj",
         "projectName": "MediaWebApi",
-        "projectPath": "D:\\C2109L\\project-aptech-3\\project-aptech-3\\server\\MediaWebApi.csproj",
+        "projectPath": "D:\\C2109L\\project-aptech-3\\Doc\\server\\MediaWebApi.csproj",
         "packagesPath": "C:\\Users\\bomch\\.nuget\\packages\\",
-        "outputPath": "D:\\C2109L\\project-aptech-3\\project-aptech-3\\server\\obj\\",
+        "outputPath": "D:\\C2109L\\project-aptech-3\\Doc\\server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

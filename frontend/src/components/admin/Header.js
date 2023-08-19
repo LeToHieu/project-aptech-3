@@ -1,6 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { userLogOut } from "../../redux/reducer/users";
 const Header = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const handleLogOut = (e) => {
+    e.preventDefault();
+    dispatch(userLogOut());
+  };
 
   const showProfile = () => {
     setOpen(!open);
@@ -34,7 +41,10 @@ const Header = () => {
                 <p className="cursor-pointer hover:text-[blue] font-semibold">
                   Settings
                 </p>
-                <p className="cursor-pointer hover:text-[blue] font-semibold">
+                <p
+                  onClick={(event) => handleLogOut(event)}
+                  className="cursor-pointer hover:text-[blue] font-semibold"
+                >
                   Log out
                 </p>
               </div>

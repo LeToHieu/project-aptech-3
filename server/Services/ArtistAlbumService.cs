@@ -1,6 +1,7 @@
 ﻿using MediaWebApi.Models;
 using MediaWebApi.Repositories;
 using MediaWebApi.Services.Interface;
+using MediaWebApi.ViewModels;
 
 namespace MediaWebApi.Services
 {
@@ -11,12 +12,12 @@ namespace MediaWebApi.Services
         {
             _artistAlbumRepository = artistAlbumRepository;
         }
-        public async Task<ArtistAlbum?> CreateAsync(ArtistAlbum artistAlbum)
+        public async Task<ArtistAlbum?> CreateAsync(ArtistAlbumViewModel artistAlbum)
         {
             return await _artistAlbumRepository.CreateAsync(artistAlbum);
         }
 
-        public async Task<bool?> DeleteAsync(ArtistAlbum artistAlbum)
+        public async Task<bool?> DeleteAsync(ArtistAlbumViewModel artistAlbum)
         {
             return await _artistAlbumRepository.DeleteAsync(artistAlbum);
         }

@@ -1,5 +1,6 @@
 ﻿using MediaWebApi.Models;
 using MediaWebApi.Repositories.Interface;
+using MediaWebApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -15,7 +16,7 @@ namespace MediaWebApi.Controllers
             _repository = repository;
         }
         [HttpPost("add")]
-        public async Task<IActionResult> CreateArtistAlbum(ArtistMedia artistMedia)
+        public async Task<IActionResult> CreateArtistAlbum(ArtistMediaViewModel artistMedia)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace MediaWebApi.Controllers
         }
 
         [HttpPost("delete")]
-        public async Task<IActionResult> DeleteAA(ArtistMedia artistMedia)
+        public async Task<IActionResult> DeleteAA(ArtistMediaViewModel artistMedia)
         {
             try
             {

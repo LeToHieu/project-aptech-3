@@ -57,7 +57,7 @@ namespace MediaWebApi.Repositories
 
         public async Task<List<Album?>?> GetAllAlbums()
         {
-            List<Album> albums = await _context.Albums.ToListAsync();
+            List<Album> albums = await _context.Albums.Include(a => a.Artists).ThenInclude(a=>a.Artist).ToListAsync();
             return albums;
         }
 

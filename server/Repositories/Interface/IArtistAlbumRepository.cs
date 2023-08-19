@@ -1,4 +1,5 @@
 ﻿using MediaWebApi.Models;
+using MediaWebApi.ViewModels;
 
 namespace MediaWebApi.Repositories.Interface
 {
@@ -8,8 +9,8 @@ namespace MediaWebApi.Repositories.Interface
 
         Task<List<ArtistAlbum>> GetAllWithArtistsAndAlbumsAsync();
 
-        Task<ArtistAlbum> CreateAsync(ArtistAlbum artistAlbum);
+        Task<ArtistAlbum> CreateAsync(ArtistAlbumViewModel artistAlbum);
 
-        Task<bool> DeleteAsync(ArtistAlbum artistAlbum);
+        Task<bool> DeleteAsync(ArtistAlbumViewModel artistAlbum);
     }
 }

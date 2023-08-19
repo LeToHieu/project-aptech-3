@@ -12,6 +12,23 @@ BEGIN
 	SELECT * FROM Users WHERE Id = @@IDENTITY;
 END
 
+CREATE PROCEDURE InsertUser
+    @Username NVARCHAR(255),
+    @UserImage NVARCHAR(255),
+    @Password NVARCHAR(255),
+    @Phone NVARCHAR(255),
+    @Email NVARCHAR(255),
+    @Role NVARCHAR(255)
+AS
+BEGIN
+    -- Insert the user into the Users table
+    INSERT INTO Users (Username, UserImage, Password, Phone, Email, Role)
+    VALUES (@Username, @UserImage, @Password, @Phone, @Email, @Role)
+
+    -- Optionally, you can return the inserted user(s) if needed
+    SELECT * FROM Users WHERE Username = @Username
+END
+
 CREATE PROCEDURE loginUser
     @Username VARCHAR(255),
     @Password VARCHAR(255)
@@ -55,10 +72,11 @@ END
 CREATE PROCEDURE UpdateArtist
     @id INT,
     @artist_name VARCHAR(255),
+    @artist_image VARCHAR(255),
     @description VARCHAR(255)
 AS
 BEGIN
-    UPDATE Artists SET artist_name = @artist_name, description = @description WHERE Id = @id;
+    UPDATE Artists SET artist_name = @artist_name,artist_image = @artist_image , description = @description WHERE Id = @id;
 	SELECT * FROM Artists WHERE ID = @id
 END
 
@@ -162,7 +180,7 @@ CREATE PROCEDURE UpdateOrder
 AS
 BEGIN
   UPDATE Orders
-  SET total_amount = @total_amount
+  SET total_amount = @total_amount, status_order = 1
   WHERE Id = @order_id
 END;
 

@@ -131,10 +131,9 @@ const Video = () => {
           "Content-Type": "application/json",
         }
       })
-      console.log(parseJson(response.data.json))
       const ordersWithStatus1 = parseJson(response.data.json).filter(order => order.status_order === 0);
       setOrder(ordersWithStatus1);
-      if(ordersWithStatus1) {
+      if (ordersWithStatus1.length !== 0) {
         const orderId = ordersWithStatus1[0].Id;
         const mediaId = id;
         const price = video?.media.price;
@@ -143,17 +142,18 @@ const Video = () => {
           mediaId: mediaId,
           albumId: 0,
           price: price
-        } 
+        }
+        console.log(order_detail_data)
         let response_exist = await axios.get("Order_Detail/GetByOrderId/" + orderId, {
           headers: {
             "Content-Type": "application/json",
           }
         })
         let array = parseJson(response_exist.data.json)
-        for(let i = 0; i< array.length; i++) {
-          if(array[i].MediaId == id ) {
+        for (let i = 0; i < array.length; i++) {
+          if (array[i].MediaId == id) {
             toast.error("Sản phẩm đã tồn tại trong giỏ hàng")
-            return ;
+            return;
           }
         }
         let response_add = await axios.post("Order_Detail/add", order_detail_data, {
@@ -167,13 +167,51 @@ const Video = () => {
         } else {
           toast.error("Thêm giỏ hàng thất bại")
         }
+      } else {
+        const orderData = {
+          userId: user.id,
+          orderDate: new Date().toISOString(),
+          total_amount: 0,
+        }
+        console.log(orderData)
+        const orderResponse = await axios.post("Order/add", orderData, {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+        const newOrder = orderResponse.data.newOrder;
+
+        if (newOrder) {
+          const orderDetailData = {
+            orderId: newOrder.id,
+            albumId: 0,
+            mediaId: id,
+            price: video?.media.price,
+          };
+          const orderDetailResponse = await axios.post(
+            "Order_Detail/add",
+            orderDetailData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              }
+            }
+          );
+          if (!orderDetailResponse.data.status) {
+            toast.error(
+              `Có lỗi xảy ra khi thêm sản phẩm vào đơn hàng.`
+            );
+            return ;
+          }
+        }
+        toast.success("Thêm thành công")
       }
     } catch (error) {
       toast.error("Error submitting product:", error);
       console.error("Error submitting product:", error);
     }
   }
-  
+
   return (
     <div className='flex gap-2 h-full pl-5'>
       <div className="left flex-[3]">
@@ -189,7 +227,7 @@ const Video = () => {
             <p className='text-sm font-semibold mb-1'>{video?.artist?.artistName} </p>
             <p className='flex items-center gap-1 text-xs'>{video?.artist?.description}</p>
           </div>
-          <form action="" onClick={(e) => handleCart(e)}>
+          <form action="" onSubmit={(e) => handleCart(e)}>
             <button className='ml-5 py-2 px-4 rounded-2xl font-semibold text-sm text-black bg-white border-[1px] border-gray-400'>Mua ngay</button>
           </form>
         </div>

@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "../../api/axios";
 import parseJson from "../../Parse";
+import {toast} from 'react-toastify'
+
 function Cart() {
   const [order, setOrder] = useState([])
   let { user } = useSelector(state => state.user)
@@ -29,6 +31,31 @@ function Cart() {
         "Content-Type": "application/json",
       }
     })
+    if(response.data) {
+      toast.success("Xoá thành công")
+    } else {
+      toast.error("Có lỗi xảy ra")
+    }
+    fetchData();
+  }
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    const data = {
+      id: order[0].Id,
+      total_amount: order.reduce((total, currentOrder) => {
+        return total + currentOrder.Order_Detail.reduce((orderTotal, orderDetail) => orderTotal + orderDetail.price, 0);
+      }, 0)
+    }
+    const response = await axios.post("Order/edit/" + order[0].Id, data,{
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    if (response.data) {
+      toast.success("Mua thành công");
+    } else {
+      toast.error("Mua không thành công");
+    }
   }
   return (
     <>
@@ -59,8 +86,8 @@ function Cart() {
                           <div>
                             <div class="flex justify-between text-sm text-gray-900">
                               <h3 class="text-base font-bold"> {order?.Media ? order?.Media?.MediaName : order.Album.AlbumName}</h3>
-                              <form action="" onSubmit={(e) => handleDelete(e, order?.Id)}>
-                                <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900">
+                              <form action="">
+                                <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900" onClick={(e) => handleDelete(e, order?.Id)}>
                                   <p class="text-xs font-normal">Delete</p>
                                   <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                 </button>
@@ -91,12 +118,14 @@ function Cart() {
               <div class="flex flex-col gap-2">
                 <div class="flex justify-between text-base text-gray-900">
                   <p>Total price</p>
-                  <p>{order[0]?.total_amount}</p>
+                  <p>        {order.reduce((total, currentOrder) => {
+                    return total + currentOrder.Order_Detail.reduce((orderTotal, orderDetail) => orderTotal + orderDetail.price, 0);
+                  }, 0)} $</p>
                 </div>
 
                 <div class="mt-auto flex flex-col gap-2 pt-4">
                   <div class="">
-                    <button class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900">Pay</button>
+                    <button class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900" onClick={(e) => handleAdd(e)}>Pay</button>
                   </div>
                 </div>
               </div>

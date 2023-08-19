@@ -17,7 +17,7 @@ import Bill from "./components/Bills/Bills";
 import Index from "./pages/Index";
 import Home from "./components/Home/Home";
 import Video from "./components/Video/Video";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Music from "./pages/Music";
 import Album from "./components/Album/Album";
@@ -29,7 +29,11 @@ import GetUsers from "./components/admin/User/GetUsers";
 import GetCate from "./components/admin/Categories/GetCate";
 import GetArtists from "./components/admin/Artists/GetArtists";
 import GetAlbums from "./components/admin/Albums/GetAlbums";
-import { GetMedias, AddMedia } from "./components/admin/Medias/IndexMedias";
+import {
+  GetMedias,
+  AddMedia,
+  EditMedia,
+} from "./components/admin/Medias/IndexMedias";
 import { usersError, usersStart, usersSuccess } from "./redux/reducer/users";
 import axios from "./api/axios";
 import Bills from "./components/admin/Bills/Bills";
@@ -42,8 +46,8 @@ function App() {
   const jwt = localStorage.getItem("jwt") ?? null;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {user} = useSelector(state => state.user)
-  console.log(user)
+  const { user, role } = useSelector((state) => state.user);
+  console.log(user);
   useEffect(() => {
     const loginUserWithJwt = async () => {
       dispatch(usersStart());
@@ -65,14 +69,65 @@ function App() {
       loginUserWithJwt();
     }
   }, [jwt]);
+
+  /*
   const ProtectedRoute = (props) => {
-    console.log(props)
-    if (parseInt(props.role) === 0) {
-      navigate('/')
-    } else {
+    console.log(props.role);
+
+    var myRole;
+    setTimeout(() => {
+      myRole = props.role;
+    }, 3000);
+    useEffect(() => {
+      if (parseInt(myRole) === 0) {
+        navigate(-1);
+      } else if (parseInt(myRole) === 1 || parseInt(myRole) === 2) {
+        return props.children;
+      } else {
+        return navigate(-1);
+      }
+    }, [props.role]);
+  };
+  */
+
+  const ProtectedRoute = (props) => {
+    const prevRole = useRef(null);
+
+    useEffect(() => {
+      const delay = 1000; // 3000 milliseconds = 3 seconds
+
+      const timerId = setTimeout(() => {
+        if (
+          prevRole.current === null &&
+          (parseInt(props.role) === 1 || parseInt(props.role) === 2)
+        ) {
+          prevRole.current = props.role;
+          return;
+        }
+
+        if (parseInt(props.role) === 0) {
+          navigate(-1);
+        } else if (parseInt(props.role) === 1 || parseInt(props.role) === 2) {
+          prevRole.current = props.role;
+          return props.children;
+        } else {
+          navigate("/");
+          window.location.reload();
+        }
+      }, delay);
+
+      return () => {
+        clearTimeout(timerId);
+      };
+    }, [props.role]);
+
+    if (parseInt(props.role) === 1 || parseInt(props.role) === 2) {
       return props.children;
     }
-  }
+
+    return null;
+  };
+
   return (
     <>
       <Routes>
@@ -84,6 +139,7 @@ function App() {
           <Route path="album" element={<Album />}></Route>
           <Route path="cart" element={<Cart />} />
           <Route path="bill" element={<Bill />} />
+
           <Route path="search" element={<Search_Data />} />
           <Route path="news" element={<News/>}></Route>
         </Route>
@@ -100,9 +156,7 @@ function App() {
         <Route
           path="admin"
           element={
-            <ProtectedRoute 
-              role={user?.role}
-            >
+            <ProtectedRoute role={user?.role}>
               <AdminIndex></AdminIndex>
             </ProtectedRoute>
           }
@@ -116,6 +170,7 @@ function App() {
           <Route path="medias">
             <Route path="" element={<GetMedias />} />
             <Route path="addMedia" element={<AddMedia />} />
+            <Route path="editMedia/:Id" element={<EditMedia />} />
           </Route>
           <Route path="bill" element={<Bills />}></Route>
           <Route path="report" element={<Feedback />}></Route>
